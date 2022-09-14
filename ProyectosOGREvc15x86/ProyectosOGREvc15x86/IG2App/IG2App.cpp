@@ -113,15 +113,16 @@ void IG2App::setupScene(void)
 	//Reloj
 	Ogre::SceneNode* Clock = mSM->getRootSceneNode()->createChildSceneNode();
 	Ogre::SceneNode* Hours = Clock->createChildSceneNode();
-	
-	float increase = 360.0 / 11;
+
+	float increase = 360.0 / 12;
 	for (size_t i = 0; i < 12; i++)
 	{
 		Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
-		Ogre::SceneNode* Hour =Hours->createChildSceneNode("Hora " + std::to_string(i));
+		Ogre::SceneNode* Hour = Hours->createChildSceneNode("Hora " + std::to_string(i));
+		Hour->setScale(.5, .5, .5);
 
 		Hour->attachObject(Sphere);
-		Hour->setPosition(2000*Ogre::Math::Cos(increase*i), 2000*Ogre::Math::Sin(increase * i), 0);
+		Hour->setPosition(250 * Ogre::Math::Cos(Ogre::Degree(increase * i)), 250 * Ogre::Math::Sin(Ogre::Degree(increase * i)), 0);
 	}
 	//------------------------------------------------------------------------
 
