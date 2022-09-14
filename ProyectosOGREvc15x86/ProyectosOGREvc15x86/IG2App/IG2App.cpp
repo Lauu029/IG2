@@ -98,78 +98,31 @@ void IG2App::setupScene(void)
 
 	// finally something to render
 
-	//Sinbad
-	Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
-	mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
-	mSinbadNode->attachObject(ent);
-
-	mSinbadNode->setPosition(100, 50, -300);
-	mSinbadNode->setScale(20, 20, 20);
-	//mSinbadNode->yaw(Ogre::Degree(-45));
-	//mSinbadNode->showBoundingBox(true);
-	//mSinbadNode->setVisible(false);
-
-	//------------------------------------------------------------------------
-
-	//Espada
-	//Ogre::Entity* ent = mSM->createEntity("Sword.mesh");
-
-	//mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
+	////Sinbad
+	//Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
+	//mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
 	//mSinbadNode->attachObject(ent);
 
-	////mSinbadNode->setPosition(400, 100, -300);
-	//mSinbadNode->setScale(100, 100, 100);
+	//mSinbadNode->setPosition(100, 50, -300);
+	//mSinbadNode->setScale(20, 20, 20);
 	////mSinbadNode->yaw(Ogre::Degree(-45));
 	////mSinbadNode->showBoundingBox(true);
 	////mSinbadNode->setVisible(false);
-	//------------------------------------------------------------------------
-	//Casco
-	//Ogre::Entity* ent = mSM->createEntity("DamagedHelmet.mesh");
 
-	//mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
-	//mSinbadNode->attachObject(ent);
 
-	////mSinbadNode->setPosition(400, 100, -300);
-	//mSinbadNode->setScale(100, 100, 100);
-	////mSinbadNode->yaw(Ogre::Degree(-45));
-	////mSinbadNode->showBoundingBox(true);
-	////mSinbadNode->setVisible(false);
-	//------------------------------------------------------------------------
-	//Cabeza de ogre
-	/*Ogre::Entity* ent = mSM->createEntity("ogrehead.mesh");
-
-	mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
-	mSinbadNode->attachObject(ent);
-
-	//mSinbadNode->setPosition(400, 100, -300);
-	mSinbadNode->setScale(10, 10, 10);
-	//mSinbadNode->yaw(Ogre::Degree(-45));
-	//mSinbadNode->showBoundingBox(true);
-	//mSinbadNode->setVisible(false);*/
-	//------------------------------------------------------------------------
-	//Cabeza
-	/*Ogre::Entity* ent = mSM->createEntity("facial.mesh");
-
-	mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
-	mSinbadNode->attachObject(ent);
-
-	//mSinbadNode->setPosition(400, 100, -300);
-	mSinbadNode->setScale(10, 10, 10);
-	//mSinbadNode->yaw(Ogre::Degree(-45));
-	//mSinbadNode->showBoundingBox(true);
-	//mSinbadNode->setVisible(false);*/
-	//------------------------------------------------------------------------
-	//Baño romano 
-	Ogre::Entity* sc = mSM->createEntity("RomanBathLower.mesh");
-
-	Ogre::SceneNode* mBathNode = mSM->getRootSceneNode()->createChildSceneNode();
-	mBathNode->attachObject(sc);
-
-	Ogre::Entity* roof = mSM->createEntity("RomanBathUpper.mesh");
-
-	mBathNode = mSM->getRootSceneNode()->createChildSceneNode();
-	mBathNode->attachObject(roof);
+	//Reloj
+	Ogre::SceneNode* Clock = mSM->getRootSceneNode()->createChildSceneNode();
+	Ogre::SceneNode* Hours = Clock->createChildSceneNode();
 	
+	float increase = 360.0 / 11;
+	for (size_t i = 0; i < 12; i++)
+	{
+		Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
+		Ogre::SceneNode* Hour =Hours->createChildSceneNode("Hora " + std::to_string(i));
+
+		Hour->attachObject(Sphere);
+		Hour->setPosition(2000*Ogre::Math::Cos(increase*i), 2000*Ogre::Math::Sin(increase * i), 0);
+	}
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
