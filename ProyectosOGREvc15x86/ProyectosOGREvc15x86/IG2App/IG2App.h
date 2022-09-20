@@ -26,6 +26,8 @@ protected:
   Ogre::SceneNode* mLightNode = nullptr;
   Ogre::SceneNode* mCamNode = nullptr;
   Ogre::SceneNode* mSinbadNode = nullptr;
+  Ogre::SceneNode* Clock = nullptr;
+  Ogre::SceneNode* Hours = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
  
 };
