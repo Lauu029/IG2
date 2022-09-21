@@ -158,7 +158,7 @@ void IG2App::setupScene(void)
 
 	//agujaS->attachObject(agujaSegundos);
 	//------------------------------------------------------------------------
-	AspaNoria* aspa = new AspaNoria(mSM);
+	Noria* n = new Noria(mSM);
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);

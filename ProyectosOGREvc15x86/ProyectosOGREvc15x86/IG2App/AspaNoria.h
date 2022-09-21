@@ -7,7 +7,7 @@
 class AspaNoria
 {
 public:
-	AspaNoria(Ogre::SceneManager* mSM);
+	AspaNoria(Ogre::SceneManager* mSM, Ogre::SceneNode* feria);
 	~AspaNoria() {};
 protected:
 	Ogre::SceneNode* Aspa = nullptr;
