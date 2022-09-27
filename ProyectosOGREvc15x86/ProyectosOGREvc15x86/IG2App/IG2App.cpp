@@ -96,7 +96,7 @@ void IG2App::setupScene(void)
 	mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
 
 	Ogre::SceneNode* norianodo = mSM->getRootSceneNode()->createChildSceneNode("noria");
-	Noria* n = new Noria (norianodo,10);
+	Noria* n = new Noria (norianodo,20);
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
