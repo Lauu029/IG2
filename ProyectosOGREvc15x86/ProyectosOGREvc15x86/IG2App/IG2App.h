@@ -6,9 +6,7 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
-#include "Noria.h"
-
-
+#include "Entity.h"
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
 public:

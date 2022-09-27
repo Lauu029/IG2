@@ -21,10 +21,7 @@
     <ClInclude Include="IG2App.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="AspaNoria.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Noria.h">
+    <ClInclude Include="Entity.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,10 +35,7 @@
     <ClCompile Include="IG2Main.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="AspaNoria.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Noria.cpp">
+    <ClCompile Include="Entity.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

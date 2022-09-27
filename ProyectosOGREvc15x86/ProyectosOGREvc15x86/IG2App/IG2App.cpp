@@ -95,79 +95,13 @@ void IG2App::setupScene(void)
 	//Luz frontal
 	mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
 
-	//Luz desde abajo
-	//mLightNode->setDirection(Ogre::Vector3(0, 1, 0));  //vec3.normalise();
-
-	//Luz lateral
-	//mLightNode->setDirection(Ogre::Vector3(1, 0, 0));  //vec3.normalise();
-	//lightNode->setPosition(0, 0, 1000);
-
-	//------------------------------------------------------------------------
-
-	// finally something to render
-
-	////Sinbad
-	//Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
-	//mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
-	//mSinbadNode->attachObject(ent);
-
-	//mSinbadNode->setPosition(100, 50, -300);
-	//mSinbadNode->setScale(20, 20, 20);
-	////mSinbadNode->yaw(Ogre::Degree(-45));
-	////mSinbadNode->showBoundingBox(true);
-	////mSinbadNode->setVisible(false);
-
-
-	//Reloj
-	//Clock = mSM->getRootSceneNode()->createChildSceneNode();
-	//Hours = Clock->createChildSceneNode();
-
-	//float increase = 360.0 / 12;
-	//for (size_t i = 0; i < 12; i++)
-	//{
-	//	Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
-	//	Ogre::SceneNode* Hour = Hours->createChildSceneNode("Hora " + std::to_string(i));
-	//	Hour->setScale(.5, .5, .5);
-
-	//	Hour->attachObject(Sphere);
-	//	Hour->setPosition(250 * Ogre::Math::Cos(Ogre::Degree(increase * i)), 250 * Ogre::Math::Sin(Ogre::Degree(increase * i)), 0);
-	//	/*if (i % 2)
-	//		mSM->getSceneNode("Hora " + std::to_string(i))->setScale(.2, .2, .2);*/
-	//}
-	////Agujas
-	//Ogre::Entity* agujaHoras = mSM->createEntity("cube.mesh");
-	//Ogre::SceneNode* aguja = Clock->createChildSceneNode("Horas");
-	//aguja->setScale(.25, 1.6, .05);
-	//aguja->setPosition(65, 0, 0);
-	//aguja->roll(Ogre::Degree(-90));
-
-	//aguja->attachObject(agujaHoras);
-
-	//Ogre::Entity* agujaMinutos = mSM->createEntity("cube.mesh");
-	//Ogre::SceneNode* agujaM = Clock->createChildSceneNode("Minutos");
-	//agujaM->setScale(.15, 2, .05);
-	//agujaM->setPosition(0, 65, 0);
-
-	//agujaM->attachObject(agujaMinutos);
-
-	//Ogre::Entity* agujaSegundos = mSM->createEntity("cube.mesh");
-	//Ogre::SceneNode* agujaS = Clock->createChildSceneNode("Segundos");
-	//agujaS->setScale(.05, 2, .05);
-	//agujaS->setPosition(-70, -60, 0);
-	//agujaS->roll(Ogre::Degree(125));
-
-	//agujaS->attachObject(agujaSegundos);
-	//------------------------------------------------------------------------
-	Noria* n = new Noria(mSM);
+	Ogre::SceneNode* norianodo = mSM->getRootSceneNode()->createChildSceneNode("noria");
+	Noria* n = new Noria (norianodo,10);
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);
 	mCamMgr->setStyle(OgreBites::CS_ORBIT);
-
-	//mCamMgr->setTarget(mSinbadNode);  
-	//mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
-
 
 	//------------------------------------------------------------------------
 
