@@ -10,6 +10,7 @@
 #include <vector>
 
 using namespace Ogre;
+using namespace std;
 
 class EntityIG : public OgreBites::InputListener {
 public:
@@ -22,18 +23,24 @@ public:
 	static void addListener(EntityIG* entidad) {
 		appListeners.push_back(entidad);
 	};
+
+	SceneNode* node() { return mNode; }
+
 protected:
 	Ogre::SceneNode* mNode = nullptr;
 	Ogre::SceneManager* mSM = nullptr;
 
-	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
-	virtual void frameRendered(const Ogre::FrameEvent& evt);
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) { return false; };
+	virtual void frameRendered(const Ogre::FrameEvent& evt) {};
 };
 //--------------------------------------------------------------
 class AspaNoria : public EntityIG {
 public:
 	AspaNoria(Ogre::SceneNode* aspaNoria);
 	~AspaNoria() {};
+
+	Ogre::SceneNode* base() { return Base; }
+
 protected:
 	Ogre::SceneNode* Base = nullptr;
 	Ogre::SceneNode* Lateral1 = nullptr;
@@ -46,7 +53,10 @@ public:
 	Noria(Ogre::SceneNode* noria, int numAspas);
 	~Noria() {};
 protected:
-	//vector<Ogre::SceneNode*> aspas;
+	bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+
+	int numAspas;
+	std::vector<AspaNoria*> aspasNoria;
 };
 
 

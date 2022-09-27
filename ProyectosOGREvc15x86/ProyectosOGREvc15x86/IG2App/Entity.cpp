@@ -6,16 +6,6 @@ EntityIG::EntityIG(SceneNode* node)
 	mSM = mNode->getCreator();
 }
 
-
-bool EntityIG::keyPressed(const OgreBites::KeyboardEvent& evt)
-{
-	return false;
-}
-
-void EntityIG::frameRendered(const Ogre::FrameEvent& evt)
-{
-}
-
 //------------------------------------------------------------------
 AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 {
@@ -42,13 +32,18 @@ AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 //---------------------------------------------------------------
 Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 {
+	this->numAspas = numAspas;
+
 	float increase = 360.0 / numAspas;
 	for (size_t i = 0; i < numAspas; i++)
 	{
 		Ogre::SceneNode* nodoAspa = mNode->createChildSceneNode("Aspa " + std::to_string(i));
 		AspaNoria* aspa = new AspaNoria(nodoAspa);
 		nodoAspa->roll(Ogre::Degree(increase * i));
+		aspa->base()->roll(Ogre::Degree(-increase * i));
+		aspasNoria.push_back(aspa);
 	}
+
 	Ogre::SceneNode* centro = mNode->createChildSceneNode("centro");
 	Ogre::Entity* cubo = mSM->createEntity("Barrel.mesh");
 	centro->attachObject(cubo);
@@ -57,4 +52,18 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 	centro->scale(10, 10, 10);
 
 
+}
+
+bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+	if (evt.keysym.sym == SDLK_q) {
+		double rot = 3.0f;
+		for (auto aspa : aspasNoria) {
+			aspa->node()->roll(Ogre::Degree(rot));
+			aspa->base()->roll(-Ogre::Degree(rot));
+		}
+	}
+
+
+	return true;
 }

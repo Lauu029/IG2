@@ -10,19 +10,6 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	if (evt.keysym.sym == SDLK_ESCAPE)
-	{
-		getRoot()->queueEndRendering();
-	}
-	if (evt.keysym.sym == SDLK_g) {
-		Clock->roll(Ogre::Degree(5));
-	}
-	if (evt.keysym.sym == SDLK_h) {
-		Hours->yaw(Ogre::Degree(5));
-	}
-
-	//else if (evt.keysym.sym == SDLK_???)
-
 	return true;
 }
 
@@ -97,6 +84,8 @@ void IG2App::setupScene(void)
 
 	Ogre::SceneNode* norianodo = mSM->getRootSceneNode()->createChildSceneNode("noria");
 	Noria* n = new Noria (norianodo,20);
+
+	addInputListener(n);
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
