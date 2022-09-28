@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+
 std::vector<EntityIG*>EntityIG::appListeners = std::vector<EntityIG*>(0, nullptr);
 
 EntityIG::EntityIG(SceneNode* node)
@@ -102,4 +103,15 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	bellyButton->translate(0, 0, 100);
 
 	mNode->translate(100, 50, 250);
+}
+
+Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
+{
+	
+	MeshManager::getSingleton().createPlane("mPlane1080x800",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+	Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
+	mNode->attachObject(plane);
 }

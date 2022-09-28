@@ -86,13 +86,7 @@ void IG2App::setupScene(void)
 	mLightNode->setPosition(0, 0, 2000);
 	//------------------------------------------------------------------------
 	Ogre::SceneNode* PlaneNodo = mSM->getRootSceneNode()->createChildSceneNode("suelo");
-	MeshManager::getSingleton().createPlane("mPlane1080x800",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		Plane(Vector3::UNIT_Y, 0),
-		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
-	Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
-	PlaneNodo->attachObject(plane);
-
+	Plano* p = new Plano(PlaneNodo);
 
 	//------------------------------------------------------------------------
 
