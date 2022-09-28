@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+std::vector<EntityIG*>EntityIG::appListeners = std::vector<EntityIG*>(0, nullptr);
+
 EntityIG::EntityIG(SceneNode* node)
 {
 	mNode = node;
@@ -82,10 +84,22 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	head->setScale(.3, .3, .3);
 	head->translate(0, 70, 0);
 
+	nose = head->createChildSceneNode("nose");
+	Ogre::Entity* n = mSM->createEntity("uv_sphere.mesh");
+	nose->attachObject(n);
+	nose->setScale(.1, .1, .1);
+	nose->translate(0, 0, 100);
+
 	body = mNode->createChildSceneNode("body");
 	Ogre::Entity* b = mSM->createEntity("uv_sphere.mesh");
 	body->attachObject(b);
 	body->setScale(.5, .5, .5);
+
+	bellyButton = body->createChildSceneNode("bellyButton");
+	Ogre::Entity* bB = mSM->createEntity("uv_sphere.mesh");
+	bellyButton->attachObject(bB);
+	bellyButton->setScale(.1, .1, .1);
+	bellyButton->translate(0, 0, 100);
 
 	mNode->translate(-50, 50, 300);
 }

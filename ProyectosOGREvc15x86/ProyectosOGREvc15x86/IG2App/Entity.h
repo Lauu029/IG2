@@ -66,5 +66,7 @@ public:
 protected:
 	Ogre::SceneNode* head = nullptr;
 	Ogre::SceneNode* body = nullptr;
+	Ogre::SceneNode* nose = nullptr;
+	Ogre::SceneNode* bellyButton = nullptr;
 };
 
