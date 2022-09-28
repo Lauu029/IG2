@@ -6,7 +6,7 @@
 #include <OgreEntity.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
-
+#include <OgreMeshManager.h>
 #include <vector>
 
 using namespace Ogre;
@@ -69,4 +69,10 @@ protected:
 	Ogre::SceneNode* nose = nullptr;
 	Ogre::SceneNode* bellyButton = nullptr;
 };
-
+//---------------------------------------------------------------
+class Plano : public EntityIG {
+public:
+	Plano(Ogre::SceneNode* plan);
+	~Plano() {};
+protected:
+};
