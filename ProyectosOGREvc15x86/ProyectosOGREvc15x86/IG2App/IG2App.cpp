@@ -10,6 +10,9 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
+	if (evt.keysym.sym == SDLK_ESCAPE) {
+		getRoot()->queueEndRendering();
+	}
 	return true;
 }
 
@@ -78,16 +81,27 @@ void IG2App::setupScene(void)
 	mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
-
 	//Luz frontal
-	mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0, -1, -1));  //vec3.normalise();
+	mLightNode->setPosition(0, 0, 2000);
+	//------------------------------------------------------------------------
+	Ogre::SceneNode* PlaneNodo = mSM->getRootSceneNode()->createChildSceneNode("suelo");
+	MeshManager::getSingleton().createPlane("mPlane1080x800",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+	Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
+	PlaneNodo->attachObject(plane);
 
-	Ogre::SceneNode* norianodo = mSM->getRootSceneNode()->createChildSceneNode("noria");
-	Noria* n = new Noria (norianodo,20);
+
+	//------------------------------------------------------------------------
+
+
+	Ogre::SceneNode* norianodo = PlaneNodo->createChildSceneNode("noria");
+	Noria* n = new Noria(norianodo, 20);
 
 	addInputListener(n);
 	//------------------------------------------------------------------------
-
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);
 	mCamMgr->setStyle(OgreBites::CS_ORBIT);
