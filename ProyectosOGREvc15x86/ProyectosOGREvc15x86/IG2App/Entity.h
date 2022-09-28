@@ -24,6 +24,10 @@ public:
 		appListeners.push_back(entidad);
 	};
 
+	void sendEvent(EntityIG* entidad);
+	virtual void receiveEvent(EntityIG* entidad) {};
+
+;
 	SceneNode* getSceneNode() { return mNode; }
 
 protected:
@@ -39,6 +43,7 @@ public:
 	AspaNoria(Ogre::SceneNode* aspaNoria);
 	~AspaNoria() {};
 
+	SceneNode* getBase() { return Base; }
 protected:
 	Ogre::SceneNode* Base = nullptr;
 	Ogre::SceneNode* Lateral1 = nullptr;
@@ -50,12 +55,17 @@ class Noria : public EntityIG {
 public:
 	Noria(Ogre::SceneNode* noria, int numAspas);
 	~Noria() {};
+
+
 protected:
-	bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	virtual void receiveEvent(EntityIG* entidad) override;
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
 	int numAspas;
 	std::vector<AspaNoria*> aspasNoria;
+
+	bool moving = true;
 };
 
 //---------------------------------------------------------------
@@ -63,11 +73,18 @@ class Munieco : public EntityIG {
 public:
 	Munieco(Ogre::SceneNode* mun);
 	~Munieco() {};
+
 protected:
+
+	virtual void receiveEvent(EntityIG* entidad) override;
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
+
 	Ogre::SceneNode* head = nullptr;
 	Ogre::SceneNode* body = nullptr;
 	Ogre::SceneNode* nose = nullptr;
 	Ogre::SceneNode* bellyButton = nullptr;
+
+	bool moving = false;
 };
 //---------------------------------------------------------------
 class Plano : public EntityIG {
@@ -75,4 +92,6 @@ public:
 	Plano(Ogre::SceneNode* plan);
 	~Plano() {};
 protected:
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+
 };

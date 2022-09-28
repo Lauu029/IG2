@@ -9,6 +9,12 @@ EntityIG::EntityIG(SceneNode* node)
 	mSM = mNode->getCreator();
 }
 
+void EntityIG::sendEvent(EntityIG* entidad)
+{
+	for (EntityIG* e : appListeners)
+		e->receiveEvent(this);
+}
+
 //------------------------------------------------------------------
 AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 {
@@ -23,7 +29,6 @@ AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 	Base->attachObject(cubo);
 	Base->setPosition(300, 0, 0);
 	Base->scale(.4, .4, .4);
-	Base->setInheritOrientation(false);
 
 	Lateral1->attachObject(LadoI);
 	Lateral1->translate(160, 0, -20);
@@ -44,6 +49,7 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 		Ogre::SceneNode* nodoAspa = mNode->createChildSceneNode("Aspa " + std::to_string(i));
 		AspaNoria* aspa = new AspaNoria(nodoAspa);
 		nodoAspa->roll(Ogre::Degree(increase * i));
+		aspa->getBase()->roll(Ogre::Degree(-increase * i));
 		aspasNoria.push_back(aspa);
 	}
 
@@ -57,14 +63,20 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 
 }
 
+void Noria::receiveEvent(EntityIG* entidad)
+{
+	moving = !moving;
+}
+
 bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	if (evt.keysym.sym == SDLK_q) {
-		double rot = 3.0f;
-		for (auto aspa : aspasNoria)
-			aspa->getSceneNode()->roll(Ogre::Degree(rot));
-
-	}
+	//if (evt.keysym.sym == SDLK_q) {
+	//	double rot = 3.0f;
+	//	for (auto aspa : aspasNoria) {
+	//		aspa->getSceneNode()->roll(Ogre::Degree(rot));
+	//		aspa->getBase()->roll(Ogre::Degree(-rot));
+	//	}
+	//}
 
 
 	return true;
@@ -72,9 +84,13 @@ bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Noria::frameRendered(const Ogre::FrameEvent& evt)
 {
-	double rot = 1.0f;
-	for (auto aspa : aspasNoria)
-		aspa->getSceneNode()->roll(Ogre::Degree(rot));
+	if (moving) {
+		double rot = 1.0f;
+		for (auto aspa : aspasNoria) {
+			aspa->getSceneNode()->roll(Ogre::Degree(rot));
+			aspa->getBase()->roll(Ogre::Degree(-rot));
+		}
+	}
 }
 
 Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
@@ -105,13 +121,37 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	mNode->translate(100, 50, 250);
 }
 
+void Munieco::receiveEvent(EntityIG* entidad)
+{
+	moving = !moving;
+}
+
+void Munieco::frameRendered(const Ogre::FrameEvent& evt)
+{
+	if (moving) {
+		mNode->yaw(Ogre::Degree(3.0f));
+		head->yaw(Ogre::Degree(-6.0f));
+	}
+}
+
 Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
 {
-	
+
 	MeshManager::getSingleton().createPlane("mPlane1080x800",
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 	Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
 	mNode->attachObject(plane);
+}
+
+bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+	if (evt.keysym.sym == SDLK_p) {
+		mNode->yaw(Ogre::Degree(3.0f));
+	}
+	else if (evt.keysym.sym == SDLK_r) {
+		sendEvent(this);
+	}
+	return true;
 }

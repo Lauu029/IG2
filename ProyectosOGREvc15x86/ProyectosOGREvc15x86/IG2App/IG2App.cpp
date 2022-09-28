@@ -87,18 +87,19 @@ void IG2App::setupScene(void)
 	//------------------------------------------------------------------------
 	Ogre::SceneNode* PlaneNodo = mSM->getRootSceneNode()->createChildSceneNode("suelo");
 	Plano* p = new Plano(PlaneNodo);
-
-	//------------------------------------------------------------------------
-
+	addInputListener(p);
 
 	Ogre::SceneNode* norianodo = PlaneNodo->createChildSceneNode("noria");
 	Noria* n = new Noria(norianodo, 20);
-
 	addInputListener(n);
+	EntityIG::addListener(n);
 
 	Ogre::SceneNode* muniecoNodo = PlaneNodo->createChildSceneNode("Munieco");
 	Munieco* m = new Munieco(muniecoNodo);
 	muniecoNodo->yaw(Degree(200));
+	addInputListener(m);
+	EntityIG::addListener(m);
+
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);
