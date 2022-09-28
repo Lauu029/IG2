@@ -104,6 +104,7 @@ void IG2App::setupScene(void)
 
 	Ogre::SceneNode* muniecoNodo = PlaneNodo->createChildSceneNode("Munieco");
 	Munieco* m = new Munieco(muniecoNodo);
+	muniecoNodo->yaw(Degree(200));
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);

@@ -101,5 +101,5 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	bellyButton->setScale(.1, .1, .1);
 	bellyButton->translate(0, 0, 100);
 
-	mNode->translate(-50, 50, 300);
+	mNode->translate(100, 50, 250);
 }
