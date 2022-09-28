@@ -24,7 +24,7 @@ public:
 		appListeners.push_back(entidad);
 	};
 
-	SceneNode* node() { return mNode; }
+	SceneNode* getSceneNode() { return mNode; }
 
 protected:
 	Ogre::SceneNode* mNode = nullptr;
@@ -38,8 +38,6 @@ class AspaNoria : public EntityIG {
 public:
 	AspaNoria(Ogre::SceneNode* aspaNoria);
 	~AspaNoria() {};
-
-	Ogre::SceneNode* base() { return Base; }
 
 protected:
 	Ogre::SceneNode* Base = nullptr;

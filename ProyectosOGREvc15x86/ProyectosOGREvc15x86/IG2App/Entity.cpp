@@ -20,6 +20,7 @@ AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 	Base->attachObject(cubo);
 	Base->setPosition(300, 0, 0);
 	Base->scale(.4, .4, .4);
+	Base->setInheritOrientation(false);
 
 	Lateral1->attachObject(LadoI);
 	Lateral1->translate(160, 0, -20);
@@ -40,7 +41,6 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 		Ogre::SceneNode* nodoAspa = mNode->createChildSceneNode("Aspa " + std::to_string(i));
 		AspaNoria* aspa = new AspaNoria(nodoAspa);
 		nodoAspa->roll(Ogre::Degree(increase * i));
-		aspa->base()->roll(Ogre::Degree(-increase * i));
 		aspasNoria.push_back(aspa);
 	}
 
@@ -58,10 +58,9 @@ bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_q) {
 		double rot = 3.0f;
-		for (auto aspa : aspasNoria) {
-			aspa->node()->roll(Ogre::Degree(rot));
-			aspa->base()->roll(-Ogre::Degree(rot));
-		}
+		for (auto aspa : aspasNoria)
+			aspa->getSceneNode()->roll(Ogre::Degree(rot));
+
 	}
 
 
