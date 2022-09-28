@@ -66,3 +66,10 @@ bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 	return true;
 }
+
+void Noria::frameRendered(const Ogre::FrameEvent& evt)
+{
+	double rot = 3.0f;
+	for (auto aspa : aspasNoria)
+		aspa->getSceneNode()->roll(Ogre::Degree(rot));
+}

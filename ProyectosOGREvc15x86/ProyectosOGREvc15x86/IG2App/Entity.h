@@ -52,6 +52,7 @@ public:
 	~Noria() {};
 protected:
 	bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
 	int numAspas;
 	std::vector<AspaNoria*> aspasNoria;
