@@ -58,4 +58,13 @@ protected:
 	std::vector<AspaNoria*> aspasNoria;
 };
 
+//---------------------------------------------------------------
+class Munieco : public EntityIG {
+public:
+	Munieco(Ogre::SceneNode* mun);
+	~Munieco() {};
+protected:
+	Ogre::SceneNode* head = nullptr;
+	Ogre::SceneNode* body = nullptr;
+};
 

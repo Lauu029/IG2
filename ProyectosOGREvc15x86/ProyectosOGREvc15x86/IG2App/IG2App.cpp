@@ -101,6 +101,9 @@ void IG2App::setupScene(void)
 	Noria* n = new Noria(norianodo, 20);
 
 	addInputListener(n);
+
+	Ogre::SceneNode* muniecoNodo = PlaneNodo->createChildSceneNode("Munieco");
+	Munieco* m = new Munieco(muniecoNodo);
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);

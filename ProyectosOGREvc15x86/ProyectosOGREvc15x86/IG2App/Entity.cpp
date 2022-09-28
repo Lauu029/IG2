@@ -73,3 +73,19 @@ void Noria::frameRendered(const Ogre::FrameEvent& evt)
 	for (auto aspa : aspasNoria)
 		aspa->getSceneNode()->roll(Ogre::Degree(rot));
 }
+
+Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
+{
+	head = mNode->createChildSceneNode("head");
+	Ogre::Entity* h = mSM->createEntity("uv_sphere.mesh");
+	head->attachObject(h);
+	head->setScale(.3, .3, .3);
+	head->translate(0, 70, 0);
+
+	body = mNode->createChildSceneNode("body");
+	Ogre::Entity* b = mSM->createEntity("uv_sphere.mesh");
+	body->attachObject(b);
+	body->setScale(.5, .5, .5);
+
+	mNode->translate(-50, 50, 300);
+}
