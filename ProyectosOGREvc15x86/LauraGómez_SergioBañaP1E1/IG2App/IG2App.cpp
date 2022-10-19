@@ -145,8 +145,7 @@ void IG2App::setupScene(void)
 	//agujaS->roll(Ogre::Degree(125));
 
 	//agujaS->attachObject(agujaSegundos);
-
-	//------------------------------------------------------------------------
+	
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);
