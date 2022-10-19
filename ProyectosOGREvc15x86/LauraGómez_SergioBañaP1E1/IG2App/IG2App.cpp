@@ -15,23 +15,30 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_ESCAPE:
 		getRoot()->queueEndRendering();
 		break;
+	case SDLK_g:
+		Clock->roll(Ogre::Degree(5));
+		break;
+	case SDLK_h:
+		Hours->yaw(Ogre::Degree(5));
+		break;
 	case SDLK_0:
 		sNoria->setVisible(false);
-		sReloj->flipVisibility(true);
+		sReloj->setVisible(true);
+		sAvion->setVisible(false);
 		break;
 	case SDLK_1:
 		sReloj->setVisible(false);
 		sNoria->setVisible(true);
+		sAvion->setVisible(false);
+		break;
+	case SDLK_2:
+		sReloj->setVisible(false);
+		sNoria->setVisible(false);
+		sAvion->setVisible(true);
+		break;
 	default:
 		break;
 	}
-	
-	/*if (evt.keysym.sym == SDLK_g) {
-		Clock->roll(Ogre::Degree(5));
-	}
-	if (evt.keysym.sym == SDLK_h) {
-		Hours->yaw(Ogre::Degree(5));
-	}*/
 	return true;
 }
 
@@ -104,25 +111,35 @@ void IG2App::setupScene(void)
 	mLightNode->setDirection(Ogre::Vector3(0, -1, -1));  //vec3.normalise();
 	mLightNode->setPosition(0, 0, 2000);
 	//------------------------------------------------------------------------
-	sNoria = mSM->getRootSceneNode()->createChildSceneNode("escenaNoria");
-	Ogre::SceneNode* PlaneNodo = sNoria->createChildSceneNode("suelo");
-	Plano* p = new Plano(PlaneNodo);
-	addInputListener(p);
 
-	Ogre::SceneNode* norianodo = PlaneNodo->createChildSceneNode("noria");
-	Noria* n = new Noria(norianodo, 20);
-	addInputListener(n);
-	EntityIG::addListener(n);
+	//noria
+	createNoria();
 
-	Ogre::SceneNode* muniecoNodo = PlaneNodo->createChildSceneNode("Munieco");
-	Munieco* m = new Munieco(muniecoNodo);
-	muniecoNodo->yaw(Degree(200));
-	addInputListener(m);
-	EntityIG::addListener(m);
-	
-	sNoria->setVisible(true);
-	
 	//Reloj
+	createReloj();
+
+	//avion
+	createAvion();
+
+	//------------------------------------------------------------------------
+	mCamMgr = new OgreBites::CameraMan(mCamNode);
+	addInputListener(mCamMgr);
+	mCamMgr->setStyle(OgreBites::CS_ORBIT);
+
+	//------------------------------------------------------------------------
+
+}
+
+void IG2App::createAvion()
+{
+	sAvion = mSM->getRootSceneNode()->createChildSceneNode("avion");
+	Avion* ent_avion = new Avion(sAvion);
+
+	sAvion->setVisible(false);
+}
+
+void IG2App::createReloj()
+{
 	sReloj = mSM->getRootSceneNode()->createChildSceneNode();
 	Clock = sReloj->createChildSceneNode();
 	Hours = Clock->createChildSceneNode();
@@ -162,14 +179,28 @@ void IG2App::setupScene(void)
 	agujaS->roll(Ogre::Degree(125));
 
 	agujaS->attachObject(agujaSegundos);
-	
+
 	sReloj->setVisible(false);
-	//------------------------------------------------------------------------
-	mCamMgr = new OgreBites::CameraMan(mCamNode);
-	addInputListener(mCamMgr);
-	mCamMgr->setStyle(OgreBites::CS_ORBIT);
+}
 
-	//------------------------------------------------------------------------
+void IG2App::createNoria()
+{
+	sNoria = mSM->getRootSceneNode()->createChildSceneNode("escenaNoria");
+	Ogre::SceneNode* PlaneNodo = sNoria->createChildSceneNode("suelo");
+	Plano* p = new Plano(PlaneNodo);
+	addInputListener(p);
 
+	Ogre::SceneNode* norianodo = PlaneNodo->createChildSceneNode("noria");
+	Noria* n = new Noria(norianodo, 20);
+	addInputListener(n);
+	EntityIG::addListener(n);
+
+	Ogre::SceneNode* muniecoNodo = PlaneNodo->createChildSceneNode("Munieco");
+	Munieco* m = new Munieco(muniecoNodo);
+	muniecoNodo->yaw(Degree(200));
+	addInputListener(m);
+	EntityIG::addListener(m);
+
+	sNoria->setVisible(true);
 }
 

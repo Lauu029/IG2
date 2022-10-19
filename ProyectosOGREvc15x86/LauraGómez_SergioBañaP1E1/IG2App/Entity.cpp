@@ -132,16 +132,7 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 
 void Munieco::receiveEvent(EntityIG* entidad)
 {
-	rojo = !rojo;
-	if (rojo) {
-		((Ogre::Entity*)head->getAttachedObjects().at(0))->setMaterialName("munieco/cabeza/rojo");
-		((Ogre::Entity*)body->getAttachedObjects().at(0))->setMaterialName("munieco/cuerpo/rojo");
-	}
-	else {
-		((Ogre::Entity*)head->getAttachedObjects().at(0))->setMaterialName("munieco/cabeza");
-		((Ogre::Entity*)body->getAttachedObjects().at(0))->setMaterialName("munieco/cuerpo");
-	}
-
+	moving = !moving;
 }
 
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -206,4 +197,99 @@ void Plano::changeMovingWater()
 		((Ogre::Entity*)mNode->getAttachedObjects().at(0))->setMaterialName("plano/aguaQuieta");
 	else
 		((Ogre::Entity*)mNode->getAttachedObjects().at(0))->setMaterialName("plano/aguaMueve");
+}
+
+Aspa::Aspa(Ogre::SceneNode* aspa) : EntityIG(aspa)
+{
+	//tablero
+	tablero = aspa->createChildSceneNode();
+	Ogre::Entity* ent_tablero = mSM->createEntity("cube.mesh");
+	ent_tablero->setMaterialName("noria/marron");
+	tablero->attachObject(ent_tablero);
+	tablero->translate(60, 0, 0);
+	tablero->scale(1.5, .2, .025);
+
+
+	//cilindro
+	cilindro = aspa->createChildSceneNode();
+	Ogre::Entity* ent_cilindro = mSM->createEntity("Barrel.mesh");
+	ent_cilindro->setMaterialName("Practica1/rojo");
+	cilindro->attachObject(ent_cilindro);
+	cilindro->scale(1, 2.5, 1);
+	cilindro->translate(125, 0, 3);
+}
+
+AspasNave::AspasNave(Ogre::SceneNode* aspasNave, int num_aspas) : EntityIG(aspasNave)
+{
+
+	float increase = 360.0 / num_aspas;
+	for (size_t i = 0; i < num_aspas; i++)
+	{
+		Ogre::SceneNode* aspa = aspasNave->createChildSceneNode();
+		Aspa* ent_aspa = new Aspa(aspa);
+		aspa->roll(Ogre::Degree(increase * i));
+		ent_aspa->getCilindro()->roll(Ogre::Degree(-increase * i));
+		aspas.push_back(ent_aspa);
+	}
+
+	centro = aspasNave->createChildSceneNode();
+	Ogre::Entity* ent_centro = mSM->createEntity("Barrel.mesh");
+	centro->attachObject(ent_centro);
+	ent_centro->setMaterialName("Avion/aspa/cilindro");
+	centro->pitch(Ogre::Degree(-90.0f));
+	centro->scale(5, 1.5, 5);
+
+
+}
+
+Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
+{
+	//esfera
+	Ogre::Entity* centro = mSM->createEntity("uv_sphere.mesh");
+	centro->setMaterialName("Practica1/rojo");
+	avion->attachObject(centro);
+
+	//morro
+	Ogre::Entity* ent_morro = mSM->createEntity("Barrel.mesh");
+	morro = avion->createChildSceneNode();
+	morro->attachObject(ent_morro);
+	ent_morro->setMaterialName("Practica1/naranja");
+	morro->pitch(Ogre::Degree(-90.0f));
+	morro->scale(8, 1.5, 8);
+	morro->translate(0, 0, 95);
+	
+	//piloto
+	Ogre::Entity* ent_piloto = mSM->createEntity("ninja.mesh");
+	piloto = avion->createChildSceneNode();
+	piloto->attachObject(ent_piloto);
+	ent_piloto->setMaterialName("Practica1/amarillo");
+	piloto->yaw(Ogre::Degree(180));
+	piloto->translate(0, -50, 0);
+
+	//ala1
+	Ogre::Entity* ent_ala1 = mSM->createEntity("cube.mesh");
+	ala1 = avion->createChildSceneNode();
+	ala1->attachObject(ent_ala1);
+	ent_ala1->setMaterialName("Practica1/ala");
+	ala1->scale(2.2, .1, 1.5);
+	ala1->translate(-150, 0, 0);
+
+	helice1 = avion->createChildSceneNode();
+	AspasNave* aspas1 = new AspasNave(helice1,5);
+	helice1->scale(.4, .4, .4);
+	helice1->translate(-150, 0, 75);
+
+	//ala2
+	Ogre::Entity* ent_ala2 = mSM->createEntity("cube.mesh");
+	ala2 = avion->createChildSceneNode();
+	ala2->attachObject(ent_ala2);
+	ent_ala2->setMaterialName("Practica1/ala");
+	ala2->scale(2.2, .1, 1.5);
+	ala2->translate(150, 0, 0);
+
+	helice2 = avion->createChildSceneNode();
+	AspasNave* aspas2 = new AspasNave(helice2, 5);
+	helice2->scale(.4, .4, .4);
+	helice2->translate(150, 0, 75);
+
 }

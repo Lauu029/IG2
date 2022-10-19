@@ -1,7 +1,7 @@
-material munieco/nariz{
+material Practica1/naranja{
 	technique {
 		pass { 
-		diffuse 1 0.4 0 
+		diffuse 1 0.5 0.1 
 		}
 	}
 }
@@ -107,6 +107,38 @@ material  noria/piedra{
 		pass{
 			texture_unit{
 				texture BeachStones.jpg			
+			}
+		}
+	}
+}
+material Practica1/rojo{
+	technique {
+		pass { 
+			diffuse 1 0 0
+		}
+	}
+}
+material  Avion/aspa/cilindro{
+	technique{
+		pass{
+			texture_unit{
+				texture terrain_texture.jpg			
+			}
+		}
+	}
+}
+material Practica1/amarillo{
+	technique {
+		pass { 
+			diffuse 1 1 0
+		}
+	}
+}
+material Practica1/ala{
+	technique {
+		pass { 
+			texture_unit{
+				texture checker.png
 			}
 		}
 	}

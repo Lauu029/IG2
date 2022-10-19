@@ -35,7 +35,7 @@ public:
 	void sendEvent(EntityIG* entidad);
 	virtual void receiveEvent(EntityIG* entidad) {};
 
-;
+	;
 	SceneNode* getSceneNode() { return mNode; }
 
 protected:
@@ -57,7 +57,7 @@ protected:
 	Ogre::SceneNode* Lateral1 = nullptr;
 	Ogre::SceneNode* Lateral2 = nullptr;
 };
-//---------------------------------------------------------------
+
 class Noria : public EntityIG {
 
 public:
@@ -106,4 +106,38 @@ protected:
 	void changeMovingWater();
 	bool moveWater = true;
 
+};
+//------------------------------------------------------------------
+class Aspa : public EntityIG {
+public:
+	Aspa(Ogre::SceneNode* aspa);
+	~Aspa() {};
+	Ogre::SceneNode* getCilindro() { return cilindro; };
+
+protected:
+	Ogre::SceneNode* tablero = nullptr;
+	Ogre::SceneNode* cilindro = nullptr;
+
+};
+
+class AspasNave : public EntityIG {
+public:
+	AspasNave(Ogre::SceneNode* aspasNave, int num_aspas);
+	~AspasNave() {};
+protected:
+	std::vector<Aspa*> aspas;
+	Ogre::SceneNode* centro = nullptr;
+};
+
+class Avion : public EntityIG {
+public:
+	Avion(Ogre::SceneNode* avion);
+	~Avion() {};
+protected:
+	Ogre::SceneNode* ala1 = nullptr;
+	Ogre::SceneNode* ala2 = nullptr;
+	Ogre::SceneNode* helice1 = nullptr;
+	Ogre::SceneNode* helice2 = nullptr;
+	Ogre::SceneNode* morro = nullptr;
+	Ogre::SceneNode* piloto = nullptr;
 };

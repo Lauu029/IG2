@@ -18,6 +18,12 @@ protected:
   virtual void shutdown();
   virtual void setupScene();
 
+  void createAvion();
+
+  void createReloj();
+
+  void createNoria();
+
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
       
   Ogre::SceneManager* mSM = nullptr;
@@ -27,6 +33,7 @@ protected:
   Ogre::SceneNode* mSinbadNode = nullptr;
   Ogre::SceneNode* sReloj = nullptr;
   Ogre::SceneNode* sNoria = nullptr;
+  Ogre::SceneNode* sAvion = nullptr;
   Ogre::SceneNode* Clock = nullptr;
   Ogre::SceneNode* Hours = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
