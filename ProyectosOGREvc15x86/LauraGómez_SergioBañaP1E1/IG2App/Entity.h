@@ -1,13 +1,21 @@
 #pragma once
 
 #include "IG2ApplicationContext.h"
-#include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
-#include <OgreEntity.h>
 #include <OgreTrays.h>
-#include <OgreCameraMan.h>
+#include <OgreSceneManager.h>
+#include <OgreEntity.h>
 #include <OgreMeshManager.h>
-#include <vector>
+#include <OgreAnimation.h>
+#include <OgreKeyFrame.h>
+#include <OgreBillboardSet.h>
+#include <OgreParticleSystem.h>
+#include <OgreMovablePlane.h>
+#include <OgreTextureManager.h>
+#include <OgreHardwarePixelBuffer.h>
+#include <OgreRenderTexture.h>
+#include <OgreSubEntity.h>
+#include <OgreTechnique.h>
 
 using namespace Ogre;
 using namespace std;

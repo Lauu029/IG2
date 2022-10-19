@@ -39,7 +39,4 @@
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Practica1.material" />
-  </ItemGroup>
 </Project>
