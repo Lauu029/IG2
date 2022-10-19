@@ -132,7 +132,16 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 
 void Munieco::receiveEvent(EntityIG* entidad)
 {
-	moving = !moving;
+	rojo = !rojo;
+	if (rojo) {
+		((Ogre::Entity*)head->getAttachedObjects().at(0))->setMaterialName("munieco/cabeza/rojo");
+		((Ogre::Entity*)body->getAttachedObjects().at(0))->setMaterialName("munieco/cuerpo/rojo");
+	}
+	else {
+		((Ogre::Entity*)head->getAttachedObjects().at(0))->setMaterialName("munieco/cabeza");
+		((Ogre::Entity*)body->getAttachedObjects().at(0))->setMaterialName("munieco/cuerpo");
+	}
+
 }
 
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)

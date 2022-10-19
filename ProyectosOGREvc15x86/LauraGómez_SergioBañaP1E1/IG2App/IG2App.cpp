@@ -16,9 +16,12 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		getRoot()->queueEndRendering();
 		break;
 	case SDLK_0:
-		sNoria->flipVisibility(true);
+		sNoria->setVisible(false);
 		sReloj->flipVisibility(true);
 		break;
+	case SDLK_1:
+		sReloj->setVisible(false);
+		sNoria->setVisible(true);
 	default:
 		break;
 	}

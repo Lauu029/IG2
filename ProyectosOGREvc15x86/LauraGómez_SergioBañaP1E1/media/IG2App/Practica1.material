@@ -36,6 +36,30 @@ material munieco/cabeza{
 		}
 	}
 }
+material munieco/cuerpo/rojo{
+	technique {
+		pass { 
+			diffuse 1 0 0
+			texture_unit{
+				texture checker.png
+				colour_op modulate
+				env_map spherical
+			}
+		}
+	}
+}
+material munieco/cabeza/rojo{
+	technique {
+		pass { 
+			diffuse 1 0 0
+			texture_unit{
+				texture spotlight_image.png
+				colour_op modulate
+				env_map spherical
+			}
+		}
+	}
+}
 material plano/aguaMueve{
 	technique{
 		pass{

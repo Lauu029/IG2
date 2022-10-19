@@ -94,6 +94,7 @@ protected:
 	Ogre::SceneNode* bellyButton = nullptr;
 
 	bool moving = false;
+	bool rojo = false;
 };
 //---------------------------------------------------------------
 class Plano : public EntityIG {
