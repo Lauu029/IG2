@@ -36,7 +36,7 @@ material munieco/cabeza{
 		}
 	}
 }
-material plano/agua{
+material plano/aguaMueve{
 	technique{
 		pass{
 			diffuse 0.7 0.7 0.7
@@ -45,6 +45,17 @@ material plano/agua{
 				colour_op add
 				scroll_anim 0.1 0.0
 			
+			}
+		}
+	}
+}
+material plano/aguaQuieta{
+	technique{
+		pass{
+			diffuse 0.7 0.7 0.7
+			texture_unit{
+				texture Water02.jpg
+				colour_op add			
 			}
 		}
 	}

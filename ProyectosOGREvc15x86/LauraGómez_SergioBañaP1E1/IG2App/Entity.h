@@ -102,5 +102,7 @@ public:
 	~Plano() {};
 protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	void changeMovingWater();
+	bool moveWater = true;
 
 };

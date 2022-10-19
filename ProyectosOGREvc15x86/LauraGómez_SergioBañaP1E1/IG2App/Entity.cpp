@@ -136,7 +136,7 @@ void Munieco::receiveEvent(EntityIG* entidad)
 }
 
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
-{	
+{
 	moving = false;
 	switch (evt.keysym.sym)
 	{
@@ -152,7 +152,6 @@ bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_RIGHT:
 		mNode->yaw(Ogre::Degree(3.0f));
 		break;
-
 	default:
 		break;
 	}
@@ -176,7 +175,7 @@ Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 	Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
 	mNode->attachObject(plane);
-	plane->setMaterialName("plano/agua");
+	plane->setMaterialName("plano/aguaMueve");
 }
 
 bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -186,6 +185,16 @@ bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_r) {
 		sendEvent(this);
+		changeMovingWater();
 	}
 	return true;
+}
+
+void Plano::changeMovingWater()
+{
+	moveWater = !moveWater;
+	if (!moveWater)
+		((Ogre::Entity*)mNode->getAttachedObjects().at(0))->setMaterialName("plano/aguaQuieta");
+	else
+		((Ogre::Entity*)mNode->getAttachedObjects().at(0))->setMaterialName("plano/aguaMueve");
 }
