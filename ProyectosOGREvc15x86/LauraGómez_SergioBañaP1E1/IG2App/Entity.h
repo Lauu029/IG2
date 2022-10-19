@@ -85,6 +85,7 @@ public:
 protected:
 
 	virtual void receiveEvent(EntityIG* entidad) override;
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
 	Ogre::SceneNode* head = nullptr;

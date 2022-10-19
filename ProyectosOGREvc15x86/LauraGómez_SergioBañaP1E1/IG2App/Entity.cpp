@@ -75,13 +75,13 @@ void Noria::receiveEvent(EntityIG* entidad)
 
 bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	//if (evt.keysym.sym == SDLK_q) {
-	//	double rot = 3.0f;
-	//	for (auto aspa : aspasNoria) {
-	//		aspa->getSceneNode()->roll(Ogre::Degree(rot));
-	//		aspa->getBase()->roll(Ogre::Degree(-rot));
-	//	}
-	//}
+	if (evt.keysym.sym == SDLK_q) {
+		double rot = 3.0f;
+		for (auto aspa : aspasNoria) {
+			aspa->getSceneNode()->roll(Ogre::Degree(rot));
+			aspa->getBase()->roll(Ogre::Degree(-rot));
+		}
+	}
 
 
 	return true;
@@ -135,7 +135,31 @@ void Munieco::receiveEvent(EntityIG* entidad)
 	moving = !moving;
 }
 
-void Munieco::frameRendered(const Ogre::FrameEvent& evt)
+bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
+{	
+	moving = false;
+	switch (evt.keysym.sym)
+	{
+	case SDLK_UP:
+		mNode->translate(3, 0, 0);
+		break;
+	case SDLK_DOWN:
+		mNode->translate(-3, 0, 0);
+		break;
+	case SDLK_LEFT:
+		mNode->yaw(Ogre::Degree(-3.0f));
+		break;
+	case SDLK_RIGHT:
+		mNode->yaw(Ogre::Degree(3.0f));
+		break;
+
+	default:
+		break;
+	}
+	return true;
+}
+
+void Munieco::frameRendered(const Ogre::FrameEvent& t)
 {
 	if (moving) {
 		mNode->yaw(Ogre::Degree(3.0f));
