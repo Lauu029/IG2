@@ -1,54 +1,73 @@
-material nariz{
+material munieco/nariz{
 	technique {
 		pass { 
 		diffuse 1 0.4 0 
 		}
 	}
 }
-material ombligo{
+material munieco/ombligo{
 	technique {
 		pass { 
 		diffuse 1 0 0 
 		}
 	}
 }
-material cuerpo{
+material munieco/cuerpo{
 	technique {
 		pass { 
-		diffuse 1 0.8 0 
+			diffuse 0.5 0.5 0.5
+			texture_unit{
+				texture checker.png
+				colour_op add
+				env_map spherical
+			}
 		}
 	}
 }
-material agua{
+material munieco/cabeza{
+	technique {
+		pass { 
+			diffuse 0.5 0.5 0.5
+			texture_unit{
+				texture spotlight_image.png
+				colour_op add
+				env_map spherical
+			}
+		}
+	}
+}
+material plano/agua{
 	technique{
 		pass{
+			diffuse 0.7 0.7 0.7
 			texture_unit{
 				texture Water02.jpg
+				colour_op add
 				scroll_anim 0.1 0.0
 			
 			}
 		}
 	}
 }
-material marron{
+material noria/marron{
 	technique{
 		pass{
-			diffuse 0.5 0.25 0
+			diffuse 0.4 0.25 0
 		}
 	}
 }
-material metal{
+material noria/metal{
 	technique{
 		pass{
-		diffuse 0.9 0.9 0.9
+		diffuse 0.7 0.7 0.7
 			texture_unit{
 				texture BumpyMetal.jpg			
-				colour_op modulate
+				colour_op add
 			}
 		}
 	}
 }
-material piedra{
+material  noria/piedra{
 	technique{
 		pass{
 			texture_unit{

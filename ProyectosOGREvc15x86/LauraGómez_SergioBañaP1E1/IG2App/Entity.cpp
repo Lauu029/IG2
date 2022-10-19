@@ -26,9 +26,9 @@ AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 	Ogre::Entity* LadoI = mSM->createEntity("cube.mesh");
 	Ogre::Entity* LadoD = mSM->createEntity("cube.mesh");
 
-	LadoI->setMaterialName("marron");
-	LadoD->setMaterialName("marron");
-	cubo->setMaterialName("metal");
+	LadoI->setMaterialName("noria/marron");
+	LadoD->setMaterialName("noria/marron");
+	cubo->setMaterialName("noria/metal");
 
 	Base->attachObject(cubo);
 	Base->setPosition(300, 0, 0);
@@ -63,7 +63,7 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 	centro->pitch(Ogre::Degree(90));
 	centro->setPosition(0, 0, 0);
 	centro->scale(10, 10, 10);
-	cubo->setMaterialName("piedra");
+	cubo->setMaterialName("noria/piedra");
 
 
 }
@@ -105,27 +105,27 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	head->attachObject(h);
 	head->setScale(.3, .3, .3);
 	head->translate(0, 70, 0);
-	h->setMaterialName("cuerpo");
+	h->setMaterialName("munieco/cabeza");
 
-	nose = head->createChildSceneNode("nose");
+	/*nose = head->createChildSceneNode("nose");
 	Ogre::Entity* n = mSM->createEntity("uv_sphere.mesh");
 	nose->attachObject(n);
 	n->setMaterialName("nariz");
 	nose->setScale(.1, .1, .1);
-	nose->translate(0, 0, 100);
+	nose->translate(0, 0, 100);*/
 
 	body = mNode->createChildSceneNode("body");
 	Ogre::Entity* b = mSM->createEntity("uv_sphere.mesh");
 	body->attachObject(b);
 	body->setScale(.5, .5, .5);
-	b->setMaterialName("cuerpo");
+	b->setMaterialName("munieco/cuerpo");
 
 	bellyButton = body->createChildSceneNode("bellyButton");
 	Ogre::Entity* bB = mSM->createEntity("uv_sphere.mesh");
 	bellyButton->attachObject(bB);
 	bellyButton->setScale(.1, .1, .1);
 	bellyButton->translate(0, 0, 100);
-	bB->setMaterialName("ombligo");
+	bB->setMaterialName("munieco/ombligo");
 
 	mNode->translate(100, 50, 250);
 }
@@ -152,7 +152,7 @@ Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 	Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
 	mNode->attachObject(plane);
-	plane->setMaterialName("agua");
+	plane->setMaterialName("plano/agua");
 }
 
 bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
