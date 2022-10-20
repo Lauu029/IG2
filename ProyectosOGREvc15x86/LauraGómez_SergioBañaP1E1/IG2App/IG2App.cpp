@@ -134,7 +134,7 @@ void IG2App::createAvion()
 {
 	sAvion = mSM->getRootSceneNode()->createChildSceneNode("avion");
 	//Avion* ent_avion = new Avion(sAvion);*/
-	Dron* ent_dron = new Dron(sAvion, 3);
+	Dron* ent_dron = new Dron(sAvion, 3, true);
 	sAvion->setVisible(false);
 }
 

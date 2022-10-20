@@ -328,18 +328,20 @@ BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
 	aspaDron->translate(180, 38, 0);
 }
 
-Dron::Dron(Ogre::SceneNode* dron, int numBrazos) : EntityIG(dron)
+Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 {
 	centro = dron->createChildSceneNode();
 	Ogre::Entity* ent_centro = mSM->createEntity("uv_sphere.mesh");
-	ent_centro->setMaterialName("Practica1/rojo");
+	if (!avispa)
+		ent_centro->setMaterialName("Practica1/rojo");
+	else
+		ent_centro->setMaterialName("munieco/cabeza");
 	centro->attachObject(ent_centro);
 	centro->scale(.6, .6, .6);
-	
+
 	aspaPrincipal = centro->createChildSceneNode();
 	BrazoDron* ent_brazoPrinc = new BrazoDron(aspaPrincipal);
 	aspaPrincipal->scale(1.5, 1.5, 1.5);
-	//aspaPrincipal->translate(100, 0, 0);
 	brazos.push_back(ent_brazoPrinc);
 
 	float increase = 360.0 / numBrazos - 1;
@@ -351,5 +353,7 @@ Dron::Dron(Ogre::SceneNode* dron, int numBrazos) : EntityIG(dron)
 		br->scale(.7, .7, .7);
 		brazos.push_back(ent_brazo);
 	}
-
+	if (avispa)
+		dron->scale(.5, .5, .5);
 }
+

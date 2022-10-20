@@ -153,10 +153,11 @@ protected:
 };
 class Dron : public EntityIG {
 public:
-	Dron(Ogre::SceneNode* dron, int numBrazos);
+	Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa);
 	~Dron() {};
 protected:
 	Ogre::SceneNode* centro = nullptr;
 	Ogre::SceneNode* aspaPrincipal = nullptr;
 	std::vector<BrazoDron*>brazos;
 };
+
