@@ -311,20 +311,21 @@ BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
 	esfera = brazo->createChildSceneNode();
 	esfera->attachObject(extremo);
 	esfera->scale(.4, .4, .4);
-	esfera->translate(80, 0, 0);
+	esfera->translate(180, 0, 0);
 
 	Ogre::Entity* cuerpo = mSM->createEntity("Barrel.mesh");
 	cuerpo->setMaterialName("Practica1/metal/amarillo");
 	cilindro = brazo->createChildSceneNode();
 	cilindro->attachObject(cuerpo);
 	cilindro->setScale(5, 15, 5);
+	cilindro->translate(100, 0, 0);
 	cilindro->roll(Ogre::Degree(90));
 
 	aspaDron = brazo->createChildSceneNode();
 	AspasNave* a = new AspasNave(aspaDron, 3);
 	aspaDron->pitch(Ogre::Degree(-90));
 	aspaDron->setScale(.3, .3, .3);
-	aspaDron->translate(80, 38, 0);
+	aspaDron->translate(180, 38, 0);
 }
 
 Dron::Dron(Ogre::SceneNode* dron, int numBrazos) : EntityIG(dron)
@@ -336,19 +337,19 @@ Dron::Dron(Ogre::SceneNode* dron, int numBrazos) : EntityIG(dron)
 	centro->scale(.6, .6, .6);
 	
 	aspaPrincipal = centro->createChildSceneNode();
-	BrazoDron* ent_brazoPrinc = new BrazoDron(centro);
-	aspaPrincipal->scale(.5, .5, .5);
-	aspaPrincipal->translate(250, 0, 0);
+	BrazoDron* ent_brazoPrinc = new BrazoDron(aspaPrincipal);
+	aspaPrincipal->scale(1.5, 1.5, 1.5);
+	//aspaPrincipal->translate(100, 0, 0);
 	brazos.push_back(ent_brazoPrinc);
 
 	float increase = 360.0 / numBrazos - 1;
-	/*for (size_t i = 1; i < numBrazos; i++)
+	for (size_t i = 1; i < numBrazos; i++)
 	{
 		Ogre::SceneNode* br = dron->createChildSceneNode();
-		BrazoDron* ent_brazo = new BrazoDron(dron);
+		BrazoDron* ent_brazo = new BrazoDron(br);
 		br->yaw(Ogre::Degree(increase * i));
-		br->scale(.5, .5, .5);
+		br->scale(.7, .7, .7);
 		brazos.push_back(ent_brazo);
-	}*/
+	}
 
 }
