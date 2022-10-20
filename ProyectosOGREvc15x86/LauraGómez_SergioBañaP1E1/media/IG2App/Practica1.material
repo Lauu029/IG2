@@ -91,10 +91,21 @@ material noria/marron{
 		}
 	}
 }
-material noria/metal{
+material Practica1/metal{
 	technique{
 		pass{
 		diffuse 0.7 0.7 0.7
+			texture_unit{
+				texture BumpyMetal.jpg			
+				colour_op add
+			}
+		}
+	}
+}
+material Practica1/metal/amarillo{
+	technique{
+		pass{
+		diffuse 1 1 .5
 			texture_unit{
 				texture BumpyMetal.jpg			
 				colour_op add

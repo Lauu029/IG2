@@ -28,7 +28,7 @@ AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 
 	LadoI->setMaterialName("noria/marron");
 	LadoD->setMaterialName("noria/marron");
-	cubo->setMaterialName("noria/metal");
+	cubo->setMaterialName("Practica1/metal");
 
 	Base->attachObject(cubo);
 	Base->setPosition(300, 0, 0);
@@ -267,7 +267,7 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	morro->pitch(Ogre::Degree(-90.0f));
 	morro->scale(8, 1.5, 8);
 	morro->translate(0, 0, 95);
-	
+
 	//piloto
 	Ogre::Entity* ent_piloto = mSM->createEntity("ninja.mesh");
 	piloto = avion->createChildSceneNode();
@@ -285,7 +285,7 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	ala1->translate(-150, 0, 0);
 
 	helice1 = avion->createChildSceneNode();
-	AspasNave* aspas1 = new AspasNave(helice1,5);
+	AspasNave* aspas1 = new AspasNave(helice1, 5);
 	helice1->scale(.4, .4, .4);
 	helice1->translate(-150, 0, 75);
 
@@ -301,5 +301,54 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	AspasNave* aspas2 = new AspasNave(helice2, 5);
 	helice2->scale(.4, .4, .4);
 	helice2->translate(150, 0, 75);
+
+}
+
+BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
+{
+	Ogre::Entity* extremo = mSM->createEntity("uv_sphere.mesh");
+	extremo->setMaterialName("Practica1/naranja");
+	esfera = brazo->createChildSceneNode();
+	esfera->attachObject(extremo);
+	esfera->scale(.4, .4, .4);
+	esfera->translate(80, 0, 0);
+
+	Ogre::Entity* cuerpo = mSM->createEntity("Barrel.mesh");
+	cuerpo->setMaterialName("Practica1/metal/amarillo");
+	cilindro = brazo->createChildSceneNode();
+	cilindro->attachObject(cuerpo);
+	cilindro->setScale(5, 15, 5);
+	cilindro->roll(Ogre::Degree(90));
+
+	aspaDron = brazo->createChildSceneNode();
+	AspasNave* a = new AspasNave(aspaDron, 3);
+	aspaDron->pitch(Ogre::Degree(-90));
+	aspaDron->setScale(.3, .3, .3);
+	aspaDron->translate(80, 38, 0);
+}
+
+Dron::Dron(Ogre::SceneNode* dron, int numBrazos) : EntityIG(dron)
+{
+	centro = dron->createChildSceneNode();
+	Ogre::Entity* ent_centro = mSM->createEntity("uv_sphere.mesh");
+	ent_centro->setMaterialName("Practica1/rojo");
+	centro->attachObject(ent_centro);
+	centro->scale(.6, .6, .6);
+	
+	aspaPrincipal = centro->createChildSceneNode();
+	BrazoDron* ent_brazoPrinc = new BrazoDron(centro);
+	aspaPrincipal->scale(.5, .5, .5);
+	aspaPrincipal->translate(250, 0, 0);
+	brazos.push_back(ent_brazoPrinc);
+
+	float increase = 360.0 / numBrazos - 1;
+	/*for (size_t i = 1; i < numBrazos; i++)
+	{
+		Ogre::SceneNode* br = dron->createChildSceneNode();
+		BrazoDron* ent_brazo = new BrazoDron(dron);
+		br->yaw(Ogre::Degree(increase * i));
+		br->scale(.5, .5, .5);
+		brazos.push_back(ent_brazo);
+	}*/
 
 }

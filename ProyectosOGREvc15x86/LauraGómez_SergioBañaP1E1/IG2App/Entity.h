@@ -141,3 +141,22 @@ protected:
 	Ogre::SceneNode* morro = nullptr;
 	Ogre::SceneNode* piloto = nullptr;
 };
+
+class BrazoDron : public EntityIG {
+public:
+	BrazoDron(Ogre::SceneNode* brazo);
+	~BrazoDron() {};
+protected:
+	Ogre::SceneNode* esfera = nullptr;
+	Ogre::SceneNode* cilindro = nullptr;
+	Ogre::SceneNode* aspaDron = nullptr;
+};
+class Dron : public EntityIG {
+public:
+	Dron(Ogre::SceneNode* dron, int numBrazos);
+	~Dron() {};
+protected:
+	Ogre::SceneNode* centro = nullptr;
+	Ogre::SceneNode* aspaPrincipal = nullptr;
+	std::vector<BrazoDron*>brazos;
+};
