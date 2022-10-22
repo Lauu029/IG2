@@ -24,6 +24,7 @@ protected:
 
   void createNoria();
 
+  void compuebaColisiones();
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
       
   Ogre::SceneManager* mSM = nullptr;
@@ -37,8 +38,8 @@ protected:
   Ogre::SceneNode* Clock = nullptr;
   Ogre::SceneNode* Hours = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
-
- 
+  Ogre::SceneNode* aeroPlane = nullptr;
+  std::vector<SceneNode*> dronesAvispa; 
 };
 
 #endif

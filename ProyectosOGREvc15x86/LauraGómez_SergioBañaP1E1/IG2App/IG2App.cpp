@@ -8,6 +8,7 @@
 
 using namespace Ogre;
 
+
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	switch (evt.keysym.sym)
@@ -18,7 +19,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_g:
 		Clock->roll(Ogre::Degree(5));
 		break;
-	case SDLK_h:
+	case SDLK_y:
 		Hours->yaw(Ogre::Degree(5));
 		break;
 	case SDLK_0:
@@ -38,6 +39,9 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sReloj->setVisible(false);
 		sNoria->setVisible(false);
 		sAvion->setVisible(true);
+		break;
+	case SDLK_h:
+		compuebaColisiones();
 		break;
 	default:
 		break;
@@ -143,7 +147,7 @@ void IG2App::createPlanetAvion()
 	Planet->scale(2.5, 2.5, 2.5);
 	
 	Ogre::SceneNode* avionFicticio = sAvion->createChildSceneNode();
-	Ogre::SceneNode* aeroPlane = avionFicticio->createChildSceneNode();
+	aeroPlane = avionFicticio->createChildSceneNode();
 	Avion* ent_avion = new Avion(aeroPlane);
 	aeroPlane->translate(0.0,255.0, 0.0);
 	aeroPlane->scale(0.2, 0.2, 0.2);
@@ -174,6 +178,7 @@ void IG2App::createPlanetAvion()
 		avispaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
 
 		addInputListener(ent_dron_avispa);
+		dronesAvispa.push_back(avispa);
 	}
 	
 	sAvion->setVisible(true);
@@ -245,3 +250,14 @@ void IG2App::createNoria()
 	sNoria->setVisible(false);
 }
 
+void IG2App::compuebaColisiones()
+{
+	AxisAlignedBox aabPlane = aeroPlane->_getWorldAABB();
+	for (auto av:dronesAvispa)
+	{
+		AxisAlignedBox aabAvispa = av->_getWorldAABB();
+		if (aabAvispa.intersects(aabPlane)) {
+			av->setVisible(false);
+		}
+	}
+}
