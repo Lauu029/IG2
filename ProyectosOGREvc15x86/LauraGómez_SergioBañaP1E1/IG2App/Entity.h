@@ -18,12 +18,6 @@
 #include <OgreTechnique.h>
 #include <OgreTimer.h>
 
-
-#include <OgreEntity.h>
-#include <OgreInput.h>
-#include <SDL_keycode.h>
-#include <OgreMeshManager.h>
-#include <OgreSceneNode.h>
 using namespace Ogre;
 using namespace std;
 
