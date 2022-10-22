@@ -146,8 +146,8 @@ void IG2App::createPlanetAvion()
 	Planet->attachObject(Sphere);
 	Planet->scale(2.5, 2.5, 2.5);
 	
-	Ogre::SceneNode* avionFicticio = sAvion->createChildSceneNode();
-	aeroPlane = avionFicticio->createChildSceneNode();
+	avionFicticio = sAvion->createChildSceneNode();
+	Ogre::SceneNode* aeroPlane = avionFicticio->createChildSceneNode();
 	Avion* ent_avion = new Avion(aeroPlane);
 	aeroPlane->translate(0.0,255.0, 0.0);
 	aeroPlane->scale(0.2, 0.2, 0.2);
@@ -178,7 +178,7 @@ void IG2App::createPlanetAvion()
 		avispaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
 
 		addInputListener(ent_dron_avispa);
-		dronesAvispa.push_back(avispa);
+		dronesAvispa.push_back(avispaFicticio);
 	}
 	
 	sAvion->setVisible(true);
@@ -252,12 +252,14 @@ void IG2App::createNoria()
 
 void IG2App::compuebaColisiones()
 {
-	AxisAlignedBox aabPlane = aeroPlane->_getWorldAABB();
-	for (auto av:dronesAvispa)
+	AxisAlignedBox aabPlane = avionFicticio->_getWorldAABB();
+	for (int i=0;i<dronesAvispa.size();i++)
 	{
-		AxisAlignedBox aabAvispa = av->_getWorldAABB();
+		AxisAlignedBox aabAvispa = dronesAvispa[i]->_getWorldAABB();
 		if (aabAvispa.intersects(aabPlane)) {
-			av->setVisible(false);
+			mSM->destroySceneNode(dronesAvispa[i]);
+			dronesAvispa.erase(dronesAvispa.begin() + i);
+			//av->setVisible(false);
 		}
 	}
 }

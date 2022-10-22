@@ -386,16 +386,18 @@ Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 
 void Dron::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (myTimer->getMilliseconds() < 2000) {
-		mNode->getParent()->roll(Ogre::Degree(-10 * evt.timeSinceLastFrame));
-		rot = rand() % 11;
-		if (rot < 5) rot = -1;
-		else rot = 1;
-		rot = (rand() % 4 + 1) * rot;
+	if (mNode->getParent() != nullptr) {
+		if (myTimer->getMilliseconds() < 2000) {
+			mNode->getParent()->roll(Ogre::Degree(-10 * evt.timeSinceLastFrame));
+			rot = rand() % 11;
+			if (rot < 5) rot = -1;
+			else rot = 1;
+			rot = (rand() % 4 + 1) * rot;
+		}
+		else if (myTimer->getMilliseconds() < 4000) {
+			mNode->getParent()->yaw(Ogre::Degree(rot));
+		}
+		else	myTimer->reset();
 	}
-	else if (myTimer->getMilliseconds() < 4000) {
-		mNode->getParent()->yaw(Ogre::Degree(rot));
-	}
-	else	myTimer->reset();
 }
 
