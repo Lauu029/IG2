@@ -25,6 +25,8 @@ protected:
   void createNoria();
 
   void compuebaColisiones();
+
+
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
       
   Ogre::SceneManager* mSM = nullptr;
@@ -32,15 +34,23 @@ protected:
   Ogre::SceneNode* mLightNode = nullptr;
   Ogre::SceneNode* mCamNode = nullptr;
   Ogre::SceneNode* mSinbadNode = nullptr;
+
+  //scenes
   Ogre::SceneNode* sReloj = nullptr;
   Ogre::SceneNode* sNoria = nullptr;
   Ogre::SceneNode* sAvion = nullptr;
-  Ogre::SceneNode* Clock = nullptr;
-  Ogre::SceneNode* Hours = nullptr;
-  Dron* ent_dron = nullptr;
+
+  //clock
+  Ogre::SceneNode* mClock = nullptr;
+  Ogre::SceneNode* mHours = nullptr;
+
+  //drones
+  int nNumDron = 400;
+  Dron* mEnt_dron = nullptr;
+  std::vector<pair<SceneNode*, Dron*>> mDronesAvispa;
+  Ogre::SceneNode* mAvionFicticio = nullptr;
+
   OgreBites::CameraMan* mCamMgr = nullptr;
-  Ogre::SceneNode* avionFicticio = nullptr;
-  std::vector<SceneNode*> dronesAvispa; 
   OgreBites::Label* l;
 };
 

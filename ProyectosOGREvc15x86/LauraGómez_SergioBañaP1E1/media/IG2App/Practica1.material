@@ -5,14 +5,14 @@ material Practica1/naranja{
 		}
 	}
 }
-material munieco/ombligo{
+material Practica1/munieco/ombligo{
 	technique {
 		pass { 
 		diffuse 1 0 0 
 		}
 	}
 }
-material munieco/cuerpo{
+material Practica1/munieco/cuerpo{
 	technique {
 		pass { 
 			diffuse 0.5 0.5 0.5
@@ -24,7 +24,7 @@ material munieco/cuerpo{
 		}
 	}
 }
-material munieco/cabeza{
+material Practica1/munieco/cabeza{
 	technique {
 		pass { 
 			diffuse 0.5 0.5 0.5
@@ -36,7 +36,7 @@ material munieco/cabeza{
 		}
 	}
 }
-material munieco/cuerpo/rojo{
+material Practica1/munieco/cuerpo/rojo{
 	technique {
 		pass { 
 			diffuse 1 0 0
@@ -48,7 +48,7 @@ material munieco/cuerpo/rojo{
 		}
 	}
 }
-material munieco/cabeza/rojo{
+material Practica1/munieco/cabeza/rojo{
 	technique {
 		pass { 
 			diffuse 1 0 0
@@ -60,7 +60,7 @@ material munieco/cabeza/rojo{
 		}
 	}
 }
-material plano/aguaMueve{
+material Practica1/plano/aguaMueve{
 	technique{
 		pass{
 			diffuse 0.7 0.7 0.7
@@ -73,7 +73,7 @@ material plano/aguaMueve{
 		}
 	}
 }
-material plano/aguaQuieta{
+material Practica1/plano/aguaQuieta{
 	technique{
 		pass{
 			diffuse 0.7 0.7 0.7
@@ -84,7 +84,7 @@ material plano/aguaQuieta{
 		}
 	}
 }
-material noria/marron{
+material Practica1/noria/marron{
 	technique{
 		pass{
 			diffuse 0.4 0.25 0
@@ -113,7 +113,7 @@ material Practica1/metal/amarillo{
 		}
 	}
 }
-material  noria/piedra{
+material  Practica1/Practica1/noria/piedra{
 	technique{
 		pass{
 			texture_unit{
@@ -129,7 +129,7 @@ material Practica1/rojo{
 		}
 	}
 }
-material  Avion/aspa/cilindro{
+material  Practica1/Avion/aspa/cilindro{
 	technique{
 		pass{
 			texture_unit{

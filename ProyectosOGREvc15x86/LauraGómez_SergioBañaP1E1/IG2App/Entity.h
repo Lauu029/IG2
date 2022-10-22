@@ -18,6 +18,12 @@
 #include <OgreTechnique.h>
 #include <OgreTimer.h>
 
+
+#include <OgreEntity.h>
+#include <OgreInput.h>
+#include <SDL_keycode.h>
+#include <OgreMeshManager.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 using namespace std;
 
@@ -36,7 +42,6 @@ public:
 	void sendEvent(EntityIG* entidad);
 	virtual void receiveEvent(EntityIG* entidad) {};
 
-	;
 	SceneNode* getSceneNode() { return mNode; }
 
 protected:
@@ -55,8 +60,6 @@ public:
 	SceneNode* getBase() { return Base; }
 protected:
 	Ogre::SceneNode* Base = nullptr;
-	Ogre::SceneNode* Lateral1 = nullptr;
-	Ogre::SceneNode* Lateral2 = nullptr;
 };
 
 class Noria : public EntityIG {
@@ -64,7 +67,6 @@ class Noria : public EntityIG {
 public:
 	Noria(Ogre::SceneNode* noria, int numAspas);
 	~Noria() {};
-
 
 protected:
 	virtual void receiveEvent(EntityIG* entidad) override;
@@ -89,13 +91,11 @@ protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
-	Ogre::SceneNode* head = nullptr;
-	Ogre::SceneNode* body = nullptr;
-	Ogre::SceneNode* nose = nullptr;
-	Ogre::SceneNode* bellyButton = nullptr;
+	Ogre::Entity* mBody = nullptr;
+	Ogre::Entity* mHead = nullptr;
 
-	bool moving = false;
-	bool rojo = false;
+	bool mMoving = false;
+	bool mRojo = false;
 };
 //---------------------------------------------------------------
 class Plano : public EntityIG {
@@ -105,7 +105,10 @@ public:
 protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	void changeMovingWater();
-	bool moveWater = true;
+
+	Ogre::Entity* mPlane = nullptr;
+
+	bool mMoveWater = true;
 
 };
 //------------------------------------------------------------------
@@ -113,21 +116,17 @@ class Aspa : public EntityIG {
 public:
 	Aspa(Ogre::SceneNode* aspa);
 	~Aspa() {};
-	Ogre::SceneNode* getCilindro() { return cilindro; };
+	Ogre::SceneNode* getCilinder() { return mCilinder; };
 
 protected:
-	Ogre::SceneNode* tablero = nullptr;
-	Ogre::SceneNode* cilindro = nullptr;
-
+	Ogre::SceneNode* mCilinder = nullptr;
 };
 
 class AspasNave : public EntityIG {
 public:
 	AspasNave(Ogre::SceneNode* aspasNave, int num_aspas);
 	~AspasNave() {};
-	std::vector<Aspa*> aspas;
-protected:
-	Ogre::SceneNode* centro = nullptr;
+	std::vector<Aspa*> mAspas;
 };
 
 class Avion : public EntityIG {
@@ -136,23 +135,22 @@ public:
 	~Avion() {};
 protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
-	Ogre::SceneNode* ala1 = nullptr;
-	Ogre::SceneNode* ala2 = nullptr;
-	Ogre::SceneNode* helice1 = nullptr;
-	Ogre::SceneNode* helice2 = nullptr;
-	Ogre::SceneNode* morro = nullptr;
-	Ogre::SceneNode* piloto = nullptr;
-};
 
+	AspasNave* mHelice1 = nullptr;
+	AspasNave* mHelice2 = nullptr;
+
+};
+//----------------------------------------------------------------------------
 class BrazoDron : public EntityIG {
 public:
 	BrazoDron(Ogre::SceneNode* brazo);
 	~BrazoDron() {};
+
+	AspasNave* getHelice() { return mHelice; }
 protected:
-	Ogre::SceneNode* esfera = nullptr;
-	Ogre::SceneNode* cilindro = nullptr;
-	Ogre::SceneNode* aspaDron = nullptr;
+	AspasNave* mHelice = nullptr;
 };
+
 class Dron : public EntityIG {
 public:
 	Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa);
@@ -160,10 +158,12 @@ public:
 	void changeBodyColor();
 protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
-	Ogre::SceneNode* centro = nullptr;
-	Ogre::SceneNode* aspaPrincipal = nullptr;
-	std::vector<BrazoDron*>brazos;
-	Ogre::Timer* myTimer;
+
+	Ogre::Entity* mCenter = nullptr;
+	std::vector<BrazoDron*>mBrazos ;
+	Ogre::Timer* myTimer = nullptr;
 	double rot;
+
+
 };
 
