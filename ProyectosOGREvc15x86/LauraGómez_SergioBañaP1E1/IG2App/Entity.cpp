@@ -384,6 +384,11 @@ Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 		dron->scale(.5, .5, .5);
 }
 
+void Dron::changeBodyColor()
+{
+	((Ogre::Entity*)centro->getAttachedObjects().at(0))->setMaterialName("Practica1/amarillo");
+}
+
 void Dron::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (mNode->getParent() != nullptr) {

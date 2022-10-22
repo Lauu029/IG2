@@ -80,7 +80,7 @@ void IG2App::setup(void)
 
 	mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);
 	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	l = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT, "Avispas", Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(dronesAvispa.size())),200);
+	l = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT, "Avispas", Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(dronesAvispa.size())), 200);
 
 	addInputListener(mTrayMgr);
 
@@ -163,7 +163,7 @@ void IG2App::createPlanetAvion()
 
 	Ogre::SceneNode* nodrizaFicticio = sAvion->createChildSceneNode();
 	Ogre::SceneNode* nodriza = nodrizaFicticio->createChildSceneNode();
-	Dron* ent_dron = new Dron(nodriza, 3, false);
+	ent_dron = new Dron(nodriza, 3, false);
 	nodriza->translate(0.0, 255.0, 0.0);
 	nodriza->scale(0.2, 0.2, 0.2);
 	addInputListener(ent_dron);
@@ -269,4 +269,7 @@ void IG2App::compuebaColisiones()
 		}
 	}
 	l->setCaption(Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(dronesAvispa.size())));
+	if (dronesAvispa.size() == 0) {
+		ent_dron->changeBodyColor();
+	}
 }

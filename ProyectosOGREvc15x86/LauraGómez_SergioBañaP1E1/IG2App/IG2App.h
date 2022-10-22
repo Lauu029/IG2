@@ -37,6 +37,7 @@ protected:
   Ogre::SceneNode* sAvion = nullptr;
   Ogre::SceneNode* Clock = nullptr;
   Ogre::SceneNode* Hours = nullptr;
+  Dron* ent_dron = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
   Ogre::SceneNode* avionFicticio = nullptr;
   std::vector<SceneNode*> dronesAvispa; 

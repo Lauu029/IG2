@@ -157,6 +157,7 @@ class Dron : public EntityIG {
 public:
 	Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa);
 	~Dron() {};
+	void changeBodyColor();
 protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 	Ogre::SceneNode* centro = nullptr;
