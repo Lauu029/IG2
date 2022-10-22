@@ -18,7 +18,7 @@ protected:
   virtual void shutdown();
   virtual void setupScene();
 
-  void createAvion();
+  void createPlanetAvion();
 
   void createReloj();
 
@@ -37,6 +37,7 @@ protected:
   Ogre::SceneNode* Clock = nullptr;
   Ogre::SceneNode* Hours = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
+
  
 };
 

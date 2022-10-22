@@ -22,16 +22,19 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		Hours->yaw(Ogre::Degree(5));
 		break;
 	case SDLK_0:
+		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
 		sNoria->setVisible(false);
 		sReloj->setVisible(true);
 		sAvion->setVisible(false);
 		break;
 	case SDLK_1:
+		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
 		sReloj->setVisible(false);
 		sNoria->setVisible(true);
 		sAvion->setVisible(false);
 		break;
 	case SDLK_2:
+		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 		sReloj->setVisible(false);
 		sNoria->setVisible(false);
 		sAvion->setVisible(true);
@@ -94,7 +97,7 @@ void IG2App::setupScene(void)
 
 	// and tell it to render into the main window
 	Viewport* vp = getRenderWindow()->addViewport(cam);
-	vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+	vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 
 	//------------------------------------------------------------------------
 
@@ -119,7 +122,7 @@ void IG2App::setupScene(void)
 	createReloj();
 
 	//avion
-	createAvion();
+	createPlanetAvion();
 
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
@@ -130,12 +133,48 @@ void IG2App::setupScene(void)
 
 }
 
-void IG2App::createAvion()
+void IG2App::createPlanetAvion()
 {
-	sAvion = mSM->getRootSceneNode()->createChildSceneNode("avion");
-	//Avion* ent_avion = new Avion(sAvion);*/
-	Dron* ent_dron = new Dron(sAvion, 3, true);
-	sAvion->setVisible(false);
+	sAvion = mSM->getRootSceneNode()->createChildSceneNode();
+	Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
+	Ogre::SceneNode* Planet = sAvion->createChildSceneNode();
+	Sphere->setMaterialName("Practica1/azul");
+	Planet->attachObject(Sphere);
+	Planet->scale(2.5, 2.5, 2.5);
+	
+	Ogre::SceneNode* avionFicticio = sAvion->createChildSceneNode();
+	Ogre::SceneNode* aeroPlane = avionFicticio->createChildSceneNode();
+	Avion* ent_avion = new Avion(aeroPlane);
+	aeroPlane->translate(0.0,255.0, 0.0);
+	aeroPlane->scale(0.2, 0.2, 0.2);
+
+
+	//avionFicticio->pitch(Ogre::Degree( 40));
+	//avionFicticio->yaw(Ogre::Degree( 40));
+
+	Ogre::SceneNode* nodrizaFicticio= sAvion->createChildSceneNode();
+	Ogre::SceneNode* nodriza = nodrizaFicticio->createChildSceneNode();
+	Dron* ent_dron = new Dron(nodriza, 3, false);
+	nodriza->translate(0.0,255.0, 0.0);
+	nodriza->scale(0.2, 0.2, 0.2);
+
+	nodrizaFicticio->yaw(Ogre::Degree(rand()%310+20));
+	nodrizaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
+
+	for (int i = 0; i < 400; i++)
+	{
+
+		Ogre::SceneNode* avispaFicticio = sAvion->createChildSceneNode();
+		Ogre::SceneNode* avispa = avispaFicticio->createChildSceneNode();
+		Dron* ent_dron_avispa = new Dron(avispa, 3, true);
+		avispa->translate(0.0, 245.0, 0.0);
+		avispa->scale(0.1, 0.1, 0.1);
+
+		avispaFicticio->yaw(Ogre::Degree(rand() % 310+20));
+		avispaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
+	}
+	
+	sAvion->setVisible(true);
 }
 
 void IG2App::createReloj()
@@ -201,6 +240,6 @@ void IG2App::createNoria()
 	addInputListener(m);
 	EntityIG::addListener(m);
 
-	sNoria->setVisible(true);
+	sNoria->setVisible(false);
 }
 

@@ -154,3 +154,10 @@ material Practica1/ala{
 		}
 	}
 }
+material Practica1/azul{
+	technique {
+		pass { 
+			diffuse 0.01 0.97 0.97
+		}
+	}
+}
