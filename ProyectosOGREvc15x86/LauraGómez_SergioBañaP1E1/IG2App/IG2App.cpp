@@ -147,7 +147,7 @@ void IG2App::createPlanetAvion()
 	Avion* ent_avion = new Avion(aeroPlane);
 	aeroPlane->translate(0.0,255.0, 0.0);
 	aeroPlane->scale(0.2, 0.2, 0.2);
-
+	addInputListener(ent_avion);
 
 	//avionFicticio->pitch(Ogre::Degree( 40));
 	//avionFicticio->yaw(Ogre::Degree( 40));

@@ -252,6 +252,8 @@ AspasNave::AspasNave(Ogre::SceneNode* aspasNave, int num_aspas) : EntityIG(aspas
 
 }
 
+
+
 Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 {
 	//esfera
@@ -302,6 +304,30 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	helice2->scale(.4, .4, .4);
 	helice2->translate(150, 0, 75);
 
+}
+
+bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+	if (evt.keysym.sym == SDLK_h) {
+		mNode->getParent()->pitch(Ogre::Degree(3));
+		helice1->roll(Ogre::Degree(15));
+
+		//for (Ogre::SceneNode* aspa: (Ogre::SceneNode*) helice1->getChildren())
+		//{
+		//	aspa.getatta
+		//}
+		//Ogre::SceneNode* asp = (SceneNode*)helice1->getChildren().at(0);
+		//AspasNave* a = (AspasNave*)asp->getAttachedObjects().at(0);
+		//for (size_t i = 0; i < a->aspas.size(); i++)
+		//{
+		//	a->aspas[i]->getCilindro()->roll(Ogre::Degree(-15));
+		//}
+		helice2->roll(Ogre::Degree(15));
+	}
+	else if (evt.keysym.sym == SDLK_j) {
+		mNode->getParent()->yaw(Ogre::Degree(3));
+	}
+	return true;
 }
 
 BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)

@@ -124,8 +124,8 @@ class AspasNave : public EntityIG {
 public:
 	AspasNave(Ogre::SceneNode* aspasNave, int num_aspas);
 	~AspasNave() {};
-protected:
 	std::vector<Aspa*> aspas;
+protected:
 	Ogre::SceneNode* centro = nullptr;
 };
 
@@ -133,6 +133,7 @@ class Avion : public EntityIG {
 public:
 	Avion(Ogre::SceneNode* avion);
 	~Avion() {};
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 protected:
 	Ogre::SceneNode* ala1 = nullptr;
 	Ogre::SceneNode* ala2 = nullptr;
