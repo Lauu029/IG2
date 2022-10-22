@@ -40,6 +40,7 @@ protected:
   OgreBites::CameraMan* mCamMgr = nullptr;
   Ogre::SceneNode* avionFicticio = nullptr;
   std::vector<SceneNode*> dronesAvispa; 
+  OgreBites::Label* l;
 };
 
 #endif

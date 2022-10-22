@@ -24,6 +24,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 	case SDLK_0:
 		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+		l->hide();
 		sNoria->setVisible(false);
 		sReloj->setVisible(true);
 		sAvion->setVisible(false);
@@ -33,12 +34,14 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sReloj->setVisible(false);
 		sNoria->setVisible(true);
 		sAvion->setVisible(false);
+		l->hide();
 		break;
 	case SDLK_2:
 		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 		sReloj->setVisible(false);
 		sNoria->setVisible(false);
 		sAvion->setVisible(true);
+		l->show();
 		break;
 	case SDLK_h:
 		compuebaColisiones();
@@ -77,6 +80,8 @@ void IG2App::setup(void)
 
 	mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);
 	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	l = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT, "Avispas", Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(dronesAvispa.size())),200);
+
 	addInputListener(mTrayMgr);
 
 	addInputListener(this);
@@ -145,24 +150,24 @@ void IG2App::createPlanetAvion()
 	Sphere->setMaterialName("Practica1/azul");
 	Planet->attachObject(Sphere);
 	Planet->scale(2.5, 2.5, 2.5);
-	
+
 	avionFicticio = sAvion->createChildSceneNode();
 	Ogre::SceneNode* aeroPlane = avionFicticio->createChildSceneNode();
 	Avion* ent_avion = new Avion(aeroPlane);
-	aeroPlane->translate(0.0,255.0, 0.0);
+	aeroPlane->translate(0.0, 255.0, 0.0);
 	aeroPlane->scale(0.2, 0.2, 0.2);
 	addInputListener(ent_avion);
 
 	//avionFicticio->pitch(Ogre::Degree( 40));
 	//avionFicticio->yaw(Ogre::Degree( 40));
 
-	Ogre::SceneNode* nodrizaFicticio= sAvion->createChildSceneNode();
+	Ogre::SceneNode* nodrizaFicticio = sAvion->createChildSceneNode();
 	Ogre::SceneNode* nodriza = nodrizaFicticio->createChildSceneNode();
 	Dron* ent_dron = new Dron(nodriza, 3, false);
-	nodriza->translate(0.0,255.0, 0.0);
+	nodriza->translate(0.0, 255.0, 0.0);
 	nodriza->scale(0.2, 0.2, 0.2);
 	addInputListener(ent_dron);
-	nodrizaFicticio->yaw(Ogre::Degree(rand()%310+20));
+	nodrizaFicticio->yaw(Ogre::Degree(rand() % 310 + 20));
 	nodrizaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
 
 	for (int i = 0; i < 400; i++)
@@ -174,13 +179,14 @@ void IG2App::createPlanetAvion()
 		avispa->translate(0.0, 245.0, 0.0);
 		avispa->scale(0.1, 0.1, 0.1);
 
-		avispaFicticio->yaw(Ogre::Degree(rand() % 310+20));
+		avispaFicticio->yaw(Ogre::Degree(rand() % 310 + 20));
 		avispaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
 
 		addInputListener(ent_dron_avispa);
 		dronesAvispa.push_back(avispaFicticio);
 	}
-	
+
+	l->setCaption(Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(dronesAvispa.size())));
 	sAvion->setVisible(true);
 }
 
@@ -253,7 +259,7 @@ void IG2App::createNoria()
 void IG2App::compuebaColisiones()
 {
 	AxisAlignedBox aabPlane = avionFicticio->_getWorldAABB();
-	for (int i=0;i<dronesAvispa.size();i++)
+	for (int i = 0; i < dronesAvispa.size(); i++)
 	{
 		AxisAlignedBox aabAvispa = dronesAvispa[i]->_getWorldAABB();
 		if (aabAvispa.intersects(aabPlane)) {
@@ -262,4 +268,5 @@ void IG2App::compuebaColisiones()
 			//av->setVisible(false);
 		}
 	}
+	l->setCaption(Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(dronesAvispa.size())));
 }
