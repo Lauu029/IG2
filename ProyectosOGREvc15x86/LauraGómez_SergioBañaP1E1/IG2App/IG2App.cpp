@@ -157,7 +157,7 @@ void IG2App::createPlanetAvion()
 	Dron* ent_dron = new Dron(nodriza, 3, false);
 	nodriza->translate(0.0,255.0, 0.0);
 	nodriza->scale(0.2, 0.2, 0.2);
-
+	addInputListener(ent_dron);
 	nodrizaFicticio->yaw(Ogre::Degree(rand()%310+20));
 	nodrizaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
 
@@ -172,6 +172,8 @@ void IG2App::createPlanetAvion()
 
 		avispaFicticio->yaw(Ogre::Degree(rand() % 310+20));
 		avispaFicticio->pitch(Ogre::Degree(rand() % 310 + 20));
+
+		addInputListener(ent_dron_avispa);
 	}
 	
 	sAvion->setVisible(true);

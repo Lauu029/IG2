@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include <iostream>
 
 
 std::vector<EntityIG*>EntityIG::appListeners = std::vector<EntityIG*>(0, nullptr);
@@ -311,7 +312,6 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (evt.keysym.sym == SDLK_h) {
 		mNode->getParent()->pitch(Ogre::Degree(3));
 		helice1->roll(Ogre::Degree(15));
-
 		//for (Ogre::SceneNode* aspa: (Ogre::SceneNode*) helice1->getChildren())
 		//{
 		//	aspa.getatta
@@ -356,6 +356,7 @@ BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
 
 Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 {
+	myTimer = new Timer();
 	centro = dron->createChildSceneNode();
 	Ogre::Entity* ent_centro = mSM->createEntity("uv_sphere.mesh");
 	if (!avispa)
@@ -381,5 +382,20 @@ Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 	}
 	if (avispa)
 		dron->scale(.5, .5, .5);
+}
+
+void Dron::frameRendered(const Ogre::FrameEvent& evt)
+{
+	if (myTimer->getMilliseconds() < 2000) {
+		mNode->getParent()->roll(Ogre::Degree(-10 * evt.timeSinceLastFrame));
+		rot = rand() % 11;
+		if (rot < 5) rot = -1;
+		else rot = 1;
+		rot = (rand() % 4 + 1) * rot;
+	}
+	else if (myTimer->getMilliseconds() < 4000) {
+		mNode->getParent()->yaw(Ogre::Degree(rot));
+	}
+	else	myTimer->reset();
 }
 

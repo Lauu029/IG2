@@ -16,6 +16,7 @@
 #include <OgreRenderTexture.h>
 #include <OgreSubEntity.h>
 #include <OgreTechnique.h>
+#include <OgreTimer.h>
 
 using namespace Ogre;
 using namespace std;
@@ -133,8 +134,8 @@ class Avion : public EntityIG {
 public:
 	Avion(Ogre::SceneNode* avion);
 	~Avion() {};
-	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 protected:
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	Ogre::SceneNode* ala1 = nullptr;
 	Ogre::SceneNode* ala2 = nullptr;
 	Ogre::SceneNode* helice1 = nullptr;
@@ -157,8 +158,11 @@ public:
 	Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa);
 	~Dron() {};
 protected:
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 	Ogre::SceneNode* centro = nullptr;
 	Ogre::SceneNode* aspaPrincipal = nullptr;
 	std::vector<BrazoDron*>brazos;
+	Ogre::Timer* myTimer;
+	double rot;
 };
 
