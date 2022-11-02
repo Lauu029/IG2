@@ -27,6 +27,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sNoria->setVisible(false);
 		sReloj->setVisible(true);
 		sAvion->setVisible(false);
+		sSinbad->setVisible(false);
 		l->hide();
 		break;
 	case SDLK_1:
@@ -34,6 +35,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sReloj->setVisible(false);
 		sNoria->setVisible(true);
 		sAvion->setVisible(false);
+		sSinbad->setVisible(false);
 		l->hide();
 		break;
 	case SDLK_2:
@@ -41,7 +43,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sReloj->setVisible(false);
 		sNoria->setVisible(false);
 		sAvion->setVisible(true);
+		sSinbad->setVisible(false);
 		l->show();
+		break;
+	case SDLK_3:
+		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+		sReloj->setVisible(false);
+		sNoria->setVisible(false);
+		sAvion->setVisible(false);
+		sSinbad->setVisible(true);
+		l->hide();
 		break;
 	case SDLK_h:
 		compuebaColisiones();
@@ -134,7 +145,10 @@ void IG2App::setupScene(void)
 
 	//planeta
 	createPlanetAvion();
+	//Ogre node
+	CreateSinbadScene();
 
+	
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);
@@ -144,6 +158,25 @@ void IG2App::setupScene(void)
 
 }
 
+void IG2App::CreateSinbadScene()
+{
+	sSinbad = mSM->getRootSceneNode()->createChildSceneNode();
+	Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
+	Ogre::SceneNode* Planet = sSinbad->createChildSceneNode();
+	Sphere->setMaterialName("Practica1/azul");
+	Planet->attachObject(Sphere);
+	Planet->scale(1.5, 1.5, 1.5);
+
+	Ogre::SceneNode* _sinbad= sSinbad->createChildSceneNode();
+	Sinbad* _simpBad = new Sinbad(_sinbad);
+	_sinbad->translate(0.0, 170.0, 0.0);
+	_sinbad->scale(6,6,6);
+	addInputListener(_simpBad);
+	
+
+	sSinbad->setVisible(false);
+	
+}
 void IG2App::createReloj()
 {
 	sReloj = mSM->getRootSceneNode()->createChildSceneNode();
@@ -188,7 +221,6 @@ void IG2App::createReloj()
 
 	sReloj->setVisible(true);
 }
-
 void IG2App::createNoria()
 {
 	sNoria = mSM->getRootSceneNode()->createChildSceneNode("escenaNoria");
@@ -209,7 +241,6 @@ void IG2App::createNoria()
 
 	sNoria->setVisible(false);
 }
-
 void IG2App::createPlanetAvion()
 {
 	sAvion = mSM->getRootSceneNode()->createChildSceneNode();
@@ -225,7 +256,6 @@ void IG2App::createPlanetAvion()
 	aeroPlane->translate(0.0, 255.0, 0.0);
 	aeroPlane->scale(0.2, 0.2, 0.2);
 	addInputListener(ent_avion);
-
 
 	Ogre::SceneNode* nodrizaFicticio = sAvion->createChildSceneNode();
 	Ogre::SceneNode* nodriza = nodrizaFicticio->createChildSceneNode();
@@ -254,7 +284,6 @@ void IG2App::createPlanetAvion()
 	
 	sAvion->setVisible(false);
 }
-
 void IG2App::compuebaColisiones()
 {
 	AxisAlignedBox aabPlane = mAvionFicticio->_getWorldAABB();

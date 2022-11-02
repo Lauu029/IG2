@@ -9,13 +9,11 @@ EntityIG::EntityIG(SceneNode* node)
 	mNode = node;
 	mSM = mNode->getCreator();
 }
-
 void EntityIG::sendEvent(EntityIG* entidad)
 {
 	for (EntityIG* e : appListeners)
 		e->receiveEvent(this);
 }
-
 //------------------------------------------------------------------
 AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 {
@@ -43,7 +41,7 @@ AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
 	Lateral2->translate(160, 0, 20);
 	Lateral2->scale(3, .3, .03);
 }
-
+//------------------------------------------------------------------
 Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 {
 	this->numAspas = numAspas;
@@ -68,12 +66,10 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 
 
 }
-
 void Noria::receiveEvent(EntityIG* entidad)
 {
 	moving = !moving;
 }
-
 bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_q) {
@@ -87,7 +83,6 @@ bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 	return true;
 }
-
 void Noria::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (moving) {
@@ -98,9 +93,7 @@ void Noria::frameRendered(const Ogre::FrameEvent& evt)
 		}
 	}
 }
-
 //---------------------------------------------------------------
-
 Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 {
 	Ogre::SceneNode* head = mNode->createChildSceneNode("head");
@@ -132,7 +125,6 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 
 	mNode->translate(100, 50, 250);
 }
-
 void Munieco::receiveEvent(EntityIG* entidad)
 {
 
@@ -149,7 +141,6 @@ void Munieco::receiveEvent(EntityIG* entidad)
 
 	mMoving = !mMoving;
 }
-
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	mMoving = false;
@@ -173,7 +164,6 @@ bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	return true;
 }
-
 void Munieco::frameRendered(const Ogre::FrameEvent& t)
 {
 	if (mMoving) {
@@ -181,10 +171,7 @@ void Munieco::frameRendered(const Ogre::FrameEvent& t)
 		mHead->getParentNode()->yaw(Ogre::Degree(-6.0f * t.timeSinceLastFrame));
 	}
 }
-
 //---------------------------------------------------------------
-
-
 Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
 {
 	MeshManager::getSingleton().createPlane("mPlane1080x800",
@@ -195,7 +182,6 @@ Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
 	mNode->attachObject(mPlane);
 	mPlane->setMaterialName("Practica1/plano/aguaMueve");
 }
-
 bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_p) {
@@ -207,7 +193,6 @@ bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	return true;
 }
-
 void Plano::changeMovingWater()
 {
 	mMoveWater = !mMoveWater;
@@ -216,9 +201,7 @@ void Plano::changeMovingWater()
 	else
 		mPlane->setMaterialName("Practica1/plano/aguaMueve");
 }
-
 //---------------------------------------------------------------
-
 Aspa::Aspa(Ogre::SceneNode* aspa) : EntityIG(aspa)
 {
 	//tablero
@@ -238,7 +221,7 @@ Aspa::Aspa(Ogre::SceneNode* aspa) : EntityIG(aspa)
 	mCilinder->scale(1, 2.5, 1);
 	mCilinder->translate(125, 0, 3);
 }
-
+//---------------------------------------------------------------
 AspasNave::AspasNave(Ogre::SceneNode* aspasNave, int num_aspas) : EntityIG(aspasNave)
 {
 
@@ -259,7 +242,7 @@ AspasNave::AspasNave(Ogre::SceneNode* aspasNave, int num_aspas) : EntityIG(aspas
 	centro->pitch(Ogre::Degree(-90.0f));
 	centro->scale(5, 1.5, 5);
 }
-
+//---------------------------------------------------------------
 Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 {
 	//esfera
@@ -311,7 +294,6 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	helice2->translate(150, 0, 75);
 
 }
-
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_h) {
@@ -336,7 +318,7 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	return true;
 }
-
+//---------------------------------------------------------------
 BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
 {
 	Ogre::Entity* extremo = mSM->createEntity("uv_sphere.mesh");
@@ -360,7 +342,7 @@ BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
 	aspaDron->setScale(.3, .3, .3);
 	aspaDron->translate(180, 38, 0);
 }
-
+//---------------------------------------------------------------
 Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 {
 	myTimer = new Timer();
@@ -390,12 +372,10 @@ Dron::Dron(Ogre::SceneNode* dron, int numBrazos, bool avispa) : EntityIG(dron)
 	if (avispa)
 		dron->scale(.5, .5, .5);
 }
-
 void Dron::changeBodyColor()
 {
 	mCenter->setMaterialName("Practica1/amarillo");
 }
-
 void Dron::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (myTimer->getMilliseconds() < 2000) {//move
@@ -415,4 +395,22 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 		myTimer->reset();
 
 }
+//---------------------------------------------------------------
+Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
+{
+	Ogre::Entity* s = mSM->createEntity("Sinbad.mesh");
+	_sinbad->attachObject(s);
 
+	animation_piernas = s->getAnimationState("RunBase"); //entity se construye sobre una mesh
+	animation_piernas->setEnabled(true);
+	animation_piernas->setLoop(true);
+
+	animation_brazos = s->getAnimationState("RunTop"); //entity se construye sobre una mesh
+	animation_brazos->setEnabled(true);
+	animation_brazos->setLoop(true);
+}
+void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
+{
+	animation_piernas->addTime(evt.timeSinceLastFrame);
+	animation_brazos->addTime(evt.timeSinceLastFrame);
+}

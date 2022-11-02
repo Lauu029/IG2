@@ -157,7 +157,16 @@ protected:
 	std::vector<BrazoDron*>mBrazos ;
 	Ogre::Timer* myTimer = nullptr;
 	double rot;
-
-
 };
+class Sinbad : public EntityIG {
+public:
+	Sinbad(Ogre::SceneNode* _sinbad);
+	~Sinbad() {};
+protected:
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
+	AnimationState* animation_piernas = nullptr;
+	AnimationState* animation_brazos = nullptr;
+};
+
+
 
