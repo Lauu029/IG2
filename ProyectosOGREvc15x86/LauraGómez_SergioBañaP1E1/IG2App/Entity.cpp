@@ -127,7 +127,7 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	Ogre::Entity* bB = mSM->createEntity("uv_sphere.mesh");
 	bellyButton->attachObject(bB);
 	bellyButton->setScale(.1, .1, .1);
-	bellyButton->translate(0, 0, 100);
+	bellyButton->translate(100, 0, 0);
 	bB->setMaterialName("Practica1/munieco/ombligo");
 
 	mNode->translate(100, 50, 250);
@@ -157,10 +157,10 @@ bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 	switch (evt.keysym.sym)
 	{
 	case SDLK_UP:
-		mNode->translate(3, 0, 0);
+		mNode->translate(3, 0, 0, Ogre::Node::TS_LOCAL);
 		break;
 	case SDLK_DOWN:
-		mNode->translate(-3, 0, 0);
+		mNode->translate(-3, 0, 0, Ogre::Node::TS_LOCAL);
 		break;
 	case SDLK_LEFT:
 		mNode->yaw(Ogre::Degree(-3.0f));
@@ -410,8 +410,8 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 	}
 	else if (myTimer->getMilliseconds() < 4000) //rotate
 		mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
-	
-	else	
+
+	else
 		myTimer->reset();
 
 }
