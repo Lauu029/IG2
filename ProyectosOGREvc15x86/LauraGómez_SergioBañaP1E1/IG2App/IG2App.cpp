@@ -80,6 +80,7 @@ void IG2App::shutdown()
 void IG2App::setup(void)
 {
 	srand(time(NULL));//change random seed
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// do not forget to call the base first
 	IG2ApplicationContext::setup();

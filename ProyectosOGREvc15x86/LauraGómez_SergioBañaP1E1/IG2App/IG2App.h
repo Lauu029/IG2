@@ -7,6 +7,7 @@
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
 #include "Entity.h"
+#include "checkML.h"
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
 public:

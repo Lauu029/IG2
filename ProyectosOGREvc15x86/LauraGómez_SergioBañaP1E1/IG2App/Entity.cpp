@@ -409,6 +409,10 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
 	animation_brazos->setEnabled(true);
 	animation_brazos->setLoop(true);
 
+	animation_dance = _Sinbad->getAnimationState("Dance");
+	animation_dance->setEnabled(false);
+	animation_dance->setLoop(true);
+
 	AnimationStateSet* aux = _Sinbad->getAllAnimationStates();
 	auto it = aux->getAnimationStateIterator().begin();
 	std::cout << "\nEstado animaciones Sinbad:\n";
@@ -424,12 +428,14 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
 }
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
-
-	double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
-	mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
-	mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+	if (!animation_dance->getEnabled()) {
+		double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
+		mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
+		mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+	}
 	animation_piernas->addTime(evt.timeSinceLastFrame);
 	animation_brazos->addTime(evt.timeSinceLastFrame);
+	animation_dance->addTime(evt.timeSinceLastFrame);
 }
 bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
 	switch (evt.keysym.sym) {
@@ -445,6 +451,8 @@ bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
 	case SDLK_m:
 		arma(false);
 		break;
+	case SDLK_c:
+		dance();
 	default:
 		break;
 	}
@@ -485,4 +493,16 @@ void Sinbad::arma() {
 }
 void Sinbad::cambiaEspada() {
 	arma(!swordRight);
+}
+void Sinbad::dance() {
+	if (!animation_dance->getEnabled()) {
+		animation_brazos->setEnabled(false);
+		animation_piernas->setEnabled(false);
+		animation_dance->setEnabled(true);
+	}
+	else {
+		animation_brazos->setEnabled(true);
+		animation_piernas->setEnabled(true);
+		animation_dance->setEnabled(false);
+	}
 }
