@@ -162,10 +162,20 @@ class Sinbad : public EntityIG {
 public:
 	Sinbad(Ogre::SceneNode* _sinbad);
 	~Sinbad() {};
+	void arma(bool setDerecha);
+	void arma();
+	void cambiaEspada();
 protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+
 	AnimationState* animation_piernas = nullptr;
 	AnimationState* animation_brazos = nullptr;
+	Ogre::Entity* sword_left = nullptr;
+	Ogre::Entity* sword_right = nullptr;
+	bool swordRight = false;
+	bool swordLeft = false;
+	Ogre::Entity* _Sinbad = nullptr;
 };
 
 

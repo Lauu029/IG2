@@ -398,18 +398,18 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 //---------------------------------------------------------------
 Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
 {
-	Ogre::Entity* s = mSM->createEntity("Sinbad.mesh");
-	_sinbad->attachObject(s);
+	_Sinbad = mSM->createEntity("Sinbad.mesh");
+	_sinbad->attachObject(_Sinbad);
 
-	animation_piernas = s->getAnimationState("RunBase"); //entity se construye sobre una mesh
+	animation_piernas = _Sinbad->getAnimationState("RunBase"); //entity se construye sobre una mesh
 	animation_piernas->setEnabled(true);
 	animation_piernas->setLoop(true);
 
-	animation_brazos = s->getAnimationState("RunTop"); //entity se construye sobre una mesh
+	animation_brazos = _Sinbad->getAnimationState("RunTop"); //entity se construye sobre una mesh
 	animation_brazos->setEnabled(true);
 	animation_brazos->setLoop(true);
 
-	AnimationStateSet* aux = s->getAllAnimationStates();
+	AnimationStateSet* aux = _Sinbad->getAllAnimationStates();
 	auto it = aux->getAnimationStateIterator().begin();
 	std::cout << "\nEstado animaciones Sinbad:\n";
 	while (it != aux->getAnimationStateIterator().end())
@@ -418,6 +418,9 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
 		std::cout << s << "\n";
 	}
 	std::cout << "\n";
+
+	sword_right = mSM->createEntity("Sword.mesh");
+	sword_left = mSM->createEntity("Sword.mesh");
 }
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
@@ -427,4 +430,59 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 	mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
 	animation_piernas->addTime(evt.timeSinceLastFrame);
 	animation_brazos->addTime(evt.timeSinceLastFrame);
+}
+bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
+	switch (evt.keysym.sym) {
+	case SDLK_b:
+		cambiaEspada();
+		break;
+	case SDLK_v:
+		arma();
+		break;
+	case SDLK_n:
+		arma(true);
+		break;
+	case SDLK_m:
+		arma(false);
+		break;
+	default:
+		break;
+	}
+	return true;
+}
+
+void Sinbad::arma(bool setDerecha) {
+	if (setDerecha) {
+		if (!swordRight) {
+			_Sinbad->attachObjectToBone("Handle.R", sword_right);
+			swordRight = true;
+		}
+		if (swordLeft) {
+			_Sinbad->detachObjectFromBone(sword_left);
+			swordLeft = false;
+		}
+	}
+	else {
+		if (!swordLeft) {
+			_Sinbad->attachObjectToBone("Handle.L", sword_left);
+			swordLeft = true;
+		}
+		if (swordRight) {
+			_Sinbad->detachObjectFromBone(sword_right);
+			swordRight = false;
+		}
+	}
+}
+void Sinbad::arma() {
+	if (!swordRight) {
+		_Sinbad->attachObjectToBone("Handle.R", sword_right);
+		swordRight = true;
+	}
+	if (!swordLeft) {
+		_Sinbad->attachObjectToBone("Handle.L", sword_left);
+		swordLeft = true;
+	}
+}
+void Sinbad::cambiaEspada() {
+	arma(!swordRight);
 }
