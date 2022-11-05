@@ -186,6 +186,9 @@ protected:
 	bool swordLeft = false;
 
 };
+class Bomba : public EntityIG {
+public:
+	Bomba(Ogre::SceneNode* _bomba);
+	~Bomba();
 
-
-
+};

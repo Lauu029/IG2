@@ -506,3 +506,8 @@ void Sinbad::dance() {
 		animation_dance->setEnabled(false);
 	}
 }
+
+Bomba::Bomba(Ogre::SceneNode* _bomba): EntityIG(_bomba)
+{
+	
+}
