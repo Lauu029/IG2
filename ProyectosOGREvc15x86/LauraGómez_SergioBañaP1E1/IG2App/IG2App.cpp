@@ -166,11 +166,12 @@ void IG2App::CreateSinbadScene()
 	Sphere->setMaterialName("Practica1/azul");
 	Planet->attachObject(Sphere);
 	Planet->scale(1.5, 1.5, 1.5);
-
+	
 	Ogre::SceneNode* _sinbad= sSinbad->createChildSceneNode();
-	Sinbad* _simpBad = new Sinbad(_sinbad);
-	_sinbad->translate(0.0, 170.0, 0.0);
-	_sinbad->scale(6,6,6);
+	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
+	Sinbad* _simpBad = new Sinbad(sinbadAnimation);
+	sinbadAnimation->translate(0.0, 170.0, 0.0);
+	sinbadAnimation->scale(6,6,6);
 	addInputListener(_simpBad);
 	
 

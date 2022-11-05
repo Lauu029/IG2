@@ -408,9 +408,23 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
 	animation_brazos = s->getAnimationState("RunTop"); //entity se construye sobre una mesh
 	animation_brazos->setEnabled(true);
 	animation_brazos->setLoop(true);
+
+	AnimationStateSet* aux = s->getAllAnimationStates();
+	auto it = aux->getAnimationStateIterator().begin();
+	std::cout << "\nEstado animaciones Sinbad:\n";
+	while (it != aux->getAnimationStateIterator().end())
+	{
+		auto s = it->first; ++it;
+		std::cout << s << "\n";
+	}
+	std::cout << "\n";
 }
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
+
+	double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
+	mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
+	mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
 	animation_piernas->addTime(evt.timeSinceLastFrame);
 	animation_brazos->addTime(evt.timeSinceLastFrame);
 }
