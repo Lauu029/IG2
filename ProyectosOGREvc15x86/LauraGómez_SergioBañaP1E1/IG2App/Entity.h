@@ -189,6 +189,6 @@ protected:
 class Bomba : public EntityIG {
 public:
 	Bomba(Ogre::SceneNode* _bomba);
-	~Bomba();
+	virtual ~Bomba() {};
 
 };

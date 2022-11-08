@@ -149,6 +149,9 @@ void IG2App::setupScene(void)
 	//Ogre node
 	CreateSinbadScene();
 
+	Ogre::SceneNode* n = mSM->getRootSceneNode()->createChildSceneNode();
+	Bomba* bomb = new Bomba(n);
+
 	
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
@@ -221,7 +224,7 @@ void IG2App::createReloj()
 
 	agujaS->attachObject(agujaSegundos);
 
-	sReloj->setVisible(true);
+	sReloj->setVisible(false);
 }
 void IG2App::createNoria()
 {

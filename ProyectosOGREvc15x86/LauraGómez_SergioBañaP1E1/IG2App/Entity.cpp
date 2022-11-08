@@ -509,5 +509,9 @@ void Sinbad::dance() {
 
 Bomba::Bomba(Ogre::SceneNode* _bomba): EntityIG(_bomba)
 {
+	Ogre::Entity* bomba = mSM->createEntity("Barrel.mesh");
+	_bomba->attachObject(bomba);
+	bomba->setMaterialName("Practica1/bomba");
+	_bomba->scale(10,10,10);
 	
 }

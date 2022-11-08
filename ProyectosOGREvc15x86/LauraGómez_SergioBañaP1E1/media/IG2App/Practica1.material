@@ -161,3 +161,14 @@ material Practica1/azul{
 		}
 	}
 }
+
+material Practica1/bomba{
+	technique {
+		pass { 
+			texture_unit{
+				texture checker.png
+				colour_op add
+			}
+		}
+	}
+}
