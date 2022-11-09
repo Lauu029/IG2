@@ -440,38 +440,43 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad, bool dP) :EntityIG(_sinbad)
 	if (desplazaPlano) {
 		_sinbad->setInitialState();
 		Vector3 initialPose = _sinbad->getPosition();
-		Real duration = 30;
+		Real duration = 10;
 		Animation* anim = mSM->createAnimation("SinbadCorriendo", duration);
 		NodeAnimationTrack* track = anim->createNodeTrack(0);
 		track->setAssociatedNode(mNode);
 
-		Vector3 keyFramePos(0, 0, 0);// 0
 		Vector3 src(0, 0, 1);
-		Real durPaso = duration / 6;
-		TransformKeyFrame* kf = track->createNodeKeyFrame(0);
+		Real durPaso = duration / 5.0;
+		
+		Vector3 keyFramePos(0, 0, 0);// 0
+		TransformKeyFrame* kf = track->createNodeKeyFrame(durPaso * 0);
 		kf->setTranslate(keyFramePos);
+		kf->setRotation(src.getRotationTo(Vector3(0.0, 0.0, 1.0)));
 
-		keyFramePos = Vector3(0, 0, 0);//1 
+		keyFramePos = Vector3(0,0,0);//1 
 		kf = track->createNodeKeyFrame(durPaso);
-		kf->setRotation(src.getRotationTo(Vector3(0, 0, 1)));
+		kf->setTranslate(keyFramePos);
+		kf->setRotation(src.getRotationTo(Vector3(0.5, 0.0,-0.5)));
 
 		keyFramePos = Vector3(-initialPose.x * 2, 0, -initialPose.z * 2);//2
 		kf = track->createNodeKeyFrame(durPaso * 2);
 		kf->setTranslate(keyFramePos);
+		kf->setRotation(src.getRotationTo(Vector3(0.5, 0.0, -0.5)));
 
-		keyFramePos = Vector3(0, 0, 0);//3
+		keyFramePos = Vector3(-initialPose.x * 2, 0, -initialPose.z * 2);//3
 		kf = track->createNodeKeyFrame(durPaso * 3);
 		kf->setTranslate(keyFramePos);
-		kf->setRotation(src.getRotationTo(Vector3(0, 0, -1)));
+		kf->setRotation(src.getRotationTo(Vector3(-0.5, 0.0, 0.5)));
 
-		keyFramePos = Vector3(initialPose.x * 2, 0, initialPose.z * 2);//4
+		keyFramePos = Vector3(0,0,0);//4
 		kf = track->createNodeKeyFrame(durPaso * 4);
 		kf->setTranslate(keyFramePos);
+		kf->setRotation(src.getRotationTo(Vector3(-0.5, 0.0, 0.5)));
 
-		keyFramePos = Vector3(0,0, 0);//5
+		keyFramePos = Vector3(0,0,0);//5
 		kf = track->createNodeKeyFrame(durPaso * 5);
+		kf->setRotation(src.getRotationTo(Vector3(0.0, 0.0, 1)));
 		kf->setTranslate(keyFramePos);
-		kf->setRotation(src.getRotationTo(Vector3(0, 0, 1)));
 
 		animationState = mSM->createAnimationState("SinbadCorriendo");
 		animationState->setLoop(true);
