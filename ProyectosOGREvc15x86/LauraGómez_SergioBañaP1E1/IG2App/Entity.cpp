@@ -172,13 +172,13 @@ void Munieco::frameRendered(const Ogre::FrameEvent& t)
 	}
 }
 //---------------------------------------------------------------
-Plano::Plano(Ogre::SceneNode* plan) : EntityIG(plan)
+Plano::Plano(Ogre::SceneNode* plan, string name) : EntityIG(plan)
 {
-	MeshManager::getSingleton().createPlane("mPlane1080x800",
+	MeshManager::getSingleton().createPlane(name,
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
-	mPlane = mSM->createEntity("mPlane1080x800");
+	mPlane = mSM->createEntity(name);
 	mNode->attachObject(mPlane);
 	mPlane->setMaterialName("Practica1/plano/aguaMueve");
 }
@@ -396,10 +396,12 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 
 }
 //---------------------------------------------------------------
-Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
+Sinbad::Sinbad(Ogre::SceneNode* _sinbad,bool dP) :EntityIG(_sinbad)
 {
+	desplazaPlano = dP;
 	_Sinbad = mSM->createEntity("Sinbad.mesh");
 	_sinbad->attachObject(_Sinbad);
+
 
 	animation_piernas = _Sinbad->getAnimationState("RunBase"); //entity se construye sobre una mesh
 	animation_piernas->setEnabled(true);
@@ -429,9 +431,11 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad) :EntityIG(_sinbad)
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (!animation_dance->getEnabled()) {
-		double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
-		mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
-		mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+		if (!desplazaPlano) {
+			double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
+			mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
+			mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+		}
 	}
 	animation_piernas->addTime(evt.timeSinceLastFrame);
 	animation_brazos->addTime(evt.timeSinceLastFrame);
@@ -510,17 +514,17 @@ void Sinbad::dance() {
 Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	Ogre::Entity* bomba = mSM->createEntity("Barrel.mesh");
-	Ogre::SceneNode* bombaNode = _bomba->createChildSceneNode();
 	bomba->setMaterialName("Practica1/bomba");
-	bombaNode->attachObject(bomba);
+	_bomba->attachObject(bomba);
 	_bomba->setScale(10, 10, 10);
 
+	_bomba->setInitialState();
 	Real duration = 3;
-	Real desplazamiento = 10;
+	Real desplazamiento = 35;
 	Animation* anim = mSM->createAnimation("animVV", duration);
 	NodeAnimationTrack* track = anim->createNodeTrack(0);
-	track->setAssociatedNode(bombaNode);
-	
+	track->setAssociatedNode(mNode);
+
 	Vector3 keyFramePos(0, 0, 0);// 0 origen
 	Vector3 src(0, 0, 1);
 	Real durPaso = duration / 4;
@@ -531,7 +535,7 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 	kf = track->createNodeKeyFrame(durPaso);
 	kf->setTranslate(keyFramePos);
 	kf->setRotation(src.getRotationTo(Vector3(1, 0, 1)));
-	
+
 	keyFramePos = Vector3(0, 0, 0);//2 origen
 	kf = track->createNodeKeyFrame(durPaso * 2);
 	kf->setTranslate(keyFramePos);
@@ -540,7 +544,7 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 	kf = track->createNodeKeyFrame(durPaso * 3);
 	kf->setTranslate(keyFramePos);
 	kf->setRotation(src.getRotationTo(Vector3(-1, 0, 1)));
-	
+
 	keyFramePos = Vector3(0, 0, 0);//4 origen
 	kf = track->createNodeKeyFrame(durPaso * 4);
 	kf->setTranslate(keyFramePos);

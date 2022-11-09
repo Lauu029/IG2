@@ -96,7 +96,7 @@ protected:
 //---------------------------------------------------------------
 class Plano : public EntityIG {
 public:
-	Plano(Ogre::SceneNode* plan);
+	Plano(Ogre::SceneNode* plan, string name);
 	~Plano() {};
 protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
@@ -162,15 +162,15 @@ protected:
 };
 class Sinbad : public EntityIG {
 public:
-	Sinbad(Ogre::SceneNode* _sinbad);
+	Sinbad(Ogre::SceneNode* _sinbad, bool dP);
 	~Sinbad() {};
 
+	void arma();
 protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 
 	void arma(bool setDerecha);
-	void arma();
 	void cambiaEspada();
 	void dance();
 
@@ -185,6 +185,7 @@ protected:
 	bool swordRight = false;
 	bool swordLeft = false;
 
+	bool desplazaPlano = true;
 };
 class Bomba : public EntityIG {
 private:

@@ -19,6 +19,8 @@ protected:
   virtual void shutdown();
   virtual void setupScene();
 
+  void CreateBombaRioSinbadScene();
+
   void CreateSinbadScene();
 
   void createPlanetAvion();
@@ -43,6 +45,7 @@ protected:
   Ogre::SceneNode* sNoria = nullptr;
   Ogre::SceneNode* sAvion = nullptr;
   Ogre::SceneNode* sSinbad = nullptr;
+  Ogre::SceneNode* sBomba = nullptr;
 
   //clock
   Ogre::SceneNode* mClock = nullptr;

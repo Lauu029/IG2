@@ -28,6 +28,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sReloj->setVisible(true);
 		sAvion->setVisible(false);
 		sSinbad->setVisible(false);
+		sBomba->setVisible(false);
 		l->hide();
 		break;
 	case SDLK_1:
@@ -36,6 +37,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sNoria->setVisible(true);
 		sAvion->setVisible(false);
 		sSinbad->setVisible(false);
+		sBomba->setVisible(false);
 		l->hide();
 		break;
 	case SDLK_2:
@@ -44,6 +46,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sNoria->setVisible(false);
 		sAvion->setVisible(true);
 		sSinbad->setVisible(false);
+		sBomba->setVisible(false);
 		l->show();
 		break;
 	case SDLK_3:
@@ -52,6 +55,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		sNoria->setVisible(false);
 		sAvion->setVisible(false);
 		sSinbad->setVisible(true);
+		sBomba->setVisible(false);
+		l->hide();
+		break;
+	case SDLK_4:
+		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+		sReloj->setVisible(false);
+		sNoria->setVisible(false);
+		sAvion->setVisible(false);
+		sSinbad->setVisible(false);
+		sBomba->setVisible(true);
 		l->hide();
 		break;
 	case SDLK_h:
@@ -149,10 +162,8 @@ void IG2App::setupScene(void)
 	//Ogre node
 	CreateSinbadScene();
 
-	Ogre::SceneNode* n = mSM->getRootSceneNode()->createChildSceneNode();
-	Bomba* bomb = new Bomba(n);
-	addInputListener(bomb);
-	
+	CreateBombaRioSinbadScene();
+
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
 	addInputListener(mCamMgr);
@@ -160,6 +171,47 @@ void IG2App::setupScene(void)
 
 	//------------------------------------------------------------------------
 
+}
+
+void IG2App::CreateBombaRioSinbadScene()
+{
+	sBomba = mSM->getRootSceneNode()->createChildSceneNode();
+	Ogre::SceneNode* n = sBomba->createChildSceneNode();
+	Bomba* bomb = new Bomba(n);
+	addInputListener(bomb);
+
+	Ogre::SceneNode* PlaneNodo = sBomba->createChildSceneNode();
+	Plano* p = new Plano(PlaneNodo, "rioBomba");
+	addInputListener(p);
+
+	//plano rojo
+	MeshManager::getSingleton().createPlane("redPlane",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		250, 250, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+	Ogre::Entity* redPlane = mSM->createEntity("redPlane");
+	Ogre::SceneNode* redPlaneNode = sBomba->createChildSceneNode();
+	redPlaneNode-> attachObject(redPlane);
+	redPlane->setMaterialName("Practica1/rojo");
+	redPlaneNode->translate(400, 1, -250);
+
+	//Plano amarillo
+	Ogre::Entity* yellowPlane = mSM->createEntity("redPlane");
+	Ogre::SceneNode* YellowPlaneNode = sBomba->createChildSceneNode();
+	YellowPlaneNode->attachObject(yellowPlane);
+	yellowPlane->setMaterialName("Practica1/amarillo");
+	YellowPlaneNode->translate(-400, 1, 250);
+
+	//Simbad
+	Ogre::SceneNode* _sinbad = sBomba->createChildSceneNode();
+	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
+	Sinbad* _simpBad = new Sinbad(sinbadAnimation,true);
+	sinbadAnimation->translate(-400, 50, 250);
+	sinbadAnimation->scale(10,10, 10);
+	_simpBad->arma();
+	addInputListener(_simpBad);
+
+	sBomba->setVisible(false);
 }
 
 void IG2App::CreateSinbadScene()
@@ -170,17 +222,16 @@ void IG2App::CreateSinbadScene()
 	Sphere->setMaterialName("Practica1/azul");
 	Planet->attachObject(Sphere);
 	Planet->scale(1.5, 1.5, 1.5);
-	
-	Ogre::SceneNode* _sinbad= sSinbad->createChildSceneNode();
+
+	Ogre::SceneNode* _sinbad = sSinbad->createChildSceneNode();
 	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
-	Sinbad* _simpBad = new Sinbad(sinbadAnimation);
+	Sinbad* _simpBad = new Sinbad(sinbadAnimation,false);
 	sinbadAnimation->translate(0.0, 170.0, 0.0);
-	sinbadAnimation->scale(6,6,6);
+	sinbadAnimation->scale(6, 6, 6);
 	addInputListener(_simpBad);
-	
 
 	sSinbad->setVisible(false);
-	
+
 }
 void IG2App::createReloj()
 {
@@ -224,13 +275,13 @@ void IG2App::createReloj()
 
 	agujaS->attachObject(agujaSegundos);
 
-	sReloj->setVisible(false);
+	sReloj->setVisible(true);
 }
 void IG2App::createNoria()
 {
 	sNoria = mSM->getRootSceneNode()->createChildSceneNode("escenaNoria");
 	Ogre::SceneNode* PlaneNodo = sNoria->createChildSceneNode("suelo");
-	Plano* p = new Plano(PlaneNodo);
+	Plano* p = new Plano(PlaneNodo, "RioNoria");
 	addInputListener(p);
 
 	Ogre::SceneNode* norianodo = PlaneNodo->createChildSceneNode("noria");
@@ -286,7 +337,7 @@ void IG2App::createPlanetAvion()
 		mDronesAvispa.push_back({ avispaFicticio,ent_dron_avispa });
 	}
 	l->setCaption(Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(mDronesAvispa.size())));
-	
+
 	sAvion->setVisible(false);
 }
 void IG2App::compuebaColisiones()
@@ -307,7 +358,7 @@ void IG2App::compuebaColisiones()
 
 	l->setCaption(Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(mDronesAvispa.size())));
 
-	if (mDronesAvispa.size() == 0) 
+	if (mDronesAvispa.size() == 0)
 		mEnt_dron->changeBodyColor();
-	
+
 }
