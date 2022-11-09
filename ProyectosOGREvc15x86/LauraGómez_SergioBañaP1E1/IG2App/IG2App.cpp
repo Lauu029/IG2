@@ -151,7 +151,7 @@ void IG2App::setupScene(void)
 
 	Ogre::SceneNode* n = mSM->getRootSceneNode()->createChildSceneNode();
 	Bomba* bomb = new Bomba(n);
-
+	addInputListener(bomb);
 	
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);

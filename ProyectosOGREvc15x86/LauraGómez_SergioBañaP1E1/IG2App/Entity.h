@@ -156,7 +156,7 @@ protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
 	Ogre::Entity* mCenter = nullptr;
-	std::vector<BrazoDron*>mBrazos ;
+	std::vector<BrazoDron*>mBrazos;
 	Ogre::Timer* myTimer = nullptr;
 	double rot;
 };
@@ -164,7 +164,7 @@ class Sinbad : public EntityIG {
 public:
 	Sinbad(Ogre::SceneNode* _sinbad);
 	~Sinbad() {};
-	
+
 protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
@@ -187,8 +187,10 @@ protected:
 
 };
 class Bomba : public EntityIG {
+private:
+	AnimationState* animationState = nullptr;
 public:
 	Bomba(Ogre::SceneNode* _bomba);
 	virtual ~Bomba() {};
-
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 };

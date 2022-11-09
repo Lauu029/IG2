@@ -49,7 +49,7 @@ protected:
   Ogre::SceneNode* mHours = nullptr;
 
   //drones
-  int nNumDron = 400;
+  int nNumDron = 0;
   Dron* mEnt_dron = nullptr;
   std::vector<pair<SceneNode*, Dron*>> mDronesAvispa;
   Ogre::SceneNode* mAvionFicticio = nullptr;

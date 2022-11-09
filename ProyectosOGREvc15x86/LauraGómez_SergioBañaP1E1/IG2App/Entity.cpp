@@ -507,11 +507,51 @@ void Sinbad::dance() {
 	}
 }
 
-Bomba::Bomba(Ogre::SceneNode* _bomba): EntityIG(_bomba)
+Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	Ogre::Entity* bomba = mSM->createEntity("Barrel.mesh");
-	_bomba->attachObject(bomba);
+	Ogre::SceneNode* bombaNode = _bomba->createChildSceneNode();
 	bomba->setMaterialName("Practica1/bomba");
-	_bomba->scale(10,10,10);
+	bombaNode->attachObject(bomba);
+	_bomba->setScale(10, 10, 10);
+
+	Real duration = 3;
+	Real desplazamiento = 10;
+	Animation* anim = mSM->createAnimation("animVV", duration);
+	NodeAnimationTrack* track = anim->createNodeTrack(0);
+	track->setAssociatedNode(bombaNode);
 	
+	Vector3 keyFramePos(0, 0, 0);// 0 origen
+	Vector3 src(0, 0, 1);
+	Real durPaso = duration / 4;
+	TransformKeyFrame* kf = track->createNodeKeyFrame(0);
+	kf->setTranslate(keyFramePos);
+
+	keyFramePos = Vector3(0, desplazamiento, 0);//1 arriba 
+	kf = track->createNodeKeyFrame(durPaso);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(1, 0, 1)));
+	
+	keyFramePos = Vector3(0, 0, 0);//2 origen
+	kf = track->createNodeKeyFrame(durPaso * 2);
+	kf->setTranslate(keyFramePos);
+
+	keyFramePos = Vector3(0, -desplazamiento, 0);//3 abajo
+	kf = track->createNodeKeyFrame(durPaso * 3);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(-1, 0, 1)));
+	
+	keyFramePos = Vector3(0, 0, 0);//4 origen
+	kf = track->createNodeKeyFrame(durPaso * 4);
+	kf->setTranslate(keyFramePos);
+
+	animationState = mSM->createAnimationState("animVV");
+	animationState->setLoop(true);
+	animationState->setEnabled(true);
 }
+
+void Bomba::frameRendered(const Ogre::FrameEvent& evt)
+{
+	animationState->addTime(evt.timeSinceLastFrame);
+}
+
