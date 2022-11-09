@@ -183,6 +183,7 @@ void IG2App::CreateBombaRioSinbadScene()
 	Ogre::SceneNode* PlaneNodo = sBomba->createChildSceneNode();
 	Plano* p = new Plano(PlaneNodo, "rioBomba");
 	addInputListener(p);
+	EntityIG::addListener(p);
 
 	//plano rojo
 	MeshManager::getSingleton().createPlane("redPlane",
@@ -201,13 +202,12 @@ void IG2App::CreateBombaRioSinbadScene()
 	YellowPlaneNode->attachObject(yellowPlane);
 	yellowPlane->setMaterialName("Practica1/amarillo");
 	YellowPlaneNode->translate(-400, 1, 250);
-
+	
 	//Simbad
 	Ogre::SceneNode* _sinbad = sBomba->createChildSceneNode();
 	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
 	Sinbad* _simpBad = new Sinbad(sinbadAnimation,true);
 	sinbadAnimation->translate(-400, 50, 250);
-	sinbadAnimation->scale(10,10, 10);
 	_simpBad->arma();
 	addInputListener(_simpBad);
 
@@ -226,8 +226,8 @@ void IG2App::CreateSinbadScene()
 	Ogre::SceneNode* _sinbad = sSinbad->createChildSceneNode();
 	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
 	Sinbad* _simpBad = new Sinbad(sinbadAnimation,false);
-	sinbadAnimation->translate(0.0, 170.0, 0.0);
-	sinbadAnimation->scale(6, 6, 6);
+	sinbadAnimation->setPosition(0.0, 170.0, 0.0);
+	sinbadAnimation->setScale(6, 6, 6);
 	addInputListener(_simpBad);
 
 	sSinbad->setVisible(false);

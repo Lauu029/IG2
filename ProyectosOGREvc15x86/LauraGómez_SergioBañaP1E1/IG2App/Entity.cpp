@@ -9,10 +9,10 @@ EntityIG::EntityIG(SceneNode* node)
 	mNode = node;
 	mSM = mNode->getCreator();
 }
-void EntityIG::sendEvent(EntityIG* entidad)
+void EntityIG::sendEvent(EntityIG* entidad, MessageKind k)
 {
 	for (EntityIG* e : appListeners)
-		e->receiveEvent(this);
+		e->receiveEvent(this, k);
 }
 //------------------------------------------------------------------
 AspaNoria::AspaNoria(Ogre::SceneNode* aspaNodo) : EntityIG(aspaNodo)
@@ -66,9 +66,10 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 
 
 }
-void Noria::receiveEvent(EntityIG* entidad)
+void Noria::receiveEvent(EntityIG* entidad, MessageKind k)
 {
-	moving = !moving;
+	if (k == MessageKind::NoriaScene)
+		moving = !moving;
 }
 bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -79,10 +80,9 @@ bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 			aspa->getBase()->roll(Ogre::Degree(-rot));
 		}
 	}
-
-
 	return true;
 }
+
 void Noria::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (moving) {
@@ -125,22 +125,23 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 
 	mNode->translate(100, 50, 250);
 }
-void Munieco::receiveEvent(EntityIG* entidad)
+
+void Munieco::receiveEvent(EntityIG* entidad, MessageKind k)
 {
-
-	mRojo = !mRojo;
-	if (mRojo) {
-		mHead->setMaterialName("Practica1/munieco/cabeza/rojo");
-		mBody->setMaterialName("Practica1/munieco/cuerpo/rojo");
+	if (k == MessageKind::NoriaScene) {
+		mRojo = !mRojo;
+		if (mRojo) {
+			mHead->setMaterialName("Practica1/munieco/cabeza/rojo");
+			mBody->setMaterialName("Practica1/munieco/cuerpo/rojo");
+		}
+		else {
+			mHead->setMaterialName("Practica1/munieco/cabeza");
+			mBody->setMaterialName("Practica1/munieco/cuerpo");
+		}
+		mMoving = !mMoving;
 	}
-	else {
-		mHead->setMaterialName("Practica1/munieco/cabeza");
-		mBody->setMaterialName("Practica1/munieco/cuerpo");
-	}
-
-
-	mMoving = !mMoving;
 }
+
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	mMoving = false;
@@ -164,6 +165,7 @@ bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	return true;
 }
+
 void Munieco::frameRendered(const Ogre::FrameEvent& t)
 {
 	if (mMoving) {
@@ -188,10 +190,16 @@ bool Plano::keyPressed(const OgreBites::KeyboardEvent& evt)
 		mNode->yaw(Ogre::Degree(3.0f));
 	}
 	else if (evt.keysym.sym == SDLK_r) {
-		sendEvent(this);
+		sendEvent(this, MessageKind::NoriaScene);
 		changeMovingWater();
 	}
 	return true;
+}
+void Plano::receiveEvent(EntityIG* entidad, MessageKind k)
+{
+	if (k == MessageKind::BombScene) {
+		mPlane->setMaterialName("Practica1/plano/pieadras");
+	}
 }
 void Plano::changeMovingWater()
 {
@@ -396,12 +404,13 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 
 }
 //---------------------------------------------------------------
-Sinbad::Sinbad(Ogre::SceneNode* _sinbad,bool dP) :EntityIG(_sinbad)
+Sinbad::Sinbad(Ogre::SceneNode* _sinbad, bool dP) :EntityIG(_sinbad)
 {
 	desplazaPlano = dP;
 	_Sinbad = mSM->createEntity("Sinbad.mesh");
 	_sinbad->attachObject(_Sinbad);
-
+	_sinbad->setScale(10, 10, 10);
+	_sinbad->setPosition(-400, 50, 250);
 
 	animation_piernas = _Sinbad->getAnimationState("RunBase"); //entity se construye sobre una mesh
 	animation_piernas->setEnabled(true);
@@ -427,6 +436,47 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad,bool dP) :EntityIG(_sinbad)
 
 	sword_right = mSM->createEntity("Sword.mesh");
 	sword_left = mSM->createEntity("Sword.mesh");
+
+	if (desplazaPlano) {
+		_sinbad->setInitialState();
+		Vector3 initialPose = _sinbad->getPosition();
+		Real duration = 30;
+		Animation* anim = mSM->createAnimation("SinbadCorriendo", duration);
+		NodeAnimationTrack* track = anim->createNodeTrack(0);
+		track->setAssociatedNode(mNode);
+
+		Vector3 keyFramePos(0, 0, 0);// 0
+		Vector3 src(0, 0, 1);
+		Real durPaso = duration / 6;
+		TransformKeyFrame* kf = track->createNodeKeyFrame(0);
+		kf->setTranslate(keyFramePos);
+
+		keyFramePos = Vector3(0, 0, 0);//1 
+		kf = track->createNodeKeyFrame(durPaso);
+		kf->setRotation(src.getRotationTo(Vector3(0, 0, 1)));
+
+		keyFramePos = Vector3(-initialPose.x * 2, 0, -initialPose.z * 2);//2
+		kf = track->createNodeKeyFrame(durPaso * 2);
+		kf->setTranslate(keyFramePos);
+
+		keyFramePos = Vector3(0, 0, 0);//3
+		kf = track->createNodeKeyFrame(durPaso * 3);
+		kf->setTranslate(keyFramePos);
+		kf->setRotation(src.getRotationTo(Vector3(0, 0, -1)));
+
+		keyFramePos = Vector3(initialPose.x * 2, 0, initialPose.z * 2);//4
+		kf = track->createNodeKeyFrame(durPaso * 4);
+		kf->setTranslate(keyFramePos);
+
+		keyFramePos = Vector3(0,0, 0);//5
+		kf = track->createNodeKeyFrame(durPaso * 5);
+		kf->setTranslate(keyFramePos);
+		kf->setRotation(src.getRotationTo(Vector3(0, 0, 1)));
+
+		animationState = mSM->createAnimationState("SinbadCorriendo");
+		animationState->setLoop(true);
+		animationState->setEnabled(true);
+	}
 }
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
@@ -435,6 +485,9 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 			double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
 			mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
 			mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+		}
+		else {
+			animationState->addTime(evt.timeSinceLastFrame);
 		}
 	}
 	animation_piernas->addTime(evt.timeSinceLastFrame);
@@ -511,6 +564,7 @@ void Sinbad::dance() {
 	}
 }
 
+
 Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	Ogre::Entity* bomba = mSM->createEntity("Barrel.mesh");
@@ -557,5 +611,22 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 void Bomba::frameRendered(const Ogre::FrameEvent& evt)
 {
 	animationState->addTime(evt.timeSinceLastFrame);
+	if (time != 0) {
+		time -= evt.timeSinceLastFrame;
+		std::cout << time << "\n";
+		if (time <= 0) {
+			time = 0;
+			sendEvent(this, MessageKind::BombScene);
+		}
+	}
+
 }
 
+bool Bomba::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+	if (evt.keysym.sym == SDLK_t) {
+		animationState->setEnabled(false);
+		time = 350;
+	}
+	return false;
+}

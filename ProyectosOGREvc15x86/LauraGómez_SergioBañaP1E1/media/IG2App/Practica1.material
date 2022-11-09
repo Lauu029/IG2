@@ -84,6 +84,15 @@ material Practica1/plano/aguaQuieta{
 		}
 	}
 }
+material Practica1/plano/pieadras{
+	technique{
+		pass{
+			texture_unit{
+				texture BeachStones.jpg		
+			}
+		}
+	}
+}
 material Practica1/noria/marron{
 	technique{
 		pass{

@@ -25,6 +25,7 @@ using namespace std;
 
 class EntityIG : public OgreBites::InputListener {
 public:
+	enum MessageKind { NoriaScene, BombScene };
 	//Constructora y destructora
 	EntityIG(Ogre::SceneNode* node);
 	~EntityIG() {}
@@ -35,8 +36,8 @@ public:
 		appListeners.push_back(entidad);
 	};
 
-	void sendEvent(EntityIG* entidad);
-	virtual void receiveEvent(EntityIG* entidad) {};
+	void sendEvent(EntityIG* entidad, MessageKind k);
+	virtual void receiveEvent(EntityIG* entidad, MessageKind k) {};
 
 	SceneNode* getSceneNode() { return mNode; }
 
@@ -65,7 +66,7 @@ public:
 	~Noria() {};
 
 protected:
-	virtual void receiveEvent(EntityIG* entidad) override;
+	virtual void receiveEvent(EntityIG* entidad, MessageKind k) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
@@ -83,7 +84,7 @@ public:
 
 protected:
 
-	virtual void receiveEvent(EntityIG* entidad) override;
+	virtual void receiveEvent(EntityIG* entidad, MessageKind k) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
@@ -100,6 +101,8 @@ public:
 	~Plano() {};
 protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	virtual void receiveEvent(EntityIG* entidad, MessageKind k) override;
+
 	void changeMovingWater();
 
 	Ogre::Entity* mPlane = nullptr;
@@ -179,6 +182,7 @@ protected:
 	AnimationState* animation_piernas = nullptr;
 	AnimationState* animation_brazos = nullptr;
 	AnimationState* animation_dance = nullptr;
+	AnimationState* animationState = nullptr;
 
 	Ogre::Entity* sword_left = nullptr;
 	Ogre::Entity* sword_right = nullptr;
@@ -188,10 +192,12 @@ protected:
 	bool desplazaPlano = true;
 };
 class Bomba : public EntityIG {
-private:
-	AnimationState* animationState = nullptr;
 public:
 	Bomba(Ogre::SceneNode* _bomba);
 	virtual ~Bomba() {};
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
+private:
+	AnimationState* animationState = nullptr;
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	int time=0;
 };
