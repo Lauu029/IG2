@@ -23,13 +23,13 @@ protected:
 
   void CreateSinbadScene();
 
-  void createPlanetAvion();
+  //void createPlanetAvion();
 
-  void createReloj();
+  //void createReloj();
 
-  void createNoria();
+  //void createNoria();
 
-  void compuebaColisiones();
+  //void compuebaColisiones();
 
 
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
