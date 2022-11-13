@@ -211,6 +211,31 @@ void IG2App::CreateBombaRioSinbadScene()
 	_simpBad->arma();
 	addInputListener(_simpBad);
 
+	//Noria
+	Ogre::SceneNode* _norianodo = sBomba->createChildSceneNode();
+	Noria* _norita = new Noria(_norianodo, 20);
+	_norianodo->setScale(0.5, 0.5, 0.5);
+	_norianodo->translate(400, 0, -350);
+	addInputListener(_norita);
+	EntityIG::addListener(_norita);
+
+	//Muñeco
+	Ogre::SceneNode* _muniecoNodo = sBomba->createChildSceneNode();
+	Munieco* _mun = new Munieco(_muniecoNodo);
+	_muniecoNodo->yaw(Degree(-90));
+	_muniecoNodo->setScale(0.5, 0.5, 0.5);
+	_muniecoNodo->setPosition(500, 30, -150);
+	addInputListener(_mun);
+	EntityIG::addListener (_mun);
+
+	//Avion
+	Ogre::SceneNode * avionBomba = sBomba->createChildSceneNode();
+	Ogre::SceneNode* _aeroPlane = avionBomba->createChildSceneNode();
+	Avion* ent_avion = new Avion(_aeroPlane);
+	_aeroPlane->translate(-150.0, 250.0, 0.0);
+	_aeroPlane->scale(0.3, 0.3, 0.3);
+	addInputListener(ent_avion);
+
 	sBomba->setVisible(false);
 }
 

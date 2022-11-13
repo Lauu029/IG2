@@ -134,10 +134,10 @@ public:
 	~Avion() {};
 protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
 	AspasNave* mHelice1 = nullptr;
 	AspasNave* mHelice2 = nullptr;
-
 };
 //----------------------------------------------------------------------------
 class BrazoDron : public EntityIG {

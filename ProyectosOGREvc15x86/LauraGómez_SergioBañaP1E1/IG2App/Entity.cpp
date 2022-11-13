@@ -49,14 +49,14 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 	float increase = 360.0 / numAspas;
 	for (size_t i = 0; i < numAspas; i++)
 	{
-		Ogre::SceneNode* nodoAspa = mNode->createChildSceneNode("Aspa " + std::to_string(i));
+		Ogre::SceneNode* nodoAspa = mNode->createChildSceneNode();
 		AspaNoria* aspa = new AspaNoria(nodoAspa);
 		nodoAspa->roll(Ogre::Degree(increase * i));
 		aspa->getBase()->roll(Ogre::Degree(-increase * i));
 		aspasNoria.push_back(aspa);
 	}
 
-	Ogre::SceneNode* centro = mNode->createChildSceneNode("centro");
+	Ogre::SceneNode* centro = mNode->createChildSceneNode();
 	Ogre::Entity* cubo = mSM->createEntity("Barrel.mesh");
 	centro->attachObject(cubo);
 	centro->pitch(Ogre::Degree(90));
@@ -96,27 +96,29 @@ void Noria::frameRendered(const Ogre::FrameEvent& evt)
 //---------------------------------------------------------------
 Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 {
-	Ogre::SceneNode* head = mNode->createChildSceneNode("head");
+	Ogre::SceneNode* head = mNode->createChildSceneNode();
 	mHead = mSM->createEntity("uv_sphere.mesh");
 	head->attachObject(mHead);
 	head->setScale(.3, .3, .3);
 	head->translate(0, 70, 0);
-	mHead->setMaterialName("Practica1/munieco/cabeza");
+	//mHead->setMaterialName("Practica1/munieco/cabeza");
+	mHead->setMaterialName("Practica1/naranja");
 
-	Ogre::SceneNode* nose = head->createChildSceneNode("nose");
-	/*Ogre::Entity* n = mSM->createEntity("uv_sphere.mesh");
+	Ogre::SceneNode* nose = head->createChildSceneNode();
+	Ogre::Entity* n = mSM->createEntity("uv_sphere.mesh");
 	nose->attachObject(n);
-	n->setMaterialName("nariz");
+	n->setMaterialName("Practica1/munieco/ombligo");
 	nose->setScale(.1, .1, .1);
-	nose->translate(0, 0, 100);*/
+	nose->translate(100, 0, 0);
 
-	Ogre::SceneNode* body = mNode->createChildSceneNode("body");
+	Ogre::SceneNode* body = mNode->createChildSceneNode();
 	mBody = mSM->createEntity("uv_sphere.mesh");
 	body->attachObject(mBody);
 	body->setScale(.5, .5, .5);
-	mBody->setMaterialName("Practica1/munieco/cuerpo");
+	//mBody->setMaterialName("Practica1/munieco/cuerpo");
+	mBody->setMaterialName("Practica1/naranja");
 
-	Ogre::SceneNode* bellyButton = body->createChildSceneNode("bellyButton");
+	Ogre::SceneNode* bellyButton = body->createChildSceneNode();
 	Ogre::Entity* bB = mSM->createEntity("uv_sphere.mesh");
 	bellyButton->attachObject(bB);
 	bellyButton->setScale(.1, .1, .1);
@@ -304,27 +306,44 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 }
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	if (evt.keysym.sym == SDLK_h) {
-		mNode->getParent()->pitch(Ogre::Degree(3));
+	//if (evt.keysym.sym == SDLK_h) {
+	//	mNode->getParent()->pitch(Ogre::Degree(3));
 
-		//desrotar cilindros de las helices
-		double rot = 15.0f;
-		mHelice1->getSceneNode()->roll(Ogre::Degree(rot));
+	//	//desrotar cilindros de las helices
+	//	double rot = 15.0f;
+	//	mHelice1->getSceneNode()->roll(Ogre::Degree(rot));
 
-		for (auto aspa : mHelice1->mAspas)
-			aspa->getCilinder()->roll(Ogre::Degree(-rot));
+	//	for (auto aspa : mHelice1->mAspas)
+	//		aspa->getCilinder()->roll(Ogre::Degree(-rot));
 
 
-		mHelice2->getSceneNode()->roll(Ogre::Degree(rot));
+	//	mHelice2->getSceneNode()->roll(Ogre::Degree(rot));
 
-		for (auto aspa : mHelice2->mAspas)
-			aspa->getCilinder()->roll(Ogre::Degree(-rot));
+	//	for (auto aspa : mHelice2->mAspas)
+	//		aspa->getCilinder()->roll(Ogre::Degree(-rot));
 
-	}
-	else if (evt.keysym.sym == SDLK_j) {
-		mNode->getParent()->yaw(Ogre::Degree(3));
-	}
+	//}
+	//else if (evt.keysym.sym == SDLK_j) {
+	//	mNode->getParent()->yaw(Ogre::Degree(3));
+	//}
 	return true;
+}
+void Avion::frameRendered(const Ogre::FrameEvent& evt)
+{
+	mNode->getParent()->yaw(Ogre::Degree(20 * evt.timeSinceLastFrame));
+
+	//desrotar cilindros de las helices
+	double rot = 200.0f * evt.timeSinceLastEvent;
+	mHelice1->getSceneNode()->roll(Ogre::Degree(rot));
+
+	for (auto aspa : mHelice1->mAspas)
+		aspa->getCilinder()->roll(Ogre::Degree(-rot));
+
+
+	mHelice2->getSceneNode()->roll(Ogre::Degree(rot));
+
+	for (auto aspa : mHelice2->mAspas)
+		aspa->getCilinder()->roll(Ogre::Degree(-rot));
 }
 //---------------------------------------------------------------
 BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)
@@ -440,7 +459,7 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad, bool dP) :EntityIG(_sinbad)
 	if (desplazaPlano) {
 		_sinbad->setInitialState();
 		Vector3 initialPose = _sinbad->getPosition();
-		Real duration = 10;
+		Real duration = 20;
 		Animation* anim = mSM->createAnimation("SinbadCorriendo", duration);
 		NodeAnimationTrack* track = anim->createNodeTrack(0);
 		track->setAssociatedNode(mNode);
