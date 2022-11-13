@@ -147,7 +147,7 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	keyFramePos = Vector3(0, 0, 0);//1 
 	kf = track->createNodeKeyFrame(durPaso);
 	kf->setTranslate(keyFramePos);
-	kf->setRotation(src.getRotationTo(Vector3(-1.0, 0.0,0.0)));
+	kf->setRotation(src.getRotationTo(Vector3(-1.0, 0.0, 0.0)));
 
 	keyFramePos = Vector3(-200, 0, 0);//2
 	kf = track->createNodeKeyFrame(durPaso * 2);
@@ -297,14 +297,15 @@ AspasNave::AspasNave(Ogre::SceneNode* aspasNave, int num_aspas) : EntityIG(aspas
 //---------------------------------------------------------------
 Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 {
+	nAvion = avion->createChildSceneNode();
 	//esfera
 	Ogre::Entity* centro = mSM->createEntity("uv_sphere.mesh");
 	centro->setMaterialName("Practica1/rojo");
-	avion->attachObject(centro);
+	nAvion->attachObject(centro);
 
 	//morro
 	Ogre::Entity* ent_morro = mSM->createEntity("Barrel.mesh");
-	Ogre::SceneNode* morro = avion->createChildSceneNode();
+	Ogre::SceneNode* morro = nAvion->createChildSceneNode();
 	morro->attachObject(ent_morro);
 	ent_morro->setMaterialName("Practica1/naranja");
 	morro->pitch(Ogre::Degree(-90.0f));
@@ -313,7 +314,7 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 
 	//piloto
 	Ogre::Entity* ent_piloto = mSM->createEntity("ninja.mesh");
-	Ogre::SceneNode* piloto = avion->createChildSceneNode();
+	Ogre::SceneNode* piloto = nAvion->createChildSceneNode();
 	piloto->attachObject(ent_piloto);
 	ent_piloto->setMaterialName("Practica1/amarillo");
 	piloto->yaw(Ogre::Degree(180));
@@ -321,26 +322,26 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 
 	//ala1
 	Ogre::Entity* ent_ala1 = mSM->createEntity("cube.mesh");
-	Ogre::SceneNode* ala1 = avion->createChildSceneNode();
+	Ogre::SceneNode* ala1 = nAvion->createChildSceneNode();
 	ala1->attachObject(ent_ala1);
 	ent_ala1->setMaterialName("Practica1/ala");
 	ala1->scale(2.2, .1, 1.5);
 	ala1->translate(-150, 0, 0);
 
-	Ogre::SceneNode* helice1 = avion->createChildSceneNode();
+	Ogre::SceneNode* helice1 = nAvion->createChildSceneNode();
 	mHelice1 = new AspasNave(helice1, 5);
 	helice1->scale(.4, .4, .4);
 	helice1->translate(-150, 0, 75);
 
 	//ala2
 	Ogre::Entity* ent_ala2 = mSM->createEntity("cube.mesh");
-	Ogre::SceneNode* ala2 = avion->createChildSceneNode();
+	Ogre::SceneNode* ala2 = nAvion->createChildSceneNode();
 	ala2->attachObject(ent_ala2);
 	ent_ala2->setMaterialName("Practica1/ala");
 	ala2->scale(2.2, .1, 1.5);
 	ala2->translate(150, 0, 0);
 
-	Ogre::SceneNode* helice2 = avion->createChildSceneNode();
+	Ogre::SceneNode* helice2 = nAvion->createChildSceneNode();
 	mHelice2 = new AspasNave(helice2, 5);
 	helice2->scale(.4, .4, .4);
 	helice2->translate(150, 0, 75);
@@ -350,14 +351,16 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	bbSet->setDefaultDimensions(50, 50);
 	bbSet->setMaterialName("Practica1/10points");
 
-	mNode->attachObject(bbSet);
+	nAvion->attachObject(bbSet);
 
 	Billboard* bb = bbSet->createBillboard(0, 0, -150);
+
+	pSys = mSM->createParticleSystem("avionBum", "Practica1/Explosion");
 
 	//humo
 	ParticleSystem* pSys = mSM->createParticleSystem("psSmoke", "Practica1/smoke");
 	pSys->setEmitting(true);
-	mNode->attachObject(pSys);
+	nAvion->attachObject(pSys);
 }
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -381,10 +384,20 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	//else if (evt.keysym.sym == SDLK_j) {
 	//	mNode->getParent()->yaw(Ogre::Degree(3));
 	//}
+
+	if (evt.keysym.sym == SDLK_r) {
+		pSys->setEmitting(true);
+		mNode->attachObject(pSys);
+		nAvion->setVisible(false);
+		death = true;
+		//delete this;
+	}
 	return true;
 }
 void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
+	if (!death) {
+
 	mNode->getParent()->yaw(Ogre::Degree(20 * evt.timeSinceLastFrame));
 
 	//desrotar cilindros de las helices
@@ -399,6 +412,7 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 
 	for (auto aspa : mHelice2->mAspas)
 		aspa->getCilinder()->roll(Ogre::Degree(-rot));
+	}
 }
 //---------------------------------------------------------------
 BrazoDron::BrazoDron(Ogre::SceneNode* brazo) : EntityIG(brazo)

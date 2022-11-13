@@ -16,60 +16,60 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_ESCAPE:
 		getRoot()->queueEndRendering();
 		break;
-	/*case SDLK_g:
-		mClock->roll(Ogre::Degree(5));
-		break;
-	case SDLK_y:
-		mHours->yaw(Ogre::Degree(5));
-		break;
-	case SDLK_0:
-		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
-		sNoria->setVisible(false);
-		sReloj->setVisible(true);
-		sAvion->setVisible(false);
-		sSinbad->setVisible(false);
-		sBomba->setVisible(false);
-		l->hide();
-		break;
-	case SDLK_1:
-		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
-		sReloj->setVisible(false);
-		sNoria->setVisible(true);
-		sAvion->setVisible(false);
-		sSinbad->setVisible(false);
-		sBomba->setVisible(false);
-		l->hide();
-		break;
-	case SDLK_2:
-		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
-		sReloj->setVisible(false);
-		sNoria->setVisible(false);
-		sAvion->setVisible(true);
-		sSinbad->setVisible(false);
-		sBomba->setVisible(false);
-		l->show();
-		break;
-	case SDLK_3:
-		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
-		sReloj->setVisible(false);
-		sNoria->setVisible(false);
-		sAvion->setVisible(false);
-		sSinbad->setVisible(true);
-		sBomba->setVisible(false);
-		l->hide();
-		break;
-	case SDLK_4:
-		mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
-		sReloj->setVisible(false);
-		sNoria->setVisible(false);
-		sAvion->setVisible(false);
-		sSinbad->setVisible(false);
-		sBomba->setVisible(true);
-		l->hide();
-		break;
-	case SDLK_h:
-		compuebaColisiones();
-		break;*/
+		/*case SDLK_g:
+			mClock->roll(Ogre::Degree(5));
+			break;
+		case SDLK_y:
+			mHours->yaw(Ogre::Degree(5));
+			break;
+		case SDLK_0:
+			mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+			sNoria->setVisible(false);
+			sReloj->setVisible(true);
+			sAvion->setVisible(false);
+			sSinbad->setVisible(false);
+			sBomba->setVisible(false);
+			l->hide();
+			break;
+		case SDLK_1:
+			mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+			sReloj->setVisible(false);
+			sNoria->setVisible(true);
+			sAvion->setVisible(false);
+			sSinbad->setVisible(false);
+			sBomba->setVisible(false);
+			l->hide();
+			break;
+		case SDLK_2:
+			mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+			sReloj->setVisible(false);
+			sNoria->setVisible(false);
+			sAvion->setVisible(true);
+			sSinbad->setVisible(false);
+			sBomba->setVisible(false);
+			l->show();
+			break;
+		case SDLK_3:
+			mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+			sReloj->setVisible(false);
+			sNoria->setVisible(false);
+			sAvion->setVisible(false);
+			sSinbad->setVisible(true);
+			sBomba->setVisible(false);
+			l->hide();
+			break;
+		case SDLK_4:
+			mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+			sReloj->setVisible(false);
+			sNoria->setVisible(false);
+			sAvion->setVisible(false);
+			sSinbad->setVisible(false);
+			sBomba->setVisible(true);
+			l->hide();
+			break;
+		case SDLK_h:
+			compuebaColisiones();
+			break;*/
 	case SDLK_0:
 		sSinbad->setVisible(true);
 		sBomba->setVisible(false);
@@ -167,8 +167,8 @@ void IG2App::setupScene(void)
 
 	//planeta
 	//createPlanetAvion();
-	
-	
+
+
 	mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.6, 0.7, 0.8));
 	//Ogre node
 	CreateSinbadScene();
@@ -203,7 +203,7 @@ void IG2App::CreateBombaRioSinbadScene()
 		250, 250, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 	Ogre::Entity* redPlane = mSM->createEntity("redPlane");
 	Ogre::SceneNode* redPlaneNode = sBomba->createChildSceneNode();
-	redPlaneNode-> attachObject(redPlane);
+	redPlaneNode->attachObject(redPlane);
 	redPlane->setMaterialName("Practica1/rojo");
 	redPlaneNode->translate(400, 1, -250);
 
@@ -213,11 +213,11 @@ void IG2App::CreateBombaRioSinbadScene()
 	YellowPlaneNode->attachObject(yellowPlane);
 	yellowPlane->setMaterialName("Practica1/amarillo");
 	YellowPlaneNode->translate(-400, 1, 250);
-	
+
 	//Simbad
 	Ogre::SceneNode* _sinbad = sBomba->createChildSceneNode();
 	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
-	Sinbad* _simpBad = new Sinbad(sinbadAnimation,true);
+	Sinbad* _simpBad = new Sinbad(sinbadAnimation, true);
 	sinbadAnimation->translate(-400, 50, 250);
 	_simpBad->arma();
 	addInputListener(_simpBad);
@@ -235,10 +235,10 @@ void IG2App::CreateBombaRioSinbadScene()
 	Munieco* _mun = new Munieco(_muniecoNodo);
 	_muniecoNodo->yaw(Degree(-90));
 	addInputListener(_mun);
-	EntityIG::addListener (_mun);
+	EntityIG::addListener(_mun);
 
 	//Avion
-	Ogre::SceneNode * avionBomba = sBomba->createChildSceneNode();
+	Ogre::SceneNode* avionBomba = sBomba->createChildSceneNode();
 	Ogre::SceneNode* _aeroPlane = avionBomba->createChildSceneNode();
 	Avion* ent_avion = new Avion(_aeroPlane);
 	_aeroPlane->translate(-150.0, 250.0, 0.0);
@@ -247,16 +247,15 @@ void IG2App::CreateBombaRioSinbadScene()
 
 	//niebla
 	Ogre::SceneNode* nieblaNode = sBomba->createChildSceneNode();
-	BillboardSet* bbSet = mSM->createBillboardSet("Niebla",20);
-	bbSet->setDefaultDimensions(500,500);
+	BillboardSet* bbSet = mSM->createBillboardSet("Niebla", 20);
+	bbSet->setDefaultDimensions(500, 500);
 	bbSet->setMaterialName("Practica1/smoke");
 	nieblaNode->attachObject(bbSet);
-	nieblaNode->setPosition(100, 200,-100);
+	nieblaNode->setPosition(100, 200, -100);
 
 	for (int i = 0; i < 10; i++)
 	{
-
-	Billboard* bb = bbSet->createBillboard(rand()%300,rand()%50,rand()%300);
+		Billboard* bb = bbSet->createBillboard(rand() % 300, rand() % 50, rand() % 300);
 	}
 
 
@@ -275,7 +274,7 @@ void IG2App::CreateSinbadScene()
 
 	Ogre::SceneNode* _sinbad = sSinbad->createChildSceneNode();
 	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
-	Sinbad* _simpBad = new Sinbad(sinbadAnimation,false);
+	Sinbad* _simpBad = new Sinbad(sinbadAnimation, false);
 	sinbadAnimation->setPosition(0.0, 170.0, 0.0);
 	sinbadAnimation->setScale(6, 6, 6);
 	addInputListener(_simpBad);

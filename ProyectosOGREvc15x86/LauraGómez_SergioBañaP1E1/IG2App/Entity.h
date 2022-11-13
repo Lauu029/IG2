@@ -141,6 +141,12 @@ protected:
 	AspasNave* mHelice1 = nullptr;
 	AspasNave* mHelice2 = nullptr;
 
+	ParticleSystem* pSys = nullptr;
+	Ogre::SceneNode* nAvion = nullptr;
+
+	int timeExplosion = -1;
+	bool death = false;
+
 };
 //----------------------------------------------------------------------------
 class BrazoDron : public EntityIG {
