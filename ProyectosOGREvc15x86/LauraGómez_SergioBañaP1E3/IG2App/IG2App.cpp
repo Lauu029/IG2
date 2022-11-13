@@ -190,6 +190,7 @@ void IG2App::CreateBombaRioSinbadScene()
 	Ogre::SceneNode* n = sBomba->createChildSceneNode();
 	Bomba* bomb = new Bomba(n);
 	addInputListener(bomb);
+	EntityIG::addListener(bomb);
 
 	Ogre::SceneNode* PlaneNodo = sBomba->createChildSceneNode();
 	Plano* p = new Plano(PlaneNodo, "rioBomba");
@@ -221,6 +222,7 @@ void IG2App::CreateBombaRioSinbadScene()
 	sinbadAnimation->translate(-400, 50, 250);
 	_simpBad->arma();
 	addInputListener(_simpBad);
+	EntityIG::addListener(_simpBad);
 
 	//Noria
 	Ogre::SceneNode* _norianodo = sBomba->createChildSceneNode();
@@ -278,6 +280,7 @@ void IG2App::CreateSinbadScene()
 	sinbadAnimation->setPosition(0.0, 170.0, 0.0);
 	sinbadAnimation->setScale(6, 6, 6);
 	addInputListener(_simpBad);
+
 
 	sSinbad->setVisible(true);
 

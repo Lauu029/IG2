@@ -68,8 +68,8 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 }
 void Noria::receiveEvent(EntityIG* entidad, MessageKind k)
 {
-	if (k == MessageKind::NoriaScene)
-		moving = !moving;
+	/*if (k == MessageKind::NoriaScene)
+		moving = !moving;*/
 }
 bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -171,7 +171,7 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 
 void Munieco::receiveEvent(EntityIG* entidad, MessageKind k)
 {
-	if (k == MessageKind::NoriaScene) {
+	/*if (k == MessageKind::NoriaScene) {
 		mRojo = !mRojo;
 		if (mRojo) {
 			mHead->setMaterialName("Practica1/munieco/cabeza/rojo");
@@ -182,7 +182,7 @@ void Munieco::receiveEvent(EntityIG* entidad, MessageKind k)
 			mBody->setMaterialName("Practica1/munieco/cuerpo");
 		}
 		mMoving = !mMoving;
-	}
+	}*/
 }
 
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -357,7 +357,7 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 
 	pSys = mSM->createParticleSystem("avionBum", "Practica1/Explosion");
 
-	//humo
+	//estela
 	ParticleSystem* pSys = mSM->createParticleSystem("psSmoke", "Practica1/smoke");
 	pSys->setEmitting(true);
 	nAvion->attachObject(pSys);
@@ -390,7 +390,7 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 		mNode->attachObject(pSys);
 		nAvion->setVisible(false);
 		death = true;
-		//delete this;
+		sendEvent(this, avionDied);
 	}
 	return true;
 }
@@ -398,20 +398,20 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (!death) {
 
-	mNode->getParent()->yaw(Ogre::Degree(20 * evt.timeSinceLastFrame));
+		mNode->getParent()->yaw(Ogre::Degree(20 * evt.timeSinceLastFrame));
 
-	//desrotar cilindros de las helices
-	double rot = 200.0f * evt.timeSinceLastEvent;
-	mHelice1->getSceneNode()->roll(Ogre::Degree(rot));
+		//desrotar cilindros de las helices
+		double rot = 200.0f * evt.timeSinceLastEvent;
+		mHelice1->getSceneNode()->roll(Ogre::Degree(rot));
 
-	for (auto aspa : mHelice1->mAspas)
-		aspa->getCilinder()->roll(Ogre::Degree(-rot));
+		for (auto aspa : mHelice1->mAspas)
+			aspa->getCilinder()->roll(Ogre::Degree(-rot));
 
 
-	mHelice2->getSceneNode()->roll(Ogre::Degree(rot));
+		mHelice2->getSceneNode()->roll(Ogre::Degree(rot));
 
-	for (auto aspa : mHelice2->mAspas)
-		aspa->getCilinder()->roll(Ogre::Degree(-rot));
+		for (auto aspa : mHelice2->mAspas)
+			aspa->getCilinder()->roll(Ogre::Degree(-rot));
 	}
 }
 //---------------------------------------------------------------
@@ -573,21 +573,37 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad, bool dP) :EntityIG(_sinbad)
 }
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (!animation_dance->getEnabled()) {
-		if (!desplazaPlano) {
-			double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
-			mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
-			mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+	if (death) return;
+
+	if (t == nullptr) {
+
+		if (!animation_dance->getEnabled()) {
+			if (!desplazaPlano) {
+				double rot = ((rand() % 11 < 5) ? -1 : 1) * (rand() % 119 + 1);
+				mNode->getParent()->yaw(Ogre::Degree(rot * evt.timeSinceLastFrame));
+				mNode->getParent()->pitch(Ogre::Degree(20 * evt.timeSinceLastFrame));
+			}
+			else {
+				animationState->addTime(evt.timeSinceLastFrame);
+			}
 		}
-		else {
-			animationState->addTime(evt.timeSinceLastFrame);
+		animation_piernas->addTime(evt.timeSinceLastFrame);
+		animation_brazos->addTime(evt.timeSinceLastFrame);
+		animation_dance->addTime(evt.timeSinceLastFrame);
+	}
+	else {
+		
+
+		if (t->getMilliseconds()>=5000) {
+			death = true;
+			sendEvent(this, SimBadDied);
 		}
 	}
-	animation_piernas->addTime(evt.timeSinceLastFrame);
-	animation_brazos->addTime(evt.timeSinceLastFrame);
-	animation_dance->addTime(evt.timeSinceLastFrame);
 }
 bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
+	
+	if (death) return true;
+
 	switch (evt.keysym.sym) {
 	case SDLK_b:
 		cambiaEspada();
@@ -607,6 +623,20 @@ bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt) {
 		break;
 	}
 	return true;
+}
+
+void Sinbad::receiveEvent(EntityIG* entidad, MessageKind k)
+{
+	if (k == avionDied) {
+		animationState->setEnabled(false);
+		animation_brazos->setEnabled(false);
+		animation_piernas->setEnabled(false);
+		animation_dance->setEnabled(false);
+
+		mNode->pitch(Ogre::Degree(-90));
+
+		t = new Ogre::Timer();
+	}
 }
 
 void Sinbad::arma(bool setDerecha) {
@@ -660,12 +690,13 @@ void Sinbad::dance() {
 
 Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
+	bombaNode = mNode->createChildSceneNode();
 	Ogre::Entity* bomba = mSM->createEntity("Barrel.mesh");
 	bomba->setMaterialName("Practica1/bomba");
-	_bomba->attachObject(bomba);
-	_bomba->setScale(10, 10, 10);
+	bombaNode->attachObject(bomba);
+	bombaNode->setScale(10, 10, 10);
 
-	_bomba->setInitialState();
+	bombaNode->setInitialState();
 	Real duration = 3;
 	Real desplazamiento = 35;
 	Animation* anim = mSM->createAnimation("animVV", duration);
@@ -704,11 +735,8 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 void Bomba::frameRendered(const Ogre::FrameEvent& evt)
 {
 	animationState->addTime(evt.timeSinceLastFrame);
-	if (time != 0) {
-		time -= evt.timeSinceLastFrame;
-		std::cout << time << "\n";
-		if (time <= 0) {
-			time = 0;
+	if (timeBomb != nullptr) {
+		if (timeBomb->getMilliseconds()>=5000) {
 			sendEvent(this, MessageKind::BombScene);
 		}
 	}
@@ -719,7 +747,17 @@ bool Bomba::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_t) {
 		animationState->setEnabled(false);
-		time = 350;
+		timeBomb = new Ogre::Timer();
 	}
 	return false;
+}
+
+void Bomba::receiveEvent(EntityIG* entidad, MessageKind k)
+{
+	if (k == SimBadDied) {
+		ParticleSystem* pSys = mSM->createParticleSystem("explosionBomba", "Practica1/BombaExplosion");
+		pSys->setEmitting(true);
+		mNode->attachObject(pSys);
+		bombaNode->setVisible(false);
+	}
 }

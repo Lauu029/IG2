@@ -25,7 +25,7 @@ using namespace std;
 
 class EntityIG : public OgreBites::InputListener {
 public:
-	enum MessageKind { NoriaScene, BombScene };
+	enum MessageKind { NoriaScene, BombScene,avionDied, SimBadDied };
 	//Constructora y destructora
 	EntityIG(Ogre::SceneNode* node);
 	~EntityIG() {}
@@ -181,6 +181,8 @@ public:
 protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+	virtual void receiveEvent(EntityIG* entidad, MessageKind k)override;
+
 
 	void arma(bool setDerecha);
 	void cambiaEspada();
@@ -199,14 +201,21 @@ protected:
 	bool swordLeft = false;
 
 	bool desplazaPlano = true;
+	int sendDiedEvent;
+	bool death = false;
+
+	Ogre::Timer* t = nullptr;
 };
 class Bomba : public EntityIG {
 public:
 	Bomba(Ogre::SceneNode* _bomba);
 	virtual ~Bomba() {};
-	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 private:
 	AnimationState* animationState = nullptr;
+	Ogre::SceneNode* bombaNode = nullptr;
+	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
-	int time=0;
+	virtual void receiveEvent(EntityIG* entidad, MessageKind k)override;
+
+	Ogre::Timer* timeBomb = nullptr;
 };
