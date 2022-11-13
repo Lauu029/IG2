@@ -16,7 +16,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_ESCAPE:
 		getRoot()->queueEndRendering();
 		break;
-	case SDLK_g:
+	/*case SDLK_g:
 		mClock->roll(Ogre::Degree(5));
 		break;
 	case SDLK_y:
@@ -69,6 +69,14 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 	case SDLK_h:
 		compuebaColisiones();
+		break;*/
+	case SDLK_0:
+		sSinbad->setVisible(true);
+		sBomba->setVisible(false);
+		break;
+	case SDLK_1:
+		sSinbad->setVisible(false);
+		sBomba->setVisible(true);
 		break;
 	default:
 		break;
@@ -107,7 +115,7 @@ void IG2App::setup(void)
 
 	mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);
 	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	l = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT, "Avispas", Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(mDronesAvispa.size())), 200);
+	//l = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT, "Avispas", Ogre::DisplayString("Avispas: " + Ogre::StringConverter::toString(mDronesAvispa.size())), 200);
 
 	addInputListener(mTrayMgr);
 
@@ -152,13 +160,16 @@ void IG2App::setupScene(void)
 	//------------------------------------------------------------------------
 
 	//noria
-	createNoria();
+	//createNoria();
 
 	//Reloj
-	createReloj();
+	//createReloj();
 
 	//planeta
-	createPlanetAvion();
+	//createPlanetAvion();
+	
+	
+	mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));
 	//Ogre node
 	CreateSinbadScene();
 
@@ -255,10 +266,10 @@ void IG2App::CreateSinbadScene()
 	sinbadAnimation->setScale(6, 6, 6);
 	addInputListener(_simpBad);
 
-	sSinbad->setVisible(false);
+	sSinbad->setVisible(true);
 
 }
-void IG2App::createReloj()
+/*void IG2App::createReloj()
 {
 	sReloj = mSM->getRootSceneNode()->createChildSceneNode();
 	mClock = sReloj->createChildSceneNode();
@@ -386,4 +397,4 @@ void IG2App::compuebaColisiones()
 	if (mDronesAvispa.size() == 0)
 		mEnt_dron->changeBodyColor();
 
-}
+}*/

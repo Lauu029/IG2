@@ -41,24 +41,24 @@ protected:
   Ogre::SceneNode* mSinbadNode = nullptr;
 
   //scenes
-  Ogre::SceneNode* sReloj = nullptr;
-  Ogre::SceneNode* sNoria = nullptr;
-  Ogre::SceneNode* sAvion = nullptr;
+  //Ogre::SceneNode* sReloj = nullptr;
+  //Ogre::SceneNode* sNoria = nullptr;
+  //Ogre::SceneNode* sAvion = nullptr;
   Ogre::SceneNode* sSinbad = nullptr;
   Ogre::SceneNode* sBomba = nullptr;
 
   //clock
-  Ogre::SceneNode* mClock = nullptr;
-  Ogre::SceneNode* mHours = nullptr;
+  //Ogre::SceneNode* mClock = nullptr;
+  //Ogre::SceneNode* mHours = nullptr;
 
   //drones
-  int nNumDron = 0;
-  Dron* mEnt_dron = nullptr;
-  std::vector<pair<SceneNode*, Dron*>> mDronesAvispa;
-  Ogre::SceneNode* mAvionFicticio = nullptr;
+  //int nNumDron = 0;
+  //Dron* mEnt_dron = nullptr;
+  //std::vector<pair<SceneNode*, Dron*>> mDronesAvispa;
+  //Ogre::SceneNode* mAvionFicticio = nullptr;
 
   OgreBites::CameraMan* mCamMgr = nullptr;
-  OgreBites::Label* l;
+  //OgreBites::Label* l;
 };
 
 #endif
