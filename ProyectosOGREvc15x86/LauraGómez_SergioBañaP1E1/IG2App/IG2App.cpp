@@ -233,9 +233,7 @@ void IG2App::CreateBombaRioSinbadScene()
 	//Muñeco
 	Ogre::SceneNode* _muniecoNodo = sBomba->createChildSceneNode();
 	Munieco* _mun = new Munieco(_muniecoNodo);
-	_muniecoNodo->yaw(Degree(-90));
-	_muniecoNodo->setScale(0.5, 0.5, 0.5);
-	_muniecoNodo->setPosition(500, 30, -150);
+
 	addInputListener(_mun);
 	EntityIG::addListener (_mun);
 

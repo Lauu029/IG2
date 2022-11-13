@@ -93,6 +93,8 @@ protected:
 
 	bool mMoving = false;
 	bool mRojo = false;
+
+	AnimationState* animationState = nullptr;
 };
 //---------------------------------------------------------------
 class Plano : public EntityIG {
@@ -138,6 +140,7 @@ protected:
 
 	AspasNave* mHelice1 = nullptr;
 	AspasNave* mHelice2 = nullptr;
+
 };
 //----------------------------------------------------------------------------
 class BrazoDron : public EntityIG {

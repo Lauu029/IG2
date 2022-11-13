@@ -125,7 +125,48 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	bellyButton->translate(100, 0, 0);
 	bB->setMaterialName("Practica1/munieco/ombligo");
 
-	mNode->translate(100, 50, 250);
+
+	mNode->setScale(0.5, 0.5, 0.5);
+	mNode->setPosition(500, 30, -150);
+	mNode->yaw(Degree(-90));
+
+	mNode->setInitialState();
+	Real duration = 10;
+	Animation* anim = mSM->createAnimation("MuniecoMueve", duration);
+	NodeAnimationTrack* track = anim->createNodeTrack(0);
+	track->setAssociatedNode(mNode);
+
+	Vector3 src(0.0, 0.0, 1.0);
+	Real durPaso = duration / 4.0;
+
+	Vector3 keyFramePos(0, 0, 0);// 0
+	TransformKeyFrame* kf = track->createNodeKeyFrame(durPaso * 0);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(0.5, 0.0, 0.0)));
+
+	keyFramePos = Vector3(0, 0, 0);//1 
+	kf = track->createNodeKeyFrame(durPaso);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(-1.0, 0.0,0.0)));
+
+	keyFramePos = Vector3(-200, 0, 0);//2
+	kf = track->createNodeKeyFrame(durPaso * 2);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(-1.0, 0.0, 0.0)));
+
+	keyFramePos = Vector3(-200, 0, 0);//3
+	kf = track->createNodeKeyFrame(durPaso * 3);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(1.0, 0.0, 0.0)));
+
+	keyFramePos = Vector3(0, 0, 0);//4
+	kf = track->createNodeKeyFrame(durPaso * 4);
+	kf->setTranslate(keyFramePos);
+	kf->setRotation(src.getRotationTo(Vector3(1.0, 0.0, 0.0)));
+
+	animationState = mSM->createAnimationState("MuniecoMueve");
+	animationState->setLoop(true);
+	animationState->setEnabled(true);
 }
 
 void Munieco::receiveEvent(EntityIG* entidad, MessageKind k)
@@ -170,6 +211,7 @@ bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Munieco::frameRendered(const Ogre::FrameEvent& t)
 {
+	animationState->addTime(t.timeSinceLastFrame);
 	if (mMoving) {
 		mNode->yaw(Ogre::Degree(3.0f * t.timeSinceLastFrame));
 		mHead->getParentNode()->yaw(Ogre::Degree(-6.0f * t.timeSinceLastFrame));
@@ -466,16 +508,16 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad, bool dP) :EntityIG(_sinbad)
 
 		Vector3 src(0, 0, 1);
 		Real durPaso = duration / 5.0;
-		
+
 		Vector3 keyFramePos(0, 0, 0);// 0
 		TransformKeyFrame* kf = track->createNodeKeyFrame(durPaso * 0);
 		kf->setTranslate(keyFramePos);
 		kf->setRotation(src.getRotationTo(Vector3(0.0, 0.0, 1.0)));
 
-		keyFramePos = Vector3(0,0,0);//1 
+		keyFramePos = Vector3(0, 0, 0);//1 
 		kf = track->createNodeKeyFrame(durPaso);
 		kf->setTranslate(keyFramePos);
-		kf->setRotation(src.getRotationTo(Vector3(0.5, 0.0,-0.5)));
+		kf->setRotation(src.getRotationTo(Vector3(0.5, 0.0, -0.5)));
 
 		keyFramePos = Vector3(-initialPose.x * 2, 0, -initialPose.z * 2);//2
 		kf = track->createNodeKeyFrame(durPaso * 2);
@@ -487,12 +529,12 @@ Sinbad::Sinbad(Ogre::SceneNode* _sinbad, bool dP) :EntityIG(_sinbad)
 		kf->setTranslate(keyFramePos);
 		kf->setRotation(src.getRotationTo(Vector3(-0.5, 0.0, 0.5)));
 
-		keyFramePos = Vector3(0,0,0);//4
+		keyFramePos = Vector3(0, 0, 0);//4
 		kf = track->createNodeKeyFrame(durPaso * 4);
 		kf->setTranslate(keyFramePos);
 		kf->setRotation(src.getRotationTo(Vector3(-0.5, 0.0, 0.5)));
 
-		keyFramePos = Vector3(0,0,0);//5
+		keyFramePos = Vector3(0, 0, 0);//5
 		kf = track->createNodeKeyFrame(durPaso * 5);
 		kf->setRotation(src.getRotationTo(Vector3(0.0, 0.0, 1)));
 		kf->setTranslate(keyFramePos);
