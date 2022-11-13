@@ -345,6 +345,13 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	helice2->scale(.4, .4, .4);
 	helice2->translate(150, 0, 75);
 
+	BillboardSet* bbSet = mSM->createBillboardSet("cartel", 1);
+	bbSet->setDefaultDimensions(50, 50);
+	bbSet->setMaterialName("Practica1/10points");
+
+	mNode->attachObject(bbSet);
+
+	Billboard* bb = bbSet->createBillboard(0, 0, -150);
 }
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
