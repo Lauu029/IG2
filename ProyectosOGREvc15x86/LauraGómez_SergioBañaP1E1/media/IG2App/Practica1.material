@@ -193,3 +193,22 @@ material Practica1/10points{
 		}
 	}
 }
+
+material Practica1/smoke{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+			diffuse vertexcolour
+			texture_unit
+			{
+				texture smoke.png
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+

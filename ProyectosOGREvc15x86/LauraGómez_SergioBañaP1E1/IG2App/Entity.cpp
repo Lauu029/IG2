@@ -345,6 +345,7 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	helice2->scale(.4, .4, .4);
 	helice2->translate(150, 0, 75);
 
+	//10points
 	BillboardSet* bbSet = mSM->createBillboardSet("cartel", 1);
 	bbSet->setDefaultDimensions(50, 50);
 	bbSet->setMaterialName("Practica1/10points");
@@ -352,6 +353,11 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 	mNode->attachObject(bbSet);
 
 	Billboard* bb = bbSet->createBillboard(0, 0, -150);
+
+	//humo
+	ParticleSystem* pSys = mSM->createParticleSystem("psSmoke", "Practica1/smoke");
+	pSys->setEmitting(true);
+	mNode->attachObject(pSys);
 }
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {

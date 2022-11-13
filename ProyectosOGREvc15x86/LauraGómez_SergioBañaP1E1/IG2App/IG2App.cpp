@@ -169,7 +169,7 @@ void IG2App::setupScene(void)
 	//createPlanetAvion();
 	
 	
-	mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));
+	mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.6, 0.7, 0.8));
 	//Ogre node
 	CreateSinbadScene();
 
@@ -233,7 +233,7 @@ void IG2App::CreateBombaRioSinbadScene()
 	//Muñeco
 	Ogre::SceneNode* _muniecoNodo = sBomba->createChildSceneNode();
 	Munieco* _mun = new Munieco(_muniecoNodo);
-
+	_muniecoNodo->yaw(Degree(-90));
 	addInputListener(_mun);
 	EntityIG::addListener (_mun);
 
