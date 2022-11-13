@@ -245,6 +245,22 @@ void IG2App::CreateBombaRioSinbadScene()
 	_aeroPlane->scale(0.3, 0.3, 0.3);
 	addInputListener(ent_avion);
 
+	//niebla
+	Ogre::SceneNode* nieblaNode = sBomba->createChildSceneNode();
+	BillboardSet* bbSet = mSM->createBillboardSet("Niebla",20);
+	bbSet->setDefaultDimensions(500,500);
+	bbSet->setMaterialName("Practica1/smoke");
+	nieblaNode->attachObject(bbSet);
+	nieblaNode->setPosition(100, 200,-100);
+
+	for (int i = 0; i < 10; i++)
+	{
+
+	Billboard* bb = bbSet->createBillboard(rand()%300,rand()%50,rand()%300);
+	}
+
+
+
 	sBomba->setVisible(false);
 }
 
