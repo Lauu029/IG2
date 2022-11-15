@@ -1,0 +1,11 @@
+material Practica2/space{
+    technique{
+        pass{
+            texture_unit{
+                texture spacesky.jpg
+                colour_op add
+
+            }
+        }
+    }
+}

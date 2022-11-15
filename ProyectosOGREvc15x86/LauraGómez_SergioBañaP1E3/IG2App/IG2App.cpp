@@ -70,14 +70,14 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		case SDLK_h:
 			compuebaColisiones();
 			break;*/
-	case SDLK_0:
+	/*case SDLK_0:
 		sSinbad->setVisible(true);
 		sBomba->setVisible(false);
 		break;
 	case SDLK_1:
 		sSinbad->setVisible(false);
 		sBomba->setVisible(true);
-		break;
+		break;*/
 	default:
 		break;
 	}
@@ -149,7 +149,7 @@ void IG2App::setupScene(void)
 
 	Light* luz = mSM->createLight("Luz");
 	luz->setType(Ogre::Light::LT_DIRECTIONAL);
-	luz->setDiffuseColour(0.75, 0.75, 0.75);
+	luz->setDiffuseColour(1.0,1.0,1.0);
 
 	mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
@@ -169,10 +169,12 @@ void IG2App::setupScene(void)
 	//createPlanetAvion();
 
 
-	mSM->getCamera("Cam")->getViewport()->setBackgroundColour(Ogre::ColourValue(0.6, 0.7, 0.8));
 	//Ogre node
-	CreateSinbadScene();
-
+	//CreateSinbadScene();
+	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20),
+		"Practica2/space"
+		, 1, 1, true, 1.0, 100, 100);
+	
 	CreateBombaRioSinbadScene();
 
 	//------------------------------------------------------------------------
@@ -202,11 +204,11 @@ void IG2App::CreateBombaRioSinbadScene()
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		250, 250, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
-	Ogre::Entity* redPlane = mSM->createEntity("redPlane");
+	/*Ogre::Entity* redPlane = mSM->createEntity("redPlane");
 	Ogre::SceneNode* redPlaneNode = sBomba->createChildSceneNode();
 	redPlaneNode->attachObject(redPlane);
 	redPlane->setMaterialName("Practica1/rojo");
-	redPlaneNode->translate(400, 1, -250);
+	redPlaneNode->translate(400, 1, -250);*/
 
 	//Plano amarillo
 	Ogre::Entity* yellowPlane = mSM->createEntity("redPlane");
@@ -248,7 +250,7 @@ void IG2App::CreateBombaRioSinbadScene()
 	addInputListener(ent_avion);
 
 	//niebla
-	Ogre::SceneNode* nieblaNode = sBomba->createChildSceneNode();
+	/*Ogre::SceneNode* nieblaNode = sBomba->createChildSceneNode();
 	BillboardSet* bbSet = mSM->createBillboardSet("Niebla", 20);
 	bbSet->setDefaultDimensions(500, 500);
 	bbSet->setMaterialName("Practica1/smoke");
@@ -258,33 +260,33 @@ void IG2App::CreateBombaRioSinbadScene()
 	for (int i = 0; i < 10; i++)
 	{
 		Billboard* bb = bbSet->createBillboard(rand() % 300, rand() % 50, rand() % 300);
-	}
+	}*/
 
 
 
-	sBomba->setVisible(false);
+	sBomba->setVisible(true);
 }
 
-void IG2App::CreateSinbadScene()
-{
-	sSinbad = mSM->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
-	Ogre::SceneNode* Planet = sSinbad->createChildSceneNode();
-	Sphere->setMaterialName("Practica1/azul");
-	Planet->attachObject(Sphere);
-	Planet->scale(1.5, 1.5, 1.5);
-
-	Ogre::SceneNode* _sinbad = sSinbad->createChildSceneNode();
-	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
-	Sinbad* _simpBad = new Sinbad(sinbadAnimation, false);
-	sinbadAnimation->setPosition(0.0, 170.0, 0.0);
-	sinbadAnimation->setScale(6, 6, 6);
-	addInputListener(_simpBad);
-
-
-	sSinbad->setVisible(true);
-
-}
+//void IG2App::CreateSinbadScene()
+//{
+//	sSinbad = mSM->getRootSceneNode()->createChildSceneNode();
+//	Ogre::Entity* Sphere = mSM->createEntity("uv_sphere.mesh");
+//	Ogre::SceneNode* Planet = sSinbad->createChildSceneNode();
+//	Sphere->setMaterialName("Practica1/azul");
+//	Planet->attachObject(Sphere);
+//	Planet->scale(1.5, 1.5, 1.5);
+//
+//	Ogre::SceneNode* _sinbad = sSinbad->createChildSceneNode();
+//	Ogre::SceneNode* sinbadAnimation = _sinbad->createChildSceneNode();
+//	Sinbad* _simpBad = new Sinbad(sinbadAnimation, false);
+//	sinbadAnimation->setPosition(0.0, 170.0, 0.0);
+//	sinbadAnimation->setScale(6, 6, 6);
+//	addInputListener(_simpBad);
+//
+//
+//	sSinbad->setVisible(true);
+//
+//}
 /*void IG2App::createReloj()
 {
 	sReloj = mSM->getRootSceneNode()->createChildSceneNode();
