@@ -204,18 +204,18 @@ void IG2App::CreateBombaRioSinbadScene()
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		250, 250, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
-	/*Ogre::Entity* redPlane = mSM->createEntity("redPlane");
+	Ogre::Entity* redPlane = mSM->createEntity("redPlane");
 	Ogre::SceneNode* redPlaneNode = sBomba->createChildSceneNode();
 	redPlaneNode->attachObject(redPlane);
 	redPlane->setMaterialName("Practica1/rojo");
-	redPlaneNode->translate(400, 1, -250);*/
+	redPlaneNode->translate(400, 1, -250);
 
-	//Plano amarillo
-	Ogre::Entity* yellowPlane = mSM->createEntity("redPlane");
-	Ogre::SceneNode* YellowPlaneNode = sBomba->createChildSceneNode();
-	YellowPlaneNode->attachObject(yellowPlane);
-	yellowPlane->setMaterialName("Practica1/amarillo");
-	YellowPlaneNode->translate(-400, 1, 250);
+	////Plano amarillo
+	//Ogre::Entity* yellowPlane = mSM->createEntity("redPlane");
+	//Ogre::SceneNode* YellowPlaneNode = sBomba->createChildSceneNode();
+	//YellowPlaneNode->attachObject(yellowPlane);
+	//yellowPlane->setMaterialName("Practica1/amarillo");
+	//YellowPlaneNode->translate(-400, 1, 250);
 
 	//Simbad
 	Ogre::SceneNode* _sinbad = sBomba->createChildSceneNode();
