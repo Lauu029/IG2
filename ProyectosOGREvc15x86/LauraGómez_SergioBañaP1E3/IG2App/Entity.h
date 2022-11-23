@@ -66,7 +66,6 @@ public:
 	~Noria() {};
 
 protected:
-	virtual void receiveEvent(EntityIG* entidad, MessageKind k) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 
@@ -83,8 +82,6 @@ public:
 	~Munieco() {};
 
 protected:
-
-	virtual void receiveEvent(EntityIG* entidad, MessageKind k) override;
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
 	virtual void frameRendered(const Ogre::FrameEvent& evt) override;
 

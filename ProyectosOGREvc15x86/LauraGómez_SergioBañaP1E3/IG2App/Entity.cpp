@@ -66,11 +66,7 @@ Noria::Noria(Ogre::SceneNode* noria, int numAspas) : EntityIG(noria)
 
 
 }
-void Noria::receiveEvent(EntityIG* entidad, MessageKind k)
-{
-	/*if (k == MessageKind::NoriaScene)
-		moving = !moving;*/
-}
+
 bool Noria::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_q) {
@@ -101,7 +97,6 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	head->attachObject(mHead);
 	head->setScale(.3, .3, .3);
 	head->translate(0, 70, 0);
-	//mHead->setMaterialName("Practica1/munieco/cabeza");
 	mHead->setMaterialName("Practica1/naranja");
 
 	Ogre::SceneNode* nose = head->createChildSceneNode();
@@ -115,7 +110,6 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	mBody = mSM->createEntity("uv_sphere.mesh");
 	body->attachObject(mBody);
 	body->setScale(.5, .5, .5);
-	//mBody->setMaterialName("Practica1/munieco/cuerpo");
 	mBody->setMaterialName("Practica1/naranja");
 
 	Ogre::SceneNode* bellyButton = body->createChildSceneNode();
@@ -167,22 +161,6 @@ Munieco::Munieco(Ogre::SceneNode* mun) : EntityIG(mun)
 	animationState = mSM->createAnimationState("MuniecoMueve");
 	animationState->setLoop(true);
 	animationState->setEnabled(true);
-}
-
-void Munieco::receiveEvent(EntityIG* entidad, MessageKind k)
-{
-	/*if (k == MessageKind::NoriaScene) {
-		mRojo = !mRojo;
-		if (mRojo) {
-			mHead->setMaterialName("Practica1/munieco/cabeza/rojo");
-			mBody->setMaterialName("Practica1/munieco/cuerpo/rojo");
-		}
-		else {
-			mHead->setMaterialName("Practica1/munieco/cabeza");
-			mBody->setMaterialName("Practica1/munieco/cuerpo");
-		}
-		mMoving = !mMoving;
-	}*/
 }
 
 bool Munieco::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -364,27 +342,6 @@ Avion::Avion(Ogre::SceneNode* avion) : EntityIG(avion)
 }
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	//if (evt.keysym.sym == SDLK_h) {
-	//	mNode->getParent()->pitch(Ogre::Degree(3));
-
-	//	//desrotar cilindros de las helices
-	//	double rot = 15.0f;
-	//	mHelice1->getSceneNode()->roll(Ogre::Degree(rot));
-
-	//	for (auto aspa : mHelice1->mAspas)
-	//		aspa->getCilinder()->roll(Ogre::Degree(-rot));
-
-
-	//	mHelice2->getSceneNode()->roll(Ogre::Degree(rot));
-
-	//	for (auto aspa : mHelice2->mAspas)
-	//		aspa->getCilinder()->roll(Ogre::Degree(-rot));
-
-	//}
-	//else if (evt.keysym.sym == SDLK_j) {
-	//	mNode->getParent()->yaw(Ogre::Degree(3));
-	//}
-
 	if (evt.keysym.sym == SDLK_r) {
 		pSys->setEmitting(true);
 		mNode->attachObject(pSys);
@@ -691,10 +648,9 @@ void Sinbad::dance() {
 Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	bombaNode = mNode->createChildSceneNode();
-	Ogre::Entity* bomba = mSM->createEntity("Barrel.mesh");
-	bomba->setMaterialName("Practica1/bomba");
+	Ogre::Entity* bomba = mSM->createEntity("uv_sphere.mesh");
+	bomba->setMaterialName("IG2/ejemploGLSL");
 	bombaNode->attachObject(bomba);
-	bombaNode->setScale(10, 10, 10);
 
 	bombaNode->setInitialState();
 	Real duration = 3;

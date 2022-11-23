@@ -1,0 +1,30 @@
+vertex_program MyFirstShaderVs glsl{
+    source MyFirstShaderVs.glsl
+    default_params{
+        param_named_auto modelViewProjMat worldviewproj_matrix
+    }
+}
+
+fragment_program MyFirstShaderFs glsl{
+    source MyFirstShaderFs.glsl
+    default_params{
+        param_named texturaL int 0
+        param_named texturaM int 1
+        param_named BF float 0.5
+        param_named intLuzAmb float 1.0
+    }
+}
+
+material IG2/ejemploGLSL{
+    technique{
+        pass{
+            vertex_program_ref MyFirstShaderVs
+            {
+            }
+            fragment_program_ref MyFirstShaderFs
+            {
+            }
+            diffuse 0.73 0.5 0
+        }
+    }
+}
