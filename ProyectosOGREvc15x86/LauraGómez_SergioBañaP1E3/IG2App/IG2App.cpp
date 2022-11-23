@@ -171,7 +171,7 @@ void IG2App::setupScene(void)
 
 	//Ogre node
 	//CreateSinbadScene();
-	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20),
+	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -40),
 		"Practica2/space"
 		, 1, 1, true, 1.0, 100, 100);
 	
