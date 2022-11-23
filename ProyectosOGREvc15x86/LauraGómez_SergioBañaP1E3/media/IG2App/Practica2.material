@@ -3,8 +3,7 @@ material Practica2/space{
         pass{
             texture_unit{
                 texture spacesky.jpg
-                colour_op add
-
+                colour_op modulate
             }
         }
     }
