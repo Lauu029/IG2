@@ -1,6 +1,6 @@
- vertex_program MyFirstShaderVS glsl
+ vertex_program MyFirstShaderVs glsl
 {
-    source MyFirstShaderVS.glsl
+    source MyFirstShaderVs.glsl
     default_params
     {
         param_named_auto modelViewProjMat worldviewproj_matrix
@@ -18,7 +18,7 @@ fragment_program MyFirstShaderFS glsl
 material Practica2/MyFirstShaderGLSL {
     technique {
         pass {
-            vertex_program_ref MyFirstShaderVS
+            vertex_program_ref MyFirstShaderVs
             {
             }
             fragment_program_ref MyFirstShaderFS
