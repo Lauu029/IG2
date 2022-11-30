@@ -649,7 +649,7 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	bombaNode = mNode->createChildSceneNode();
 	Ogre::Entity* bomba = mSM->createEntity("uv_sphere.mesh");
-	bomba->setMaterialName("IG2/ejemploGLSL");
+	bomba->setMaterialName("Practica2/MyFirstShaderGLSL");
 	bombaNode->attachObject(bomba);
 
 	bombaNode->setInitialState();
