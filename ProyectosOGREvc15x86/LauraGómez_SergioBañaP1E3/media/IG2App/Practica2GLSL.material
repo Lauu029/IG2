@@ -18,12 +18,48 @@ fragment_program MyFirstShaderFS glsl
 material Practica2/MyFirstShaderGLSL {
     technique {
         pass {
-            vertex_program_ref MyFirstShaderVs
+            vertex_program_ref MyFirstShaderVs { }
+            fragment_program_ref MyFirstShaderFS { }
+        }
+    }
+}
+//SkyTexture
+vertex_program SpaceSkyVS glsl{
+    source SpaceSkyVS.glsl
+    default_params{
+        param_named_auto modelViewProjMat worldviewproj_matrix
+    }
+}
+
+fragment_program SpaceSkyFS glsl{
+    source SpaceSkyFS.glsl
+    default_params{
+       param_named texturaL int 0
+		param_named texturaM int 1
+		param_named BF float 0.5
+		param_named intLuzAmb float 1.0
+    }
+}
+
+material IG2/SkyTexture{
+    technique{
+        pass{
+            vertex_program_ref SpaceSkyVS
             {
             }
-            fragment_program_ref MyFirstShaderFS
+            fragment_program_ref SpaceSkyFS
             {
+            }
+            texture_unit{
+                texture lightMap.jpg
+                tex_adress_mode clamp
+                filtering bilinear
+            }
+            texture_unit{
+                texture spaceSky.jpg 2d
+                text_adress_mode wrap
             }
         }
     }
 }
+

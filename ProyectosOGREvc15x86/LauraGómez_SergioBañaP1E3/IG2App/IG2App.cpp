@@ -93,11 +93,11 @@ void IG2App::setupScene(void)
 	mLightNode->setDirection(Ogre::Vector3(0, -1, -1));  //vec3.normalise();
 	mLightNode->setPosition(0, 0, 2000);
 	//------------------------------------------------------------------------
+	CreateBombaRioSinbadScene();
 	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -40),
-		"Practica2/space"
+		"IG2/SkyTexture"
 		, 1, 1, true, 1.0, 100, 100);
 	
-	CreateBombaRioSinbadScene();
 
 	//------------------------------------------------------------------------
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
