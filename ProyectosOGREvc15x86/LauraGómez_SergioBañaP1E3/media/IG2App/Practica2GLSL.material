@@ -57,7 +57,48 @@ material IG2/SkyTexture{
             }
             texture_unit{
                 texture spaceSky.jpg 2d
-                text_adress_mode wrap
+                tex_adress_mode wrap
+            }
+        }
+    }
+}
+//Bomba Teselada
+vertex_program BombaTeseladaVS glsl{
+    source BombaTeseladaVS.glsl
+    default_params{
+        param_named_auto modelViewProjMat worldviewproj_matrix
+    }
+}
+
+fragment_program BombaTeseladaFS glsl{
+    source BombaTeseladaFS.glsl
+    default_params{
+       param_named texturaS int 0
+		param_named texturaM int 1
+		param_named texturaC int 2
+    }
+}
+
+material IG2/BombTexture{
+    technique{
+        pass{
+            vertex_program_ref BombaTeseladaVS
+            {
+            }
+            fragment_program_ref BombaTeseladaFS
+            {
+            }
+            texture_unit{
+                texture spaceSky.jpg 2d
+                tex_adress_mode wrap
+            }
+            texture_unit{
+                texture BumpyMetal.jpg 2d
+                tex_adress_mode wrap
+            }
+            texture_unit{
+                texture checker.png
+                tex_adress_mode wrap
             }
         }
     }
