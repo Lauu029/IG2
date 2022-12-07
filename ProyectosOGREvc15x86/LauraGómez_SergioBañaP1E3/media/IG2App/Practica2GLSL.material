@@ -52,12 +52,12 @@ material IG2/SkyTexture{
             }
             texture_unit{
                 texture lightMap.jpg
-                tex_adress_mode clamp
+                tex_address_mode clamp
                 filtering bilinear
             }
             texture_unit{
                 texture spaceSky.jpg 2d
-                tex_adress_mode wrap
+                tex_address_mode wrap
             }
         }
     }
@@ -89,16 +89,17 @@ material IG2/BombTexture{
             {
             }
             texture_unit{
+                texture checker.png 2d
+                tex_address_mode wrap
+            }
+            texture_unit{
                 texture spaceSky.jpg 2d
-                tex_adress_mode wrap
+                tex_address_mode wrap
+                filtering bilinear
             }
             texture_unit{
                 texture BumpyMetal.jpg 2d
-                tex_adress_mode wrap
-            }
-            texture_unit{
-                texture checker.png
-                tex_adress_mode wrap
+                tex_address_mode wrap
             }
         }
     }
