@@ -66,7 +66,7 @@ material IG2/SkyTexture{
 vertex_program BombaTeseladaVS glsl{
     source BombaTeseladaVS.glsl
     default_params{
-        param_named_auto modelViewProjMat worldviewproj_matrix
+        param_named_auto modelViewProjectionMatrix worldviewproj_matrix
     }
 }
 
@@ -93,13 +93,13 @@ material IG2/BombTexture{
                 tex_address_mode wrap
             }
             texture_unit{
+                texture BumpyMetal.jpg 2d
+                tex_address_mode wrap
+            }
+            texture_unit{
                 texture spaceSky.jpg 2d
                 tex_address_mode wrap
                 filtering bilinear
-            }
-            texture_unit{
-                texture BumpyMetal.jpg 2d
-                tex_address_mode wrap
             }
         }
     }
