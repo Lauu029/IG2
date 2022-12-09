@@ -73,35 +73,34 @@ vertex_program BombaTeseladaVS glsl{
 fragment_program BombaTeseladaFS glsl{
     source BombaTeseladaFS.glsl
     default_params{
-       param_named texturaS int 0
+        param_named texturaS int 0
 		param_named texturaM int 1
 		param_named texturaC int 2
     }
 }
 
 material IG2/BombTexture{
-    technique{
-        pass{
-            vertex_program_ref BombaTeseladaVS
-            {
-            }
-            fragment_program_ref BombaTeseladaFS
-            {
-            }
-            texture_unit{
-                texture checker.png 2d
-                tex_address_mode wrap
-            }
-            texture_unit{
-                texture BumpyMetal.jpg 2d
-                tex_address_mode wrap
-            }
-            texture_unit{
-                texture spaceSky.jpg 2d
-                tex_address_mode wrap
-                filtering bilinear
-            }
-        }
-    }
+   technique {
+		pass {
+			vertex_program_ref BombaTeseladaVS 
+			{
+			}
+			fragment_program_ref BombaTeseladaFS 
+			{
+			}
+			texture_unit { 
+				texture spaceSky.jpg 2d // archivo
+				tex_address_mode wrap // sólo configuración
+			}
+			texture_unit { 
+				texture BumpyMetal.jpg 2d // archivo
+				tex_address_mode wrap // sólo configuración
+			}
+			texture_unit { 
+				texture checker.png
+				tex_address_mode wrap
+			}
+		} 
+	}
 }
 
