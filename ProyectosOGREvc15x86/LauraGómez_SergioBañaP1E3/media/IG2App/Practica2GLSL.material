@@ -41,7 +41,7 @@ fragment_program SpaceSkyFS glsl{
     }
 }
 
-material IG2/SkyTexture{
+material IG2/SpaceSkyTexture{
     technique{
         pass{
             vertex_program_ref SpaceSkyVS
@@ -103,4 +103,37 @@ material IG2/BombTexture{
 		} 
 	}
 }
+//Space texture
+vertex_program SpaceVS glsl{
+    source SpaceVS.glsl
+    default_params{
+        param_named_auto modelViewProjectionMatrix worldviewproj_matrix
+    }
+}
 
+fragment_program SpaceFS glsl{
+    source SpaceFS.glsl
+    default_params{
+        param_named texturaL int 0
+		param_named texturaM int 1
+    }
+}
+material IG2/SkyTexture{
+   technique {
+		pass {
+			vertex_program_ref SpaceVS 
+			{
+			}
+			fragment_program_ref SpaceFS 
+			{
+			}
+			texture_unit { 
+				texture lightMap.jpg 2d// archivo
+				
+			}
+			texture_unit { 
+				texture spaceSky.jpg 2d // archivo
+				}
+		} 
+	}
+}
