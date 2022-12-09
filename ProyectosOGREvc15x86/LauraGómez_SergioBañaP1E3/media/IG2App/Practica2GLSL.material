@@ -133,7 +133,7 @@ material IG2/SkyTexture{
 			}
 			texture_unit { 
 				texture spaceSky.jpg 2d // archivo
-				}
+			}
 		} 
 	}
 }
