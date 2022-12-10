@@ -3,14 +3,14 @@ material Practica2/space{
         pass{
             lighting off
             diffuse 1 1 1
-            specular 0.5 0.5 0.5
+            specular 0.5 0.5 0.5 1
 
             texture_unit{
                 texture spaceSky.jpg
                 tex_coord_set 0
                 colour_op modulate
                 rotate_anim 0.01
-                text_address_mode wrap
+                tex_address_mode wrap
             }
 
             texture_unit{

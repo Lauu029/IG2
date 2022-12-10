@@ -10,4 +10,4 @@ void main() {
 	vec3 colorM = vec3(texture(texturaM, vUv1)); 
 	
 	fFragColor = vec4(colorL* colorM, 1.0);
-    }
+}
