@@ -133,11 +133,54 @@ material IG2/SkyTexture{
 			}
 			texture_unit { 
 				texture lightMap.jpg 2d// archivo
-				
 			}
 			texture_unit { 
 				texture spaceSky.jpg 2d // archivo
 			}
 		} 
 	}
+}
+//bomba con agujeros
+    source HolesFS.glsl 
+    default_params // valores para las variable uniform
+    {
+        param_named texFront int 0 
+        param_named texBack int 1 
+        param_named texturaX int 2 
+    }
+}
+
+vertex_program HolesVS glsl {
+    source HolesVS.glsl
+    default_params {
+        param_named_auto modelViewProjectionMatrix worldviewproj_matrix
+    }
+}
+
+material IG2/Holes {
+    technique {
+        pass {
+            cull_hardware none
+            vertex_program_ref HolesVS
+            { 
+            }
+            fragment_program_ref HolesFS
+            { 
+            }
+            texture_unit { 
+                texture BumpyMetal.jpg 2d
+                tex_address_mode clamp
+                filtering bilinear
+            }
+            texture_unit {
+                texture BeachStones.jpg 2d 
+                tex_address_mode clamp
+                filtering bilinear
+            } 
+            texture_unit {
+                texture corrosion.jpg 2d 
+                tex_address_mode wrap
+            } 
+        } 
+    } 
 }
