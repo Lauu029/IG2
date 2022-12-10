@@ -649,9 +649,10 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	bombaNode = mNode->createChildSceneNode();
 	Ogre::Entity* bomba = mSM->createEntity("uv_sphere.mesh");
-	bomba->setMaterialName("IG2/HolesAndLighting");
-	//bomba->setMaterialName("IG2/Holes");
 	//bomba->setMaterialName("IG2/BombTexture");
+	//bomba->setMaterialName("IG2/Holes");
+	//bomba->setMaterialName("IG2/HolesAndLighting");
+	bomba->setMaterialName("IG2/HolesAndVertexLighting");
 	bombaNode->attachObject(bomba);
 
 	bombaNode->setInitialState();

@@ -185,6 +185,67 @@ material IG2/Holes {
         } 
     } 
 }
+
+//11
+vertex_program HolesAndVertexLightingVS glsl
+{
+    source HolesAndVertexLightingVS.glsl
+    default_params
+    {
+        param_named_auto modelViewProjMat worldviewproj_matrix
+        param_named_auto modelViewMat worldview_matrix
+        param_named_auto normalMat inverse_transpose_world_matrix
+		param_named_auto lightDiffuse light_diffuse_colour 0
+		param_named_auto lightPosition light_position_view_space 0
+		param_named materialDiffuseFront float3 0.72 0.57 0.35
+		param_named materialDiffuseBack float3 0.0 0.6 0.83
+		
+    }
+
+}
+fragment_program HolesAndVertexLightingFS glsl
+{
+    source HolesAndVertexLightingFS.glsl
+	default_params 
+	{
+		param_named texturaMetal int 0 
+        param_named texturaStones int 1 
+        param_named texturaCorrosion int 2 
+		
+	}
+
+}
+material IG2/HolesAndVertexLighting {
+
+	technique {
+		pass {
+			cull_hardware none
+			vertex_program_ref HolesAndVertexLightingVS
+			{ 
+			}
+			fragment_program_ref HolesAndVertexLightingFS
+			{ 
+			}
+            texture_unit { 			
+				texture BumpyMetal.jpg 2d 
+				tex_address_mode wrap			
+			} 
+			texture_unit { 
+				texture BeachStones.jpg
+				tex_address_mode clamp
+				filtering bilinear
+			}
+
+			texture_unit { 			
+				texture corrosion.jpg 2d 
+				tex_address_mode wrap			
+			} 
+
+			
+		} 
+	} 
+}
+
 //Bomba con agujeros yluz 
 vertex_program HolesAndLightingVS glsl
 {
