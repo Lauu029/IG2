@@ -141,6 +141,7 @@ material IG2/SkyTexture{
 	}
 }
 //bomba con agujeros
+fragment_program HolesFS glsl{
     source HolesFS.glsl 
     default_params // valores para las variable uniform
     {
