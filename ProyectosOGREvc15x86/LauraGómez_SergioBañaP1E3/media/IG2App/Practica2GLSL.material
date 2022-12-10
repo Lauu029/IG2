@@ -108,6 +108,8 @@ vertex_program SpaceVS glsl{
     source SpaceVS.glsl
     default_params{
         param_named_auto modelViewProjectionMatrix worldviewproj_matrix
+        param_named ZF 0.5
+        param_named_auto sintime sintime_0_2pi 1//zoom automatico
     }
 }
 
