@@ -5,10 +5,11 @@ uniform sampler2D texturaM;
 uniform sampler2D texturaC;
 
 in vec2 vUv0; // out del vertex shader
+in vec2 vUv1;
 out vec4 fFragColor; // out del fragment shader
 
 void main() {
-	vec3 colorSpace = vec3(texture(texturaS, vUv0)); 
+	vec3 colorSpace = vec3(texture(texturaS, vUv1)); 
     vec3 colorMetal = vec3(texture(texturaM, vUv0)); 
     vec3 colorChecker = vec3(texture(texturaC, vUv0)); 
 	

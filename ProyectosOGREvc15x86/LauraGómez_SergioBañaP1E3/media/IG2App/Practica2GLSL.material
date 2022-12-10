@@ -67,6 +67,7 @@ vertex_program BombaTeseladaVS glsl{
     source BombaTeseladaVS.glsl
     default_params{
         param_named_auto modelViewProjectionMatrix worldviewproj_matrix
+        param_named_auto sintime sintime_0_2pi 5//zoom automatico
     }
 }
 
@@ -90,7 +91,8 @@ material IG2/BombTexture{
 			}
 			texture_unit { 
 				texture spaceSky.jpg 2d // archivo
-				tex_address_mode wrap // sólo configuración
+				tex_address_mode clamp // sólo configuración
+                filtering bilinear
 			}
 			texture_unit { 
 				texture BumpyMetal.jpg 2d // archivo
@@ -108,8 +110,8 @@ vertex_program SpaceVS glsl{
     source SpaceVS.glsl
     default_params{
         param_named_auto modelViewProjectionMatrix worldviewproj_matrix
-        param_named ZF 0.5
-        param_named_auto sintime sintime_0_2pi 1//zoom automatico
+        param_named ZF float 0.5
+        param_named_auto sintime sintime_0_2pi 5//zoom automatico
     }
 }
 
