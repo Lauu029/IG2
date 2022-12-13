@@ -322,7 +322,7 @@ fragment_program SpotLightFS glsl
         param_named textureS int 0
         param_named_auto worldMat world_matrix
         param_named_auto normalMat inverse_transpose_world_matrix
-        param_named_auto lightPosition float4 0.0 100.0 0.0 1.0
+        param_named_auto lightPosition float4  0.0 100.0 0.0 1.0
         param_named_auto cutoff costime_0_2pi 3
     }
 }

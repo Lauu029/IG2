@@ -111,6 +111,7 @@ void IG2App::setupScene(void)
 void IG2App::CreateBombaRioSinbadScene()
 {
 	sBomba = mSM->getRootSceneNode()->createChildSceneNode();
+	//bomba
 	Ogre::SceneNode* n = sBomba->createChildSceneNode();
 	Bomba* bomb = new Bomba(n);
 	addInputListener(bomb);

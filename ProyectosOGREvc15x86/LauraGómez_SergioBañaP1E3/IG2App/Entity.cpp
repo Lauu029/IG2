@@ -655,6 +655,7 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 	//bomba->setMaterialName("IG2/HolesAndVertexLighting");
 	bomba->setMaterialName("IG2/SpotLight");
 	bombaNode->attachObject(bomba);
+	bombaNode->translate(0, 100, 0);
 
 	bombaNode->setInitialState();
 	Real duration = 3;
@@ -689,7 +690,8 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 
 	animationState = mSM->createAnimationState("animVV");
 	animationState->setLoop(true);
-	animationState->setEnabled(true);
+	//animationState->setEnabled(true);
+	animationState->setEnabled(false);
 }
 
 void Bomba::frameRendered(const Ogre::FrameEvent& evt)
