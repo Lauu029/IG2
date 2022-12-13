@@ -215,4 +215,5 @@ private:
 	virtual void receiveEvent(EntityIG* entidad, MessageKind k)override;
 
 	Ogre::Timer* timeBomb = nullptr;
+	Ogre::Entity* bomba = nullptr;
 };

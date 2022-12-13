@@ -648,7 +648,7 @@ void Sinbad::dance() {
 Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 {
 	bombaNode = mNode->createChildSceneNode();
-	Ogre::Entity* bomba = mSM->createEntity("uv_sphere.mesh");
+	bomba = mSM->createEntity("uv_sphere.mesh");
 	//bomba->setMaterialName("IG2/BombTexture");
 	//bomba->setMaterialName("IG2/Holes");
 	//bomba->setMaterialName("IG2/HolesAndLighting");
@@ -707,6 +707,18 @@ bool Bomba::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (evt.keysym.sym == SDLK_t) {
 		animationState->setEnabled(false);
 		timeBomb = new Ogre::Timer();
+	}
+	else if (evt.keysym.sym == SDLK_1) {
+		bomba->setMaterialName("IG2/BombTexture");
+	}
+	else if (evt.keysym.sym == SDLK_2) {
+		bomba->setMaterialName("IG2/Holes");
+	}
+	else if (evt.keysym.sym == SDLK_3) {
+		bomba->setMaterialName("IG2/HolesAndLighting");
+	}
+	else if (evt.keysym.sym == SDLK_4) {
+		bomba->setMaterialName("IG2/HolesAndVertexLighting");
 	}
 	return false;
 }
