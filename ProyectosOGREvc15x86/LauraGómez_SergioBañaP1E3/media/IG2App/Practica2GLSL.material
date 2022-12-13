@@ -304,3 +304,47 @@ material IG2/HolesAndLighting
 }
 
 //SpotLight sobre la esfera
+vertex_program SpotLightVS glsl
+{
+    source SpotLightVS.glsl
+    
+    default_params
+    {
+        param_named_auto modelViewProjMat worldviewproj_matrix
+    }
+}
+
+fragment_program SpotLightFS glsl
+{
+    source SpotLightFS.glsl
+    default_params
+    {
+        param_named textureS int 0
+        param_named_auto worldMat world_matrix
+        param_named_auto normalMat inverse_transpose_world_matrix
+        param_named_auto lightPosition float4 0.0 100.0 0.0 1.0
+        param_named_auto cutoff costime_0_2pi 3
+    }
+}
+
+material IG2/SpotLight
+{
+    technique 
+    {
+        pass 
+        {
+            lighting off
+            vertex_program_ref SpotLightVS
+            { 
+            }
+            fragment_program_ref SpotLightFS
+            { 
+            }
+
+            texture_unit 
+            {
+                texture BeachStones.jpg 2d
+            }
+        } 
+    } 
+}

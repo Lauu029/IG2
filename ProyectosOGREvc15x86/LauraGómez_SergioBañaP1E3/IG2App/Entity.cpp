@@ -652,7 +652,8 @@ Bomba::Bomba(Ogre::SceneNode* _bomba) : EntityIG(_bomba)
 	//bomba->setMaterialName("IG2/BombTexture");
 	//bomba->setMaterialName("IG2/Holes");
 	//bomba->setMaterialName("IG2/HolesAndLighting");
-	bomba->setMaterialName("IG2/HolesAndVertexLighting");
+	//bomba->setMaterialName("IG2/HolesAndVertexLighting");
+	bomba->setMaterialName("IG2/SpotLight");
 	bombaNode->attachObject(bomba);
 
 	bombaNode->setInitialState();
@@ -719,6 +720,9 @@ bool Bomba::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_4) {
 		bomba->setMaterialName("IG2/HolesAndVertexLighting");
+	}
+	else if (evt.keysym.sym == SDLK_5) {
+		bomba->setMaterialName("IG2/SpotLight");
 	}
 	return false;
 }
