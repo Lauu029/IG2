@@ -208,9 +208,9 @@ fragment_program HolesAndVertexLightingFS glsl
     source HolesAndVertexLightingFS.glsl
 	default_params 
 	{
-		param_named texturaMetal int 0 
-        param_named texturaStones int 1 
-        param_named texturaCorrosion int 2 
+		param_named texturaM int 0 
+        param_named texturaS int 1 
+        param_named texturaC int 2 
 		
 	}
 
@@ -265,12 +265,10 @@ fragment_program HolesAndLightingFS glsl
         param_named texturaS int 0
         param_named texturaM int 1
         param_named texturaC int 2
-
-        param_named ocreSiena float3 0.72 0.57 0.35
-        param_named azulCeruleo float3 0.0 0.6 0.83
-
         param_named_auto lightPosition light_position 0 
         param_named_auto lightDiffuse light_diffuse_colour 0
+        param_named materialDiffuseFront float3 0.72 0.57 0.35
+        param_named materialDiffuseBack float3 0.0 0.6 0.83
     }
 }
 material IG2/HolesAndLighting
